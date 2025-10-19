@@ -1,0 +1,24 @@
+manifest:
+  version: "0.13"
+  
+  defaults:
+    remote: zephyrproject
+    
+  remotes:
+    - name: zephyrproject
+      url-base: https://github.com/zephyrproject-rtos
+      
+  projects:
+    - name: zephyr
+      repo-path: zephyr
+      revision: v3.5.0
+      import:
+        path-prefix: deps
+        name-allowlist:
+          - hal_nordic   # Nordic HAL (essential for nRF52840)
+          - nrfx         # Nordic drivers (essential)
+          - cmsis
+          - segger
+  self:
+    path: app
+

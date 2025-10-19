@@ -1,0 +1,3 @@
+"cmsis":"/home/painguin/Storage/Projects/nisc-wearable/deps/modules/hal/cmsis":"${ZEPHYR_CMSIS_CMAKE_DIR}"
+"hal_nordic":"/home/painguin/Storage/Projects/nisc-wearable/deps/modules/hal/nordic":"${ZEPHYR_HAL_NORDIC_CMAKE_DIR}"
+"segger":"/home/painguin/Storage/Projects/nisc-wearable/deps/modules/debug/segger":"${ZEPHYR_SEGGER_CMAKE_DIR}"

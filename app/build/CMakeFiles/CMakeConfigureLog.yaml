@@ -1,0 +1,3495 @@
+
+---
+events:
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:28 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    name: "ZephyrBuildConfiguration"
+    configs:
+      -
+        filename: "ZephyrBuildConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "zephyrbuild-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: false
+      bypass_provider: false
+      names:
+        - "ZephyrBuild"
+      search_paths:
+        - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/../*"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: false
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: false
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: false
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: false
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/ZephyrBuildConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/zephyrbuild-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/modules/ZephyrBuildConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/modules/zephyrbuild-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/ZephyrBuildConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/zephyrbuild-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/ZephyrBuildConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/zephyrbuild-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found: null
+    search_context:
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:41 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    name: "ZephyrAppConfiguration"
+    configs:
+      -
+        filename: "ZephyrAppConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "zephyrapp-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: false
+      bypass_provider: false
+      names:
+        - "ZephyrApp"
+      search_paths:
+        - "/home/painguin/Storage/Projects/nisc-wearable/app"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: false
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: false
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: false
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: false
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/ZephyrAppConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/zephyrapp-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/ZephyrAppConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/zephyrapp-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found: null
+    search_context:
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/ccache.cmake:10 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CCACHE_FOUND"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ccache"
+    candidate_directories:
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/ccache"
+      - "/home/painguin/.cabal/bin/ccache"
+      - "/home/painguin/.ghcup/bin/ccache"
+      - "/home/painguin/go/bin/ccache"
+      - "/usr/lib/go/bin/ccache"
+      - "/home/painguin/.local/bin/ccache"
+      - "/usr/local/bin/ccache"
+    found: "/usr/bin/ccache"
+    search_context:
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/boards.cmake:117 (find_path)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "path"
+    variable: "BOARD_DIR"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nrf52840dk_nrf52840_defconfig"
+    candidate_directories:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_evkninab3_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rak5010_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso55s69/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f3_seco_d23/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32373c_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f446ze/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf51dk_nrf51422/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cy8ckit_062_wifi_bt/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_portenta_h7/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efr32xg24_dk2601b/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/blueclover_plt_demo_v2_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimx8mp_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f401_mini/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/qemu_cortex_a9/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l433rc_p/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f031k6/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/xmc47_relax_kit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/degu_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l031k6/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/frdm_k64f/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h743zi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm3210c_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l011k4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32pg_stk3402a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f303k8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1015_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840dk_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f746zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mm_swiftio/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mec1501modular_assy6885/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/actinius_icarus_bee/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_evkannab1_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/dragino_nbsn95/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1050_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/blackpill_f401ce/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_trinket_m0/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso11u68/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/udoo_neo_full_m4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_carbon/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/tdk_robokit1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/particle_argon/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pinetime_devkit0/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsamr21_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f091rc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsaml21_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_giga_r1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/colibri_imx7d_m4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f403z_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lora_e5_dev_board/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_u5a5zj_q/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ev11l78a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arty/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/we_proteus2ev_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cc1352r_sensortag/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52dk_nrf52805/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f334r8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/swan_r5/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1160_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pinnacle_100_dvk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f767zi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/segger_trb_stm32f407/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/qomu/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32_min_dev/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cc1352r1_launchxl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/az3166_iotdevkit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32vl_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1020_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f411e_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pan1782_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rcar_h3ulcb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cy8ckit_062s4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f756zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/quick_feather/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f103rb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sparkfun_thing_plus_nrf9160/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840_mdk_usb_dongle/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840_blip/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ip_k66f/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/kv260_r5/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/am62x_m4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/npcx9m6f_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rcar_h3_salvatorx/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_g431rb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_bmd380eval_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/qemu_cortex_r5/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimex_stm32_h103/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_feather_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_meerkat96/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52833dk_nrf52820/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/google_twinkie_v2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/raytac_mdbt50q_db_40_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/legend/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/b_l072z_lrwan1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/teensy4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf21540dk_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f3_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_neonkey/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52832_mdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_aerocore2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nuvoton_pfm_m487/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32gg_stk3701a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1040_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f072_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f470i_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/vmu_rt1170/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_feather_stm32f405/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1060_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pan1770_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52dk_nrf52810/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bl654_usb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf51_ble400/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_mkrzero/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf5340dk_nrf5340/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_c031c6/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h723zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32gg_slwstk6121a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840_mdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/apollo4p_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bbc_microbit_v2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/black_f407ve/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bbc_microbit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rddrone_fmuk66/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_nano_33_iot/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h745zi_q/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1024_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f7508_dk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/wio_terminal/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f042k6/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimexino_stm32/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_due/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimx8mp_phyboard_pollux/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_feather_m0_lora/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32h735g_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/reel_board/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mps3_an547/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/scobc_module1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l552ze_q/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mr_canhubk3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cc3235sf_launchxl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/hexiwear_k64/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/raytac_mdbt53v_db_40_nrf5340/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ruuvi_ruuvitag/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f723e_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rm1xx_dvk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f207zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f411re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f302r8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso51u68/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_wistrio/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_g474re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32e507v_start/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f450z_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/v2m_musca_b1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso54114/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f030r8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/xiao_ble/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pan1781_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f469i_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32h573i_dk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_u575zi_q/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sam_v71_xult/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/twr_ke18f/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/b_g474e_dpow1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h7a3zi_q/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_g031k8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_avenger96/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/usb_kw24d512/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l073rz/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32wg_stk3800/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_stm32_sensor_mez/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/particle_boron/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/thingy53_nrf5340/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bl653_dvk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32l1_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_feather_m0_basic_proto/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_g071rb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32g0316_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bl654_dvk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/circuitdojo_feather_nrf9160/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1170_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l452re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f450i_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1010_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf9160dk_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32mp157c_dk2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf9161dk_nrf9161/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/serpente/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_wl55jc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f070rb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f4_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f412zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/zybo/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mps2_an385/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sparkfun_pro_micro_rp2040/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pandora_stm32l475/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bl654_sensor_board/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/google_kukui/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cyclonev_socdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l496zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rpi_pico/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sam_e70_xplained/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ast1030_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/blackpill_f411ce/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_bmd330eval_nrf52810/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/hexiwear_kw40z/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32a503v_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52_adafruit_feather/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52833dk_nrf52833/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/decawave_dwm1001_dev/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l4r5zi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimx8mm_phyboard_polis/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimex_lora_stm32wl_devkit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cc3220sf_launchxl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efr32_thunderboard/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/dragino_lsn50/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ebyte_e73_tbb_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sam4s_xplained/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsamc21n_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_zero/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_bmd345eval_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32hg_slstk3400a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52_blenano2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/waveshare_open103z/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f350r_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf9160dk_nrf9160/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/numaker_pfm_m467/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/v2m_beetle/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/contextualelectronics_abc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf9160_innblue21/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f401re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_evkninab4_nrf52833/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso55s06/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l4a6zg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/thingy52_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32e507z_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso55s16/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/v2m_musca_s1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/warp7_m4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_wb55rg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rak4631_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bl5340_dvk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f0_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso55s36/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/blackpill_f401cc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52dk_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/holyiot_yj16019/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f303re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sensortile_box/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f072b_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsame54_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_argonkey/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f446re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimex_stm32_h405/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f412g_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mec172xevb_assy6906/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/fvp_baser_aemv8r_aarch32/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_bmd360eval_nrf52811/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/b_u585i_iot02a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sam4l_ek/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_carbon_nrf51/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/particle_xenon/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cc1352p1_launchxl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bl652_dvk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_bmd340eval_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52_sparkfun/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/apollo4p_blue_kxr_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l476rg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mec15xxevb_assy6853/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l412rb_p/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mikroe_clicker_2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf5340_audio_dk_nrf5340/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f030_demo/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cy8cproto_062_4343w/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32e103v_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/frdm_k22f/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f410rb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1064_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_bmd300eval_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mps2_an521/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32l476g_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cy8ckit_062_ble/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mm_feather/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efr32_radio/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mec172xmodular_assy6930/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bt510/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_g0b1re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l053r8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840dongle_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/96b_nitrogen/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/actinius_icarus/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsamr34_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f746g_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf51_blenano/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f769i_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/acn52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsamd21_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/npcx7m6fb_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf51dongle_nrf51422/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f429zi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/msp_exp432p401r_launchxl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32g071b_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32l233r_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt595_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimx8mm_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l152re/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/b_l4s5i_iot01a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efr32mg_sltb004a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32h7b3i_dk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimex_stm32_p405/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimex_stm32_e407/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32g081b_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt685_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/disco_l475_iot1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/steval_fcu001v1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/frdm_kw41z/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/qemu_cortex_m3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pico_pi_m4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/s32z270dc2_r52/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bcm958402m2_m7/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/xmc45_relax_kit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f429i_disc1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_nano_33_ble/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1062_fmurt6/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/beagle_bcf/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_itsybitsy_m4_express/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mikroe_mini_m4_for_stm32/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/npcx4m8f_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bcm958401m2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_wba52cg/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/atsamd20_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimx8mq_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/bt610/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h563zi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf9160_innblue22/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf51_vbluno51/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_evkninab1_nrf52832/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cc26x2r1_launchxl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/da1469x_dk_pro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/sam4e_xpro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840dk_nrf52811/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/black_f407zg_pro/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/frdm_k82f/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f103_mini/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f450v_start/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/google_dragonclaw/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/pan1780_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/raytac_mdbt50q_db_33_nrf52833/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l432kc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ronoth_lodev/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h753zi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/twr_kv58f220m/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/frdm_kl25z/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32h747i_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/seeeduino_xiao/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/we_proteus3ev_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/raytac_mdbt53_db_40_nrf5340/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32l562e_dk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840_papyr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f413zh/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_g070rb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_itsybitsy_nrf52840/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/gd32f407v_start/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mercury_xu/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32pg_stk3401a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/qemu_cortex_m0/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/we_ophelia1ev_nrf52805/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32l496g_disco/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_nicla_sense_me/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/adafruit_kb2040/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mg100/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52_vbluno52/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/actinius_icarus_som/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso55s28/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/actinius_icarus_som_dk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/faze/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cy8cproto_063_ble/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/olimex_stm32_h407/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32gg_sltb009a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32_devkitc_wrover/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/nxp_adsp_imx8x/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/nxp_adsp_imx8m/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/m5stack_core2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/xt-sim/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32_net/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32s3_luatos_core/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32s2_saola/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/heltec_wifi_lora32_v2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/odroid_go/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/m5stickc_plus/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/intel_adsp_cavs25/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/olimex_esp32_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/intel_adsp_ace20_lnl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32s2_franzininho/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32_ethernet_kit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/nxp_adsp_imx8/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/xiao_esp32s3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32s3_devkitm/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp_wrover_kit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/intel_adsp_ace15_mtpm/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/esp32_devkitc_wroom/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/yd_esp32/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/xtensa/qemu_xtensa/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/it82xx2_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/stamp_c3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/neorv32/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/hifive_unmatched/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/gd32vf103c_starter/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/esp32c3_devkitm/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/niosv_g/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/sparkfun_red_v_things_plus/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/mpfs_icicle/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/adp_xc7k_ae350/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/qemu_riscv32/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/hifive_unleashed/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/qemu_riscv64/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/rv32m1_vega/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/tlsr9518adk80d/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/niosv_m/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/longan_nano/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/opentitan_earlgrey/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/esp32c3_luatos_core/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/m2gl025_miv/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/titanium_ti60_f225/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/icev_wireless/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/xiao_esp32c3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/hifive1_revb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/qemu_riscv32e/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/hifive1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/it8xxx2_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/litex_vexriscv/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/riscv/gd32vf103v_eval/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/posix/native_posix/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/posix/common/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/posix/doc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/posix/nrf_bsim/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/posix/native_sim/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/mips/qemu_malta/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/nios2/altera_max10/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/nios2/qemu_nios2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/common/actinius/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/sparc/qemu_leon3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/sparc/generic_leon3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/sparc/gr716a_mini/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/intel_socfpga_agilex5_socdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/khadas_edgev/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/mimx8mp_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/qemu_kvm_arm64/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/bcm958402m2_a72/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/rcar_h3ulcb_ca57/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/qemu_cortex_a53/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/fvp_base_revc_2xaemv8a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/rpi_4b/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/fvp_baser_aemv8r/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/phycore_am62x_a53/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/intel_socfpga_agilex_socdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/rcar_salvator_xs_m3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/nxp_ls1046ardb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/mimx8mn_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/mimx8mm_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/mimx93_evk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm64/xenvm/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/intel_rpl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/intel_ehl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/qemu_x86/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/intel_adl/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/common/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/acrn/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/up_squared/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/x86/intel_ish/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/qemu_arc/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/hsdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/hsdk4xd/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/em_starterkit/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/nsim/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/emsdp/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arc/iotdk/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/npm1100_ek/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/ftdi_vm800c/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/buydisplay_2_8_tft_touch_arduino/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/adafruit_data_logger/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/v2c_daplink/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_eeprma2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/semtech_sx1276mb1mas/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/npm6001_ek/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/frdm_cr20a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/inventek_eswifi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/mikroe_wifi_bt_click/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/st7789v_generic/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_iks01a2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_iks01a3/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/mcp2515/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/ssd1306/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/mikroe_eth_click/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/semtech_sx1272mb2das/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/npm1300_ek/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/arceli_eth_w5500/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_idb05a1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/max7219/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/boostxl_ulpsense/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/link_board_eth/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/adafruit_pca9685/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/sparkfun_sara_r4/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/rk055hdmipi4ma0/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/max3421e/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/st_b_lcd40_dsi1_mb1166/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/semtech_sx1262mb2das/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/wnc_m14a2a/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/arduino_uno_click/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/mikroe_mcp2518fd_click/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/tcan4550evm/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/st7735r/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/waveshare_epaper/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_iks01a1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/lmp90100_evb/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/ls0xx_generic/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/dac80508_evm/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/esp_8266/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/ti_bp_bassensorsmkii/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/mikroe_adc_click/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/frdm_stbc_agm01/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/g1120b0mipi/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/adafruit_winc1500/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_iks02a1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/atmel_rf2xx/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/buydisplay_3_5_tft_touch_arduino/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/adafruit_2_8_tft_touch_v2/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/frdm_kw41z/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/x_nucleo_53l0a1/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/amg88xx/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/shields/rk055hdmipi4m/"
+    searched_directories:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/ubx_evkninab3_nrf52840/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/rak5010_nrf52840/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/lpcxpresso55s69/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f3_seco_d23/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32373c_eval/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f446ze/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf51dk_nrf51422/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/cy8ckit_062_wifi_bt/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/arduino_portenta_h7/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efr32xg24_dk2601b/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/blueclover_plt_demo_v2_nrf52832/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimx8mp_evk/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm32f401_mini/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/qemu_cortex_a9/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l433rc_p/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f031k6/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/xmc47_relax_kit/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/degu_evk/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l031k6/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/frdm_k64f/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_h743zi/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/stm3210c_eval/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_l011k4/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/efm32pg_stk3402a/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nucleo_f303k8/nrf52840dk_nrf52840_defconfig"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/mimxrt1015_evk/nrf52840dk_nrf52840_defconfig"
+    found: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/boards/arm/nrf52840dk_nrf52840/"
+    search_context:
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindZephyr-sdk.cmake:77 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:53 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    name: "Zephyr-sdk"
+    configs:
+      -
+        filename: "Zephyr-sdkConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "zephyr-sdk-config.cmake"
+        kind: "cmake"
+    version_request:
+      version: "0.0.0"
+      version_complete: "0.0.0"
+      exact: true
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "Zephyr-sdk"
+      search_paths:
+        - "/usr"
+        - "/usr/local"
+        - "/opt"
+        - "/home/painguin"
+        - "/home/painguin/.local"
+        - "/home/painguin/.local/opt"
+        - "/home/painguin/bin"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/.venv/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/.venv/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/.cabal/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/.cabal/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/.ghcup/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/.ghcup/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/go/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/go/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/go/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/go/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/.local/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/.local/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/site_perl/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/site_perl/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/vendor_perl/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/vendor_perl/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/core_perl/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/core_perl/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/zephyr-sdk-0.17.4/cmake/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "insufficient_version"
+      -
+        path: "/home/painguin/zephyr-sdk-0.17.4/cmake/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/zephyr-sdk-0.17.4/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/zephyr-sdk-0.17.4/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/zephyr-sdk-0.17.4/cmake/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "insufficient_version"
+      -
+        path: "/home/painguin/zephyr-sdk-0.17.4/cmake/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/bin/Zephyr-sdkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/bin/zephyr-sdk-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found: null
+    search_context:
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:56 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "GPERF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gperf"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/gperf"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/gperf"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/gperf"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/gperf"
+      - "/home/painguin/.cabal/bin/gperf"
+      - "/home/painguin/.ghcup/bin/gperf"
+      - "/home/painguin/go/bin/gperf"
+      - "/usr/lib/go/bin/gperf"
+      - "/home/painguin/.local/bin/gperf"
+      - "/usr/local/bin/gperf"
+    found: "/usr/bin/gperf"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:59 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "OPENOCD"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "openocd"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/openocd"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:62 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "BOSSAC"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "bossac"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/bossac"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:66 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "IMGTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "imgtool"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/imgtool"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/imgtool"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/imgtool"
+    found: "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/imgtool"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/compiler/gcc/generic.cmake:5 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:107 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/aarch64-zephyr-elf/bin/aarch64-zephyr-elf-gcc"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/aarch64-zephyr-elf/bin/aarch64-zephyr-elf-gcc"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/compiler/gcc/generic.cmake:6 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindHostTools.cmake:107 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:9 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_GCOV"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/aarch64-zephyr-elf/bin/aarch64-zephyr-elf-gcov"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/aarch64-zephyr-elf/bin/aarch64-zephyr-elf-gcov"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindDtc.cmake:19 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/dts.cmake:10 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:129 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "DTC"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dtc"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/dtc"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/compiler/gcc/target.cmake:9 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:102 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/compiler/gcc/target.cmake:27 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:102 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-g++"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-g++"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:5 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-objcopy"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-objcopy"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:6 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:7 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_AS"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-as"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-as"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:8 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-ar"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-ar"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:9 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-ranlib"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-ranlib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:10 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-readelf"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-readelf"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:11 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-nm"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-nm"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:12 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-strip"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-strip"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:14 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_GDB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb-py"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb-py"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/bintools/gnu/target.cmake:26 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/FindTargetTools.cmake:105 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:25 (find_package)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_GDB_NO_PY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/bin/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/uname"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/uname"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/uname"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/uname"
+      - "/home/painguin/.cabal/bin/uname"
+      - "/home/painguin/.ghcup/bin/uname"
+      - "/home/painguin/go/bin/uname"
+      - "/usr/lib/go/bin/uname"
+      - "/home/painguin/.local/bin/uname"
+      - "/usr/local/bin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:207 (message)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    message: |
+      The target system is: Generic - 3.5.0 - arm
+      The host system is: Linux - 6.16.8-arch1-1 - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeNinjaFindMake.cmake:5 (find_program)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Program used to build from build.ninja files."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ninja-build"
+      - "ninja"
+      - "samu"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/ninja-build"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/ninja"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/samu"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/ninja-build"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/ninja"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/samu"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/ninja-build"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/ninja"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/samu"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/ninja-build"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/ninja"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/samu"
+      - "/home/painguin/.cabal/bin/ninja-build"
+      - "/home/painguin/.cabal/bin/ninja"
+      - "/home/painguin/.cabal/bin/samu"
+      - "/home/painguin/.ghcup/bin/ninja-build"
+      - "/home/painguin/.ghcup/bin/ninja"
+      - "/home/painguin/.ghcup/bin/samu"
+      - "/home/painguin/go/bin/ninja-build"
+      - "/home/painguin/go/bin/ninja"
+      - "/home/painguin/go/bin/samu"
+      - "/usr/lib/go/bin/ninja-build"
+      - "/usr/lib/go/bin/ninja"
+      - "/usr/lib/go/bin/samu"
+      - "/home/painguin/.local/bin/ninja-build"
+      - "/home/painguin/.local/bin/ninja"
+      - "/home/painguin/.local/bin/samu"
+      - "/usr/local/bin/ninja-build"
+      - "/usr/local/bin/ninja"
+      - "/usr/local/bin/samu"
+      - "/usr/bin/ninja-build"
+    found: "/usr/bin/ninja"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/"
+    found: "/usr/share/cmake/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/../../../../arm-zephyr-eabi/bin/ld: /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/../../../../arm-zephyr-eabi/lib/libc.a(lib_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x34): undefined reference to `_exit'
+      collect2: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/"
+    found: "/usr/share/cmake/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is GNU, found in:
+        /home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/4.1.1/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-dlltool"
+      - "dlltool"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-dlltool"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-dlltool"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-dlltool"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-dlltool"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-dlltool"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-dlltool"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-dlltool"
+      - "/usr/local/bin/arm-zephyr-eabi-dlltool"
+      - "/usr/bin/arm-zephyr-eabi-dlltool"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-dlltool"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-dlltool"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-dlltool"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/dlltool"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/dlltool"
+      - "/home/painguin/.cabal/bin/dlltool"
+      - "/home/painguin/.ghcup/bin/dlltool"
+      - "/home/painguin/go/bin/dlltool"
+      - "/usr/lib/go/bin/dlltool"
+      - "/home/painguin/.local/bin/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/usr/bin/dlltool"
+      - "/usr/bin/site_perl/dlltool"
+      - "/usr/bin/vendor_perl/dlltool"
+      - "/usr/bin/core_perl/dlltool"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-addr2line"
+      - "addr2line"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-addr2line"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-tapi"
+      - "tapi"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-tapi"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-tapi"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-tapi"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-tapi"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-tapi"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-tapi"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-tapi"
+      - "/usr/local/bin/arm-zephyr-eabi-tapi"
+      - "/usr/bin/arm-zephyr-eabi-tapi"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-tapi"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-tapi"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-tapi"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/tapi"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/tapi"
+      - "/home/painguin/.cabal/bin/tapi"
+      - "/home/painguin/.ghcup/bin/tapi"
+      - "/home/painguin/go/bin/tapi"
+      - "/usr/lib/go/bin/tapi"
+      - "/home/painguin/.local/bin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/usr/bin/tapi"
+      - "/usr/bin/site_perl/tapi"
+      - "/usr/bin/vendor_perl/tapi"
+      - "/usr/bin/core_perl/tapi"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-gcc-ar-12.2"
+      - "arm-zephyr-eabi-gcc-ar-12"
+      - "arm-zephyr-eabi-gcc-ar12"
+      - "arm-zephyr-eabi-gcc-ar"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar12"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "arm-zephyr-eabi-gcc-ranlib-12"
+      - "arm-zephyr-eabi-gcc-ranlib12"
+      - "arm-zephyr-eabi-gcc-ranlib"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib12"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/"
+    found: "/usr/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-g++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/../../../../arm-zephyr-eabi/bin/ld: /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/../../../../arm-zephyr-eabi/lib/libc.a(lib_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x34): undefined reference to `_exit'
+      collect2: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/"
+    found: "/usr/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-g++ 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/4.1.1/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-gcc-ar-12.2"
+      - "arm-zephyr-eabi-gcc-ar-12"
+      - "arm-zephyr-eabi-gcc-ar12"
+      - "arm-zephyr-eabi-gcc-ar"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar-12.2"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar-12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar-12"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar12"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:128 (project)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "arm-zephyr-eabi-gcc-ranlib-12"
+      - "arm-zephyr-eabi-gcc-ranlib12"
+      - "arm-zephyr-eabi-gcc-ranlib"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib-12.2"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib-12"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib12"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib12"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:61 (_cmake_find_compiler)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:134 (enable_language)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER"
+    description: "ASM compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:1290 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:134 (enable_language)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      arm-zephyr-eabi-gcc (Zephyr SDK 0.17.4) 12.2.0
+      Copyright (C) 2022 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:134 (enable_language)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-gcc-ar-"
+      - "arm-zephyr-eabi-gcc-ar-"
+      - "arm-zephyr-eabi-gcc-ar"
+      - "arm-zephyr-eabi-gcc-ar"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/bin/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar-"
+      - "/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ar-"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ar-"
+      - "/bin/arm-zephyr-eabi-gcc-ar-"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/kernel.cmake:134 (enable_language)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
+      - "CMakeLists.txt:5 (find_package)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-zephyr-eabi-gcc-ranlib-"
+      - "arm-zephyr-eabi-gcc-ranlib-"
+      - "arm-zephyr-eabi-gcc-ranlib"
+      - "arm-zephyr-eabi-gcc-ranlib"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/bin/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib-"
+      - "/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/.cabal/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/.ghcup/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/go/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/lib/go/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/home/painguin/.local/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/local/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/site_perl/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/vendor_perl/arm-zephyr-eabi-gcc-ranlib-"
+      - "/usr/bin/core_perl/arm-zephyr-eabi-gcc-ranlib-"
+      - "/bin/arm-zephyr-eabi-gcc-ranlib-"
+    found: "/home/painguin/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/reports/CMakeLists.txt:70 (find_program)"
+    mode: "program"
+    variable: "PUNCOVER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "puncover"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/bin/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/puncover"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/puncover"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/puncover"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/puncover"
+      - "/home/painguin/.cabal/bin/puncover"
+      - "/home/painguin/.ghcup/bin/puncover"
+      - "/home/painguin/go/bin/puncover"
+      - "/usr/lib/go/bin/puncover"
+      - "/home/painguin/.local/bin/puncover"
+      - "/usr/local/bin/puncover"
+      - "/usr/bin/puncover"
+      - "/usr/bin/site_perl/puncover"
+      - "/usr/bin/vendor_perl/puncover"
+      - "/usr/bin/core_perl/puncover"
+      - "/bin/puncover"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/reports/CMakeLists.txt:87 (find_program)"
+    mode: "program"
+    variable: "PAHOLE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "pahole"
+    candidate_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/"
+      - "/home/painguin/.cabal/bin/"
+      - "/home/painguin/.ghcup/bin/"
+      - "/home/painguin/go/bin/"
+      - "/usr/lib/go/bin/"
+      - "/home/painguin/.local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/bin/"
+    searched_directories:
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/bin/pahole"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/sbin/pahole"
+      - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/pahole"
+      - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin/pahole"
+      - "/home/painguin/.cabal/bin/pahole"
+      - "/home/painguin/.ghcup/bin/pahole"
+      - "/home/painguin/go/bin/pahole"
+      - "/usr/lib/go/bin/pahole"
+      - "/home/painguin/.local/bin/pahole"
+      - "/usr/local/bin/pahole"
+      - "/usr/bin/pahole"
+      - "/usr/bin/site_perl/pahole"
+      - "/usr/bin/vendor_perl/pahole"
+      - "/usr/bin/core_perl/pahole"
+      - "/bin/pahole"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "CMakeLists.txt:5 (find_package)"
+    name: "Zephyr"
+    configs:
+      -
+        filename: "ZephyrConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "zephyr-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      hints:
+        - "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr"
+      names:
+        - "Zephyr"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/ZephyrConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/app/build/CMakeFiles/pkgRedirects/zephyr-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/ZephyrConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/zephyr-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/ZephyrConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/cmake/zephyr-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyrunittest-package/ZephyrConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyrunittest-package/zephyr-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/ZephyrConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/zephyr-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyrunittest-package/cmake/ZephyrConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyrunittest-package/cmake/zephyr-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/home/painguin/Storage/Projects/nisc-wearable/deps/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake"
+      mode: "config"
+      version: "3.5.0"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/painguin/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr"
+      ENV{PATH}:
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/Storage/Projects/nisc-wearable/.venv/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/home/painguin/go/bin"
+        - "/usr/lib/go/bin"
+        - "/home/painguin/.local/bin"
+        - "/home/painguin/.cabal/bin"
+        - "/home/painguin/.ghcup/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+...

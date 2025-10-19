@@ -1,0 +1,18 @@
+identifier: qemu_cortex_m4
+name: QEMU Cortex-M4
+type: qemu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+ram: 262144  # 256KB in bytes
+flash: 1048576  # 1024KB in bytes 
+supported:
+  - gpio
+  - uart:polling
+  - uart:interrupt
+testing:
+  ignore_tags:
+    - net
+    - bluetooth

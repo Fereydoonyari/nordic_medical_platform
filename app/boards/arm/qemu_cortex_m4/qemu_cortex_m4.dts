@@ -1,0 +1,73 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
+/dts-v1/;
+
+#include <ti/lm3s6965.dtsi>
+
+/ {
+	model = "QEMU Cortex-M4";
+	compatible = "ti,lm3s6965evb-qemu", "ti,lm3s6965";
+
+	/* Override CPU to be Cortex-M4 */
+	cpus {
+		/delete-node/ cpu@0;
+		
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-m4";
+			reg = <0>;
+		};
+	};
+
+	/* Override memory sizes for our 256KB/1024KB configuration */
+	sram0: memory@20000000 {
+		compatible = "mmio-sram";
+		reg = <0x20000000 (256*1024)>;  /* 256KB RAM */
+	};
+
+	aliases {
+		uart-0 = &uart0;
+	};
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,uart-pipe = &uart0;
+	};
+};
+
+/* Override flash size */
+&flash0 {
+	reg = <0x00000000 (1024*1024)>;  /* 1024KB Flash */
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <115200>;
+};
+
+/* Keep uart1 and uart2 but disabled - this prevents driver compilation errors 
+   while maintaining the DTSi structure */
+&uart1 {
+	status = "disabled";
+	current-speed = <115200>;  /* Required by driver even when disabled */
+};
+
+&uart2 {
+	status = "disabled";
+	current-speed = <115200>;  /* Required by driver even when disabled */
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
