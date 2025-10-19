@@ -1,291 +1,350 @@
-# nRF52840 Zephyr Medical Wearable Platform
+.PHONY: help init setup build-hw build-qemu flash run-qemu clean deps-update docs docs-clean docs-open
+
+#==============================================================================
+# PROJECT CONFIGURATION
+#==============================================================================
+
+# Hardware and build configuration
+BOARD_HW := nrf52840dk_nrf52840
+BOARD_QEMU := qemu_cortex_m3
+BUILD_DIR := build
+APP_DIR := app
+
+# Documentation configuration
+DOCS_OUTPUT_DIR := docs/generated
+DOCS_HTML_DIR := $(DOCS_OUTPUT_DIR)/html
+DOXYFILE := Doxyfile
+
+#==============================================================================
+# COLOR DEFINITIONS FOR TERMINAL OUTPUT
+#==============================================================================
+
+# ANSI color codes for formatted output
+GREEN := \033[0;32m
+YELLOW := \033[1;33m
+RED := \033[0;31m
+BLUE := \033[0;34m
+CYAN := \033[0;36m
+PURPLE := \033[0;35m
+NC := \033[0m
+
+#==============================================================================
+# HELP AND INFORMATION TARGETS
+#==============================================================================
+
+# Default target - shows comprehensive help menu
+help: ## Show this help message
+	@printf "$(GREEN)╔════════════════════════════════════════════════════════════╗$(NC)\n"
+	@printf "$(GREEN)║               nRF52840 Zephyr Project Makefile             ║$(NC)\n"
+	@printf "$(GREEN)╚════════════════════════════════════════════════════════════╝$(NC)\n\n"
+	@printf "$(YELLOW)📦 Setup Commands:$(NC)\n"
+	@printf "  $(CYAN)init$(NC)        - Complete first-time setup for new developers\n"
+	@printf "  $(CYAN)reinit$(NC)      - Reinitialize project without fresh west init\n"
+	@printf "  $(CYAN)setup$(NC)       - Setup Python environment and install west\n\n"
+	@printf "$(YELLOW)🔨 Development Commands:$(NC)\n"
+	@printf "  $(CYAN)build-hw$(NC)    - Build firmware for nRF52840 hardware\n"
+	@printf "  $(CYAN)build-qemu$(NC)  - Build firmware for QEMU emulation\n"
+	@printf "  $(CYAN)flash$(NC)       - Flash firmware to nRF52840 hardware\n"
+	@printf "  $(CYAN)run-qemu$(NC)    - Run firmware in QEMU emulation\n\n"
+	@printf "$(YELLOW)📚 Documentation Commands:$(NC)\n"
+	@printf "  $(CYAN)docs$(NC)        - Generate complete API documentation with Doxygen\n"
+	@printf "  $(CYAN)docs-clean$(NC)  - Clean generated documentation files\n"
+	@printf "  $(CYAN)docs-open$(NC)   - Open generated documentation in default browser\n"
+	@printf "  $(CYAN)docs-serve$(NC)  - Serve documentation locally on port 8080\n\n"
+	@printf "$(YELLOW)🧹 Maintenance Commands:$(NC)\n"
+	@printf "  $(CYAN)deps-update$(NC) - Update Zephyr dependencies\n"
+	@printf "  $(CYAN)clean$(NC)       - Clean build artifacts\n"
+	@printf "  $(CYAN)clean-all$(NC)   - Clean everything including dependencies and docs\n"
+	@printf "  $(CYAN)check-env$(NC)   - Verify development environment setup\n"
+	@printf "  $(CYAN)info$(NC)        - Display project configuration information\n\n"
+	@printf "$(YELLOW)⚡ Quick Development Workflows:$(NC)\n"
+	@printf "  $(CYAN)dev-hw$(NC)      - Build and flash hardware in one step\n"
+	@printf "  $(CYAN)dev-qemu$(NC)    - Build and run QEMU in one step\n"
+	@printf "  $(CYAN)build$(NC)       - Build for hardware (default target)\n\n"
+
+#==============================================================================
+# ENVIRONMENT CHECK AND SETUP TARGETS
+#==============================================================================
+
+# Check if uv (Python package manager) is installed
+check-uv:
+	@which uv > /dev/null || (printf "$(RED)❌ Error: uv not found. Install with: curl -LsSf https://astral.sh/uv/install.sh | sh$(NC)\n" && exit 1)
+
+# Check if Doxygen is installed for documentation generation
+check-doxygen:
+	@which doxygen > /dev/null || (printf "$(YELLOW)⚠️  Warning: Doxygen not found. Install it to generate documentation.$(NC)\n" && exit 1)
+	@printf "$(GREEN)✅ Doxygen found: $(NC)"; doxygen --version
+
+#==============================================================================
+# PROJECT SETUP AND INITIALIZATION TARGETS
+#==============================================================================
+
+# Complete first-time setup for new developers
+init: check-uv ## Complete setup for new developers after cloning
+	@printf "$(GREEN)🚀 Starting complete project setup...$(NC)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(YELLOW)Step 1/6: Installing west with uv$(NC)\n"
+	uv add west
+	@printf "$(YELLOW)Step 2/6: Initializing west workspace$(NC)\n"
+	uv run west init -l $(APP_DIR)
+	@printf "$(YELLOW)Step 3/6: Updating dependencies (this may take a few minutes)$(NC)\n"
+	uv run west update
+	@printf "$(YELLOW)Step 4/6: Installing Python requirements$(NC)\n"
+	uv pip install -r deps/zephyr/scripts/requirements.txt
+	@printf "$(YELLOW)Step 5/6: Setting up Zephyr environment$(NC)\n"
+	uv run west zephyr-export
+	@printf "$(YELLOW)Step 6/6: SDK Installation Notice$(NC)\n"
+	@printf "$(RED)⚠️  MANUAL STEP REQUIRED: Install Zephyr SDK manually$(NC)\n"
+	@printf "$(CYAN)   Download from: https://github.com/zephyrproject-rtos/sdk-ng/releases$(NC)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(GREEN)✅ Setup complete! Run 'make build-hw' or 'make build-qemu' next$(NC)\n"
+
+# Reinitialize project without fresh west init (for existing projects)
+reinit: check-uv ## Complete setup for existing project (skip west init)
+	@printf "$(GREEN)🔄 Reinitializing existing project...$(NC)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(YELLOW)Step 1/5: Installing west with uv$(NC)\n"
+	uv add west
+	@printf "$(GREEN)Step 2/5: Skipping west workspace initialization$(NC)\n"
+	@printf "$(YELLOW)Step 3/5: Updating dependencies (this may take a few minutes)$(NC)\n"
+	uv run west update
+	@printf "$(YELLOW)Step 4/5: Installing Python requirements$(NC)\n"
+	uv pip install -r deps/zephyr/scripts/requirements.txt
+	@printf "$(YELLOW)Step 5/5: Setting up Zephyr environment$(NC)\n"
+	uv run west zephyr-export
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(GREEN)✅ Reinitialization complete!$(NC)\n"
+
+# Setup Python environment and west (for existing projects)
+setup: check-uv ## Setup Python environment and install west
+	@printf "$(GREEN)⚙️  Setting up development environment...$(NC)\n"
+	uv add west
+	@if [ ! -f ".west/config" ]; then \
+		printf "$(YELLOW)Initializing west workspace...$(NC)\n"; \
+		uv run west init -l $(APP_DIR); \
+	fi
+	@printf "$(GREEN)✅ Environment ready$(NC)\n"
+
+#==============================================================================
+# BUILD TARGETS FOR FIRMWARE COMPILATION
+#==============================================================================
+
+# Default target - hardware build for convenience
+build: build-hw ## Default build target (hardware)
+
+# Build firmware for nRF52840 hardware target
+build-hw: ## Build for nRF52840 hardware
+	@printf "$(GREEN)🔨 Building firmware for nRF52840 hardware...$(NC)\n"
+	@printf "$(CYAN)Board: $(BOARD_HW)$(NC)\n"
+	@cd $(APP_DIR) && uv run west build -p -b $(BOARD_HW) -d ../$(BUILD_DIR)
+	@printf "$(GREEN)✅ Hardware build complete$(NC)\n"
+	@printf "$(BLUE)Binary location: $(BUILD_DIR)/zephyr/zephyr.hex$(NC)\n"
+
+# Build firmware for QEMU emulation target
+build-qemu: ## Build for QEMU emulation
+	@printf "$(GREEN)🔨 Building firmware for QEMU emulation...$(NC)\n"
+	@printf "$(CYAN)Board: $(BOARD_QEMU)$(NC)\n"
+	@cd $(APP_DIR) && uv run west build -p -b $(BOARD_QEMU) -d ../$(BUILD_DIR)
+	@printf "$(GREEN)✅ QEMU build complete$(NC)\n"
+	@printf "$(BLUE)Binary location: $(BUILD_DIR)/zephyr/zephyr.elf$(NC)\n"
+
+#==============================================================================
+# FIRMWARE DEPLOYMENT AND EXECUTION TARGETS
+#==============================================================================
+
+# Flash firmware to nRF52840 hardware
+flash: ## Flash to nRF52840 hardware
+	@printf "$(GREEN)⚡ Flashing firmware to nRF52840...$(NC)\n"
+	@if [ ! -d "$(BUILD_DIR)" ]; then \
+		printf "$(RED)❌ Error: Build directory not found. Run 'make build-hw' first$(NC)\n"; \
+		exit 1; \
+	fi
+	@cd $(APP_DIR) && uv run west flash -d ../$(BUILD_DIR)
+	@printf "$(GREEN)✅ Flash complete$(NC)\n"
+
+# Run firmware in QEMU emulator
+run-qemu: ## Run in QEMU emulation
+	@printf "$(GREEN)🖥️  Starting QEMU emulation...$(NC)\n"
+	@printf "$(YELLOW)Press Ctrl+A then X to exit QEMU$(NC)\n"
+	@if [ ! -d "$(BUILD_DIR)" ]; then \
+		printf "$(RED)❌ Error: Build directory not found. Run 'make build-qemu' first$(NC)\n"; \
+		exit 1; \
+	fi
+	@cd $(APP_DIR) && uv run west build -t run -d ../$(BUILD_DIR)
+
+#==============================================================================
+# DOCUMENTATION GENERATION TARGETS (DOXYGEN)
+#==============================================================================
+
+# Generate comprehensive API documentation using Doxygen
+docs: check-doxygen ## Generate complete API documentation with Doxygen
+	@printf "$(GREEN)📚 Generating API documentation with Doxygen...$(NC)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(CYAN)Configuration file: $(DOXYFILE)$(NC)\n"
+	@printf "$(CYAN)Output directory: $(DOCS_OUTPUT_DIR)$(NC)\n"
+	@mkdir -p $(DOCS_OUTPUT_DIR)
+	@doxygen $(DOXYFILE)
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(GREEN)✅ Documentation generated successfully!$(NC)\n"
+	@printf "$(BLUE)📖 Open docs/generated/html/index.html in your browser$(NC)\n"
+	@printf "$(YELLOW)💡 Tip: Use 'make docs-open' to open automatically$(NC)\n"
+
+# Clean all generated documentation files
+docs-clean: ## Clean generated documentation files
+	@printf "$(GREEN)🧹 Cleaning documentation files...$(NC)\n"
+	@rm -rf $(DOCS_OUTPUT_DIR)
+	@printf "$(GREEN)✅ Documentation files cleaned$(NC)\n"
+
+# Open generated documentation in the default browser
+docs-open: ## Open generated documentation in default browser
+	@printf "$(GREEN)🌐 Opening documentation in browser...$(NC)\n"
+	@if [ ! -f "$(DOCS_HTML_DIR)/index.html" ]; then \
+		printf "$(RED)❌ Error: Documentation not found. Run 'make docs' first$(NC)\n"; \
+		exit 1; \
+	fi
+	@if command -v xdg-open > /dev/null; then \
+		xdg-open $(DOCS_HTML_DIR)/index.html; \
+	elif command -v open > /dev/null; then \
+		open $(DOCS_HTML_DIR)/index.html; \
+	else \
+		printf "$(YELLOW)⚠️  Cannot detect browser opener. Manually open: $(DOCS_HTML_DIR)/index.html$(NC)\n"; \
+	fi
+
+# Serve documentation locally using Python's built-in HTTP server
+docs-serve: ## Serve documentation locally on port 8080
+	@printf "$(GREEN)🌐 Starting local documentation server...$(NC)\n"
+	@if [ ! -f "$(DOCS_HTML_DIR)/index.html" ]; then \
+		printf "$(RED)❌ Error: Documentation not found. Run 'make docs' first$(NC)\n"; \
+		exit 1; \
+	fi
+	@printf "$(CYAN)Server URL: http://localhost:8080$(NC)\n"
+	@printf "$(YELLOW)Press Ctrl+C to stop the server$(NC)\n"
+	@cd $(DOCS_HTML_DIR) && python3 -m http.server 8080
+
+#==============================================================================
+# DEPENDENCY MANAGEMENT AND MAINTENANCE TARGETS
+#==============================================================================
+
+# Update Zephyr and project dependencies
+deps-update: ## Update Zephyr dependencies
+	@printf "$(GREEN)📦 Updating Zephyr dependencies...$(NC)\n"
+	@printf "$(YELLOW)This may take several minutes...$(NC)\n"
+	uv run west update
+	@printf "$(GREEN)✅ Dependencies updated$(NC)\n"
+
+#==============================================================================
+# CLEANUP AND MAINTENANCE TARGETS
+#==============================================================================
+
+# Clean build artifacts only
+clean: ## Clean build artifacts
+	@printf "$(GREEN)🧹 Cleaning build artifacts...$(NC)\n"
+	@rm -rf $(BUILD_DIR)
+	@printf "$(GREEN)✅ Build artifacts cleaned$(NC)\n"
+
+# Clean everything including dependencies and documentation
+clean-all: ## Clean everything including dependencies and docs
+	@printf "$(GREEN)🧹 Cleaning everything (build, deps, docs)...$(NC)\n"
+	@printf "$(YELLOW)This will remove: $(BUILD_DIR), deps, .west, docs/generated$(NC)\n"
+	@rm -rf $(BUILD_DIR) deps .west $(DOCS_OUTPUT_DIR) uv.lock
+	@printf "$(GREEN)✅ Everything cleaned$(NC)\n"
+
+#==============================================================================
+# DEVELOPMENT WORKFLOW SHORTCUTS
+#==============================================================================
+
+# Build and flash hardware in one command
+dev-hw: build-hw flash ## Build and flash hardware in one step
+	@printf "$(GREEN)🚀 Hardware development cycle complete!$(NC)\n"
+
+# Build and run QEMU in one command
+dev-qemu: build-qemu run-qemu ## Build and run QEMU in one step
+	@printf "$(GREEN)🚀 QEMU development cycle complete!$(NC)\n"
+
+#==============================================================================
+# ENVIRONMENT VALIDATION AND INFORMATION TARGETS
+#==============================================================================
+
+# Comprehensive environment check
+check-env: ## Check if environment is properly set up
+	@printf "$(GREEN)🔍 Checking development environment...$(NC)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	
+	# Check UV
+	@printf "$(CYAN)Checking UV package manager...$(NC)\n"
+	@if ! command -v uv > /dev/null 2>&1; then \
+		printf "$(RED)❌ UV not available. Run installation command$(NC)\n"; \
+		exit 1; \
+	else \
+		printf "$(GREEN)✅ UV available: $(NC)"; uv --version; \
+	fi
+	
+	# Check West
+	@printf "$(CYAN)Checking West build tool...$(NC)\n"
+	@if ! uv run west --version > /dev/null 2>&1; then \
+		printf "$(RED)❌ West not available. Run 'make setup' first$(NC)\n"; \
+		exit 1; \
+	else \
+		printf "$(GREEN)✅ West available: $(NC)"; uv run west --version; \
+	fi
+	
+	# Check Zephyr dependencies
+	@printf "$(CYAN)Checking Zephyr dependencies...$(NC)\n"
+	@if [ ! -d "deps/zephyr" ]; then \
+		printf "$(RED)❌ Zephyr dependencies not found. Run 'make init' or 'make deps-update'$(NC)\n"; \
+		exit 1; \
+	else \
+		printf "$(GREEN)✅ Zephyr dependencies found$(NC)\n"; \
+	fi
+	
+	# Check Doxygen (optional)
+	@printf "$(CYAN)Checking Doxygen (for documentation)...$(NC)\n"
+	@if ! command -v doxygen > /dev/null 2>&1; then \
+		printf "$(YELLOW)⚠️  Doxygen not available (optional for docs generation)$(NC)\n"; \
+	else \
+		printf "$(GREEN)✅ Doxygen available: $(NC)"; doxygen --version; \
+	fi
+	
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(GREEN)✅ Environment check complete$(NC)\n"
+
+# Display comprehensive project information
+info: ## Show project information
+	@printf "$(GREEN)📋 Project Information$(NC)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	@printf "$(CYAN)Project:$(NC)         NISC Wearable Device\n"
+	@printf "$(CYAN)Hardware board:$(NC)  $(BOARD_HW)\n"
+	@printf "$(CYAN)QEMU board:$(NC)      $(BOARD_QEMU)\n"
+	@printf "$(CYAN)Build directory:$(NC) $(BUILD_DIR)\n"
+	@printf "$(CYAN)App directory:$(NC)   $(APP_DIR)\n"
+	@printf "$(CYAN)Docs directory:$(NC)  $(DOCS_OUTPUT_DIR)\n"
+	@printf "$(PURPLE)═══════════════════════════════════════════════$(NC)\n"
+	
+	# Show tool versions if available
+	@if uv run west --version > /dev/null 2>&1; then \
+		printf "$(CYAN)West version:$(NC)    "; \
+		uv run west --version; \
+	fi
+	@if command -v doxygen > /dev/null 2>&1; then \
+		printf "$(CYAN)Doxygen version:$(NC) "; \
+		doxygen --version; \
+	fi
+	@if [ -d "deps/zephyr" ]; then \
+		printf "$(CYAN)Zephyr path:$(NC)     deps/zephyr\n"; \
+	fi
+
+#==============================================================================
+# TERMINAL COLOR SUPPORT
+#==============================================================================
+
+# Support for NO_COLOR standard (disable colors if requested)
+ifdef NO_COLOR
+	GREEN :=
+	YELLOW :=
+	RED :=
+	BLUE :=
+	CYAN :=
+	PURPLE :=
+	NC :=
+endif
 
-A comprehensive Zephyr RTOS development platform for the **nRF52840 Development Kit**, specifically designed for medical wearable device research and development. This repository provides a production-ready baseline with hardware abstraction, visual status indicators, and USB console interface.
-
-## Overview
-
-This project establishes a complete development environment for the nRF52840 microcontroller with comprehensive hardware integration including LED-based status indication, USB console debugging, and medical device simulation capabilities. The platform is designed for both QEMU emulation and real hardware deployment.
-
-## Architecture
-
-### Hardware Platform
-- **Primary Target**: nRF52840 Development Kit (nRF52840DK)
-- **Secondary Target**: QEMU ARM Cortex-M3 emulation  
-- **LED Integration**: 4-LED status and medical pulse visualization
-- **Console Interface**: USB-C virtual COM port for debugging and control
-
-### Build System
-- **Build tool**: West (Zephyr's meta-tool)
-- **Package management**: uv for Python dependencies
-- **Target platforms**: nRF52840 hardware (primary) and QEMU emulation
-- **Dependencies**: Minimal module set (cmsis, hal_nordic, nrfx, segger)
-
-### Development Environment
-- **Toolchain**: Zephyr SDK with ARM GCC
-- **Hardware Features**: GPIO, USB CDC-ACM, Hardware Info, Shell Commands
-- **Emulation**: QEMU ARM Cortex-M3 for hardware-independent development
-- **Version control**: Git with dependency tracking via west.yml manifest
-
-## Quick Start
-
-### Initial Setup
-
-```bash
-make init
-```
-
-### Hardware Development (Recommended)
-
-```bash
-# Build and flash to nRF52840DK in one step
-make dev-hw
-
-# OR step by step:
-make build      # Build for hardware (default)
-make flash      # Flash to connected nRF52840DK
-```
-
-### Console Connection
-
-Connect to USB console to see real-time medical data and use interactive commands:
-
-```bash
-# Linux
-screen /dev/ttyACM0 115200
-
-# macOS  
-screen /dev/tty.usbmodem* 115200
-
-# Windows - use PuTTY with COM port at 115200 baud
-```
-
-### Emulation Development
-
-```bash
-make build-qemu  # Build for QEMU
-make run-qemu    # Execute in emulator
-```
-
-## Hardware Features
-
-### LED Status System
-
-The nRF52840DK's four LEDs provide comprehensive visual feedback:
-
-| LED | Function | Normal Pattern | Alert Patterns |
-|-----|----------|---------------|----------------|
-| **LED1** | System Status | Breathing | Slow blink (starting), SOS (critical error) |
-| **LED2** | Medical Pulse | Heartbeat pattern (synchronized with sensor data) | Off (sensor failure) |
-| **LED3** | Communication | Off (idle) | Fast blink (transmitting data) |
-| **LED4** | Error/Warning | Off (no errors) | Various patterns for different alert types |
-
-### USB Console Interface
-
-- **Real-time medical data display** with formatted vital signs
-- **Interactive shell commands** for device control and testing
-- **Comprehensive system logging** with multiple log levels
-- **Hardware information** display including device ID and reset cause
-
-### Medical Data Simulation
-
-Realistic medical sensor simulation with:
-- **Heart Rate**: 60-100 BPM with natural variation
-- **Body Temperature**: 36.0-37.5°C with thermal regulation patterns  
-- **Motion Activity**: 0-5g with activity burst simulation
-- **Blood Oxygen**: 95-100% with breathing pattern variation
-
-## Build Commands
-
-| Command | Description | Use Case |
-|---------|-------------|----------|
-| `make build` | Build for nRF52840 hardware (default) | Primary development target |
-| `make build-hw` | Build for nRF52840 hardware | Explicit hardware build |
-| `make build-qemu` | Build for QEMU emulation | Algorithm development and testing |
-| `make flash` | Flash to nRF52840DK | Hardware deployment |
-| `make dev-hw` | Build and flash in one step | Rapid hardware development |
-| `make dev-qemu` | Build and run QEMU in one step | Rapid emulation testing |
-
-## Project Structure
-
-```
-├── app/
-│ ├── src/
-│ │   ├── main.c              # Application entry point with hardware integration
-│ │   ├── hardware.c/.h       # Hardware abstraction layer (LEDs, USB, GPIO)
-│ │   ├── shell_commands.c/.h # Interactive console commands
-│ │   ├── system.c/.h         # Core system management
-│ │   ├── thread_manager.c/.h # Thread orchestration
-│ │   ├── medical_device.c/.h # Medical device simulation
-│ │   ├── diagnostics.c/.h    # Logging and diagnostics
-│ │   └── safe_*.c/.h         # Safe data structures
-│ ├── CMakeLists.txt          # Build configuration
-│ ├── prj.conf                # Zephyr project configuration with USB/GPIO support
-│ ├── west.yml                # Dependency manifest
-│ └── *.overlay               # Hardware-specific device tree overlays
-├── docs/                     # Research and development documentation  
-├── HARDWARE_SETUP.md         # Comprehensive hardware setup guide
-├── build/                    # Build artifacts (generated)
-├── deps/                     # Zephyr dependencies (generated)
-└── Makefile                  # Build automation with hardware focus
-```
-
-## Interactive Shell Commands
-
-Once connected to the USB console:
-
-```bash
-# System information
-uart:~$ sysinfo
-
-# LED control and testing
-uart:~$ led test heartbeat    # Test heartbeat pattern on all LEDs
-uart:~$ led test breathing    # Test breathing pattern
-uart:~$ led test sos          # Test SOS emergency pattern
-
-# Medical device control  
-uart:~$ medical pulse 85      # Set heartbeat LED to 85 BPM
-
-# Built-in Zephyr commands
-uart:~$ kernel threads        # Show running threads
-uart:~$ device list           # Show available devices
-uart:~$ hwinfo devid         # Show hardware device ID
-```
-
-## Dependencies
-
-### System Requirements
-- Linux, macOS, or Windows development environment
-- [uv](https://docs.astral.sh/uv/) Python package manager
-- USB connection for hardware deployment and console access
-- nRF52840 Development Kit for hardware testing
-
-### Zephyr Modules
-- **cmsis**: ARM CMSIS headers for Cortex-M4 support
-- **hal_nordic**: Nordic hardware abstraction layer
-- **nrfx**: Nordic peripheral drivers (GPIO, USB, etc.)
-- **segger**: J-Link RTT debugging support
-
-## Hardware Configuration
-
-### nRF52840 Development Kit
-- **Board**: nRF52840 Development Kit (nrf52840dk_nrf52840)
-- **SoC**: nRF52840 (ARM Cortex-M4F @ 64MHz)  
-- **Memory**: 1MB Flash, 256KB RAM
-- **Connectivity**: Bluetooth 5.0, IEEE 802.15.4, USB 2.0
-- **LEDs**: 4x user-controllable LEDs for status indication
-- **Console**: USB CDC-ACM virtual COM port
-
-### Emulation Target
-- **Platform**: QEMU ARM Cortex-M3
-- **Limitations**: Basic CPU emulation, no Nordic-specific peripherals or LEDs
-- **Use case**: Algorithm development and testing without hardware
-
-## Development Workflow
-
-1. **Hardware Setup**: Connect nRF52840DK via USB-C cable
-2. **Environment Setup**: Run `make init` for complete toolchain installation
-3. **Development**: Modify application source in `app/src/`
-4. **Hardware Testing**: Use `make dev-hw` for build and flash
-5. **Console Monitoring**: Connect to USB console for real-time feedback
-6. **LED Verification**: Observe LED patterns for system status
-7. **Interactive Testing**: Use shell commands for device control
-8. **Documentation**: Update research notes in `./docs`
-
-## Expected Output
-
-### Hardware Startup Sequence
-1. **LED Animation**: All LEDs flash in sequence during initialization
-2. **USB Enumeration**: Virtual COM port becomes available
-3. **System Ready**: All LEDs briefly blink together
-4. **Normal Operation**: LEDs settle into assigned patterns:
-   - LED1: Breathing (system healthy)
-   - LED2: Heartbeat (medical pulse)
-   - LED3: Communication activity  
-   - LED4: Error indication (off = no errors)
-
-### Console Output Example
-```
-=== NISC Medical Wearable Device Starting ===
-Firmware Version: 1.0.0
-Device Model: NMW-nRF52840
-Target Platform: nRF52840 Development Kit
-
-Hardware Info:
-  Device ID: deadbeef-12345678
-  Reset Cause: 0x00000001  
-  USB Console: Ready
-  LEDs: Initialized
-
-=== System Ready - All LEDs Active ===
-
-MEDICAL DATA PULSE #1 [Time: 15.234 s]
-+-----------------------------------------+
-| HEART RATE:   72 bpm   [Quality: 89%] |
-| TEMPERATURE:  36.8°C    [Quality: 94%] |
-| MOTION:       0.3 g     [Quality: 97%] |
-| BLOOD O2:     98.2%     [Quality: 99%] |
-+-----------------------------------------+
-
-uart:~$ sysinfo
-=== NISC Medical Wearable System Information ===
-Hardware:
-  Device ID: deadbeef-12345678
-  Reset Cause: 0x00000001
-  USB Console: Ready
-  LEDs: Initialized
-System:
-  Uptime: 15234 ms
-  Total Errors: 0
-  Current State: 2
-```
-
-## Maintenance and Debugging
-
-### Environment Verification
-```bash
-make check-env    # Validate development environment
-make info         # Display configuration details  
-```
-
-### Dependency Updates
-```bash
-make deps-update  # Update Zephyr dependencies
-make clean-all    # Full environment reset
-```
-
-### Hardware Troubleshooting
-- **No LEDs**: Check power and firmware flash
-- **No console**: Verify USB cable and COM port settings (115200 baud)
-- **Build errors**: Ensure nRF SDK is properly installed
-
-## Advanced Features
-
-### LED Pattern Customization
-The hardware abstraction layer supports custom LED patterns for:
-- Medical pulse synchronization
-- Communication protocol indication  
-- Error severity visualization
-- System status breathing patterns
-
-### Medical Data Integration
-- Real-time sensor data simulation with clinical accuracy
-- Configurable alert thresholds with visual/audio feedback
-- Data logging and transmission simulation
-- Regulatory compliance framework for medical devices
-
-## Safety and Compliance
-
-⚠️ **Medical Device Warning**: This is a development platform for research purposes only. Do not use for actual medical monitoring without proper validation, testing, and regulatory approval.
-
-- **Development Use Only**: Not intended for clinical or patient use
-- **Regulatory Compliance**: Ensure compliance with medical device regulations
-- **Safety Testing**: Comprehensive safety testing required for medical applications
-- **Power Safety**: Use only USB power during development
-
-## Documentation
-
-- **[HARDWARE_SETUP.md](HARDWARE_SETUP.md)**: Detailed hardware setup and troubleshooting guide
-- **[docs/](docs/)**: Research documentation and technical specifications  
-- **Source Documentation**: Comprehensive Doxygen-style documentation in source files
-
-For hardware-specific setup instructions, LED pattern details, console commands, and troubleshooting, see the **[Hardware Setup Guide](HARDWARE_SETUP.md)**.

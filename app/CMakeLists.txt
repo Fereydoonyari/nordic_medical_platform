@@ -17,9 +17,5 @@ target_sources(app PRIVATE
     src/config.c
     src/hardware.c
     src/shell_commands.c
-    src/bootloader.c
-    src/bluetooth_dfu.c
-    src/serial_comm.c
-    src/button_handler.c
 )
 
