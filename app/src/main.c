@@ -29,6 +29,10 @@
 #include "config.h"
 #include "hardware.h"
 #include "shell_commands.h"
+#include "bootloader.h"
+#include "bluetooth_dfu.h"
+#include "serial_comm.h"
+#include "button_handler.h"
 
 /*============================================================================*/
 /* Application Timing Configuration                                           */
@@ -169,12 +173,15 @@ static void init_sensor_readings(void)
  * @details Initializes all system components, creates application threads,
  * and enters the main system monitoring loop. Follows medical device
  * software initialization patterns for safety and reliability.
+ * Includes DFU bootloader functionality and button press detection.
  * 
  * @note This function does not return - it runs the main system loop indefinitely
  */
 void main(void) 
 {
     int ret;
+    boot_mode_t boot_mode;
+    serial_config_t serial_config;
 
     printk("\n=== NISC Medical Wearable Device Starting ===\n");
     printk("Firmware Version: %s\n", APP_VERSION_STRING);
@@ -182,7 +189,98 @@ void main(void)
     printk("Target Platform: nRF52840 Development Kit\n");
     printk("Build Time: %s %s\n", __DATE__, __TIME__);
 
-    /* Initialize hardware abstraction layer first */
+    /* Initialize bootloader first */
+    printk("Initializing bootloader...\n");
+    ret = bootloader_init();
+    if (ret != 0) {
+        printk("FATAL: Bootloader initialization failed (error: %d)\n", ret);
+        return;
+    }
+
+    /* Initialize button handler for boot mode detection */
+    printk("Initializing button handler...\n");
+    ret = button_handler_init();
+    if (ret != 0) {
+        printk("WARNING: Button handler initialization failed (error: %d)\n", ret);
+    }
+
+    /* Initialize serial communication */
+    printk("Initializing serial communication...\n");
+    serial_config.mode = SERIAL_MODE_USB_CDC;
+    serial_config.baud_rate = 115200;
+    serial_config.flow_control = false;
+    ret = serial_comm_init(&serial_config);
+    if (ret != 0) {
+        printk("WARNING: Serial communication initialization failed (error: %d)\n", ret);
+    }
+
+    /* Check boot mode */
+    printk("Checking boot mode...\n");
+    boot_mode = bootloader_check_boot_mode();
+    
+    switch (boot_mode) {
+        case BOOT_MODE_DFU:
+            printk("DFU mode requested - entering DFU mode\n");
+            serial_comm_printf("DFU Mode: Waiting for firmware update...\n");
+            
+            /* Initialize Bluetooth DFU service */
+            ret = bluetooth_dfu_init();
+            if (ret == 0) {
+                ret = bluetooth_dfu_start_advertising();
+                if (ret == 0) {
+                    printk("DFU mode active - Bluetooth advertising started\n");
+                    serial_comm_printf("DFU Mode: Bluetooth advertising active\n");
+                    
+                    /* Stay in DFU mode indefinitely */
+                    while (1) {
+                        k_sleep(K_SECONDS(1));
+                        /* Check for button press to exit DFU mode */
+                        button_event_t event = button_handler_check_event();
+                        if (event == BUTTON_EVENT_SHORT_PRESS) {
+                            printk("Button pressed - exiting DFU mode\n");
+                            serial_comm_printf("DFU Mode: Exiting DFU mode\n");
+                            break;
+                        }
+                    }
+                    
+                    bluetooth_dfu_stop_advertising();
+                }
+            }
+            break;
+            
+        case BOOT_MODE_RECOVERY:
+            printk("Recovery mode requested\n");
+            serial_comm_printf("Recovery Mode: System recovery in progress...\n");
+            /* TODO: Implement recovery procedures */
+            break;
+            
+        case BOOT_MODE_FACTORY_RESET:
+            printk("Factory reset mode requested\n");
+            serial_comm_printf("Factory Reset: Resetting to factory defaults...\n");
+            /* TODO: Implement factory reset procedures */
+            break;
+            
+        case BOOT_MODE_NORMAL:
+        default:
+            printk("Normal boot mode - starting application\n");
+            serial_comm_printf("Normal Mode: Starting medical device application...\n");
+            break;
+    }
+
+    /* Wait for button press before starting main application */
+    printk("Waiting for button press to start main application...\n");
+    serial_comm_printf("Press button to start main application...\n");
+    
+    bool button_pressed = button_handler_wait_for_press(10000); /* 10 second timeout */
+    if (button_pressed) {
+        printk("Button pressed - starting main application\n");
+        serial_comm_printf("Button pressed - starting main application\n");
+    } else {
+        printk("Timeout - starting main application anyway\n");
+        serial_comm_printf("Timeout - starting main application\n");
+    }
+
+    /* Initialize hardware abstraction layer */
     printk("Initializing hardware abstraction layer...\n");
     ret = hw_init();
     if (ret != SUCCESS) {
