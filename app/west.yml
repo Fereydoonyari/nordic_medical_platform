@@ -19,6 +19,7 @@ manifest:
           - nrfx         # Nordic drivers (essential)
           - cmsis
           - segger
+          - tinycrypt    # Required for BLE crypto (ECC) in Zephyr
   self:
     path: app
 
