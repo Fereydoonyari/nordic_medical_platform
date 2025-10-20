@@ -19,3 +19,8 @@ target_sources(app PRIVATE
     src/shell_commands.c
 )
 
+# Register shell commands
+zephyr_library_sources_ifdef(CONFIG_SHELL
+    src/shell_commands.c
+)
+

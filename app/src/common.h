@@ -121,6 +121,7 @@
  */
 
 /** @brief Mark unused parameter to avoid compiler warnings */
+#define ARG_UNUSED(x)        ((void)(x))
 #define UNUSED(x)            ARG_UNUSED(x)
 
 /** @} */ /* End of UtilityMacros group */

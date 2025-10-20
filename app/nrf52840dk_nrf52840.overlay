@@ -1,0 +1,150 @@
+/*
+ * Device Tree Overlay for nRF52840DK DFU and Bluetooth Configuration
+ * 
+ * This overlay configures:
+ * - DFU boot process with button support
+ * - Bluetooth Low Energy advertising
+ * - Serial communication for Bluetooth module
+ * - GPIO interrupts for button detection
+ */
+
+/ {
+    chosen {
+        zephyr,console = &uart0;
+        zephyr,shell-uart = &uart0;
+        zephyr,uart-mcumgr = &uart0;
+    };
+
+    /* DFU Boot Configuration */
+    dfu-boot {
+        compatible = "nisc,dfu-boot";
+        button-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
+        led-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>,  /* LED1 - Status */
+                   <&gpio0 14 GPIO_ACTIVE_LOW>,  /* LED2 - Heartbeat */
+                   <&gpio0 15 GPIO_ACTIVE_LOW>,  /* LED3 - Communication */
+                   <&gpio0 16 GPIO_ACTIVE_LOW>;  /* LED4 - Error */
+        timeout-ms = <10000>;
+    };
+
+    /* Bluetooth Module Configuration */
+    bluetooth-module {
+        compatible = "nisc,bluetooth-module";
+        uart = <&uart1>;
+        enable-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+        device-name = "NISC-Medical-Device";
+        advertising-interval-ms = <100>;
+    };
+
+    /* Medical Device Configuration */
+    medical-device {
+        compatible = "nisc,medical-device";
+        device-model = "NMW-nRF52840";
+        firmware-version = "1.0.0";
+        manufacturer = "NISC Medical Devices";
+        
+        sensors {
+            heart-rate {
+                compatible = "nisc,heart-rate-sensor";
+                sampling-rate-hz = <100>;
+                range-min = <60>;
+                range-max = <200>;
+            };
+            
+            temperature {
+                compatible = "nisc,temperature-sensor";
+                sampling-rate-hz = <10>;
+                range-min = <360>;  /* 36.0°C * 10 */
+                range-max = <375>;  /* 37.5°C * 10 */
+            };
+            
+            motion {
+                compatible = "nisc,motion-sensor";
+                sampling-rate-hz = <50>;
+                range-min = <0>;
+                range-max = <50>;   /* 5.0g * 10 */
+            };
+            
+            blood-oxygen {
+                compatible = "nisc,blood-oxygen-sensor";
+                sampling-rate-hz = <20>;
+                range-min = <950>;  /* 95.0% * 10 */
+                range-max = <1000>; /* 100.0% * 10 */
+            };
+        };
+    };
+};
+
+/* UART1 Configuration for Bluetooth Module */
+&uart1 {
+    status = "okay";
+    current-speed = <115200>;
+    pinctrl-0 = <&uart1_default>;
+    pinctrl-names = "default";
+};
+
+/* GPIO Configuration */
+&gpio0 {
+    status = "okay";
+};
+
+/* Pin Control Configuration */
+&pinctrl {
+    uart1_default: uart1_default {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 0, 8)>,
+                    <NRF_PSEL(UART_RX, 0, 6)>;
+        };
+    };
+    
+    uart1_sleep: uart1_sleep {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 0, 8)>,
+                    <NRF_PSEL(UART_RX, 0, 6)>;
+            low-power-enable;
+        };
+    };
+};
+
+/* Bluetooth Configuration */
+&bt {
+    status = "okay";
+};
+
+/* Flash Configuration for DFU */
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x00000000 0x0000C000>;
+        };
+        
+        slot0_partition: partition@c000 {
+            label = "image-0";
+            reg = <0x0000C000 0x00076000>;
+        };
+        
+        slot1_partition: partition@82000 {
+            label = "image-1";
+            reg = <0x00082000 0x00076000>;
+        };
+        
+        scratch_partition: partition@f8000 {
+            label = "image-scratch";
+            reg = <0x000f8000 0x00008000>;
+        };
+    };
+};
+
+/* USB Configuration */
+&usbd {
+    status = "okay";
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
+        label = "CDC_ACM_0";
+    };
+};

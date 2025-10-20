@@ -134,3 +134,15 @@ void system_shutdown(void)
 
     DIAG_INFO(DIAG_CAT_SYSTEM, "System shutdown complete");
 }
+
+void system_clear_errors(void)
+{
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Clearing system error counters");
+    
+    k_mutex_lock(&system_mutex, K_FOREVER);
+    system_stats.total_errors = 0;
+    system_stats.current_state = SYSTEM_STATE_NORMAL;
+    k_mutex_unlock(&system_mutex);
+    
+    DIAG_INFO(DIAG_CAT_SYSTEM, "System error counters cleared");
+}

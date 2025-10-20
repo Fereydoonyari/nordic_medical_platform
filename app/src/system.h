@@ -169,6 +169,15 @@ int system_get_stats(system_stats_t *stats);
 void system_handle_error(int error_code, const char *context);
 
 /**
+ * @brief Clear system error counters
+ * @details Resets all error counters and diagnostic data to initial state.
+ * This function is useful for testing and maintenance operations.
+ * 
+ * @note This function is thread-safe and can be called from any context
+ */
+void system_clear_errors(void);
+
+/**
  * @brief Initiate controlled system shutdown
  * @details Performs orderly system shutdown including configuration saving,
  * diagnostic data preservation, and clean resource deallocation. This function

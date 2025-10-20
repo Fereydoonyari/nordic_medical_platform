@@ -45,6 +45,15 @@ make build      # Build for hardware (default)
 make flash      # Flash to connected nRF52840DK
 ```
 
+### DFU Boot Process
+
+The device now includes a DFU (Device Firmware Update) boot process:
+
+1. **Boot Sequence**: Device checks for button press during startup
+2. **DFU Mode**: If button is pressed, device enters DFU mode for firmware updates
+3. **Button Wait**: Device waits for button press before starting normal operation
+4. **Bluetooth Advertising**: Device starts Bluetooth Low Energy advertising automatically
+
 ### Console Connection
 
 Connect to USB console to see real-time medical data and use interactive commands:
@@ -135,15 +144,40 @@ Once connected to the USB console:
 
 ```bash
 # System information
-uart:~$ sysinfo
+uart:~$ sysinfo               # Complete system information
+uart:~$ hwinfo               # Hardware information
+uart:~$ threadinfo           # Thread status
 
 # LED control and testing
 uart:~$ led test heartbeat    # Test heartbeat pattern on all LEDs
 uart:~$ led test breathing    # Test breathing pattern
 uart:~$ led test sos          # Test SOS emergency pattern
+uart:~$ led set 0 on          # Turn on LED 0 (Status)
+uart:~$ led pattern 1 heartbeat # Set LED 1 to heartbeat pattern
 
 # Medical device control  
 uart:~$ medical pulse 85      # Set heartbeat LED to 85 BPM
+uart:~$ medical test          # Run medical device self-test
+uart:~$ medical status        # Show current medical data
+
+# DFU Boot control
+uart:~$ dfu status            # Show DFU status
+uart:~$ dfu enter            # Enter DFU boot mode
+uart:~$ dfu exit             # Exit DFU boot mode
+uart:~$ dfu wait 5000        # Wait 5 seconds for button press
+
+# Bluetooth control
+uart:~$ bt status            # Show Bluetooth status
+uart:~$ bt start             # Start Bluetooth advertising
+uart:~$ bt stop              # Stop Bluetooth advertising
+uart:~$ bt setname MyDevice  # Set device name
+uart:~$ bt send "Hello"      # Send data via serial Bluetooth
+
+# Diagnostic control
+uart:~$ diag status          # Show diagnostic status
+uart:~$ diag test            # Run diagnostic tests
+uart:~$ diag clear           # Clear error counters
+uart:~$ diag log 3           # Set log level to Info
 
 # Built-in Zephyr commands
 uart:~$ kernel threads        # Show running threads
@@ -195,12 +229,15 @@ uart:~$ hwinfo devid         # Show hardware device ID
 
 ### Hardware Startup Sequence
 1. **LED Animation**: All LEDs flash in sequence during initialization
-2. **USB Enumeration**: Virtual COM port becomes available
-3. **System Ready**: All LEDs briefly blink together
-4. **Normal Operation**: LEDs settle into assigned patterns:
+2. **DFU Check**: Device checks for button press to enter DFU mode
+3. **Button Wait**: Device waits for button press before starting normal operation
+4. **USB Enumeration**: Virtual COM port becomes available
+5. **Bluetooth Advertising**: BLE advertising starts automatically
+6. **System Ready**: All LEDs briefly blink together
+7. **Normal Operation**: LEDs settle into assigned patterns:
    - LED1: Breathing (system healthy)
    - LED2: Heartbeat (medical pulse)
-   - LED3: Communication activity  
+   - LED3: Communication activity (Bluetooth advertising)
    - LED4: Error indication (off = no errors)
 
 ### Console Output Example
@@ -210,11 +247,20 @@ Firmware Version: 1.0.0
 Device Model: NMW-nRF52840
 Target Platform: nRF52840 Development Kit
 
+Initializing hardware abstraction layer...
+Initializing DFU boot process...
+Waiting for button press to start normal operation...
+Button pressed - starting normal operation
+
 Hardware Info:
   Device ID: deadbeef-12345678
   Reset Cause: 0x00000001  
   USB Console: Ready
   LEDs: Initialized
+
+Initializing Bluetooth advertising...
+Bluetooth advertising started - Device discoverable
+Serial Bluetooth communication ready
 
 === System Ready - All LEDs Active ===
 
@@ -225,6 +271,15 @@ MEDICAL DATA PULSE #1 [Time: 15.234 s]
 | MOTION:       0.3 g     [Quality: 97%] |
 | BLOOD O2:     98.2%     [Quality: 99%] |
 +-----------------------------------------+
+
+TRANSMITTING MEDICAL DATA PACKET #1
++--- Current Patient Vitals Summary ---+
+| HR:  72 bpm  | Temp: 36.8°C         |
+| Motion: 0.3g | SpO2: 98.2%         |
++-------------------------------------+
+Via: Bluetooth Low Energy (BLE) - Advertising Active
+Device Name: NISC-Medical-Device
+Data packet transmitted successfully
 
 uart:~$ sysinfo
 === NISC Medical Wearable System Information ===
@@ -237,6 +292,24 @@ System:
   Uptime: 15234 ms
   Total Errors: 0
   Current State: 2
+
+uart:~$ bt status
+=== Bluetooth Status ===
+Bluetooth:
+  Status: Initialized
+  Advertising: Active
+  Device Name: NISC-Medical-Device
+  Serial Interface: Ready
+========================
+
+uart:~$ dfu status
+=== DFU Boot Status ===
+DFU Boot:
+  Initialized: Yes
+  Boot Requested: No
+  Button Press Count: 1
+  Button State: Released
+========================
 ```
 
 ## Maintenance and Debugging

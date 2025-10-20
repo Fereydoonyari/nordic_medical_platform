@@ -17,6 +17,7 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/sys/printk.h>
+#include <stdio.h>
 
 /* Include our modular components */
 #include "common.h"
@@ -169,6 +170,7 @@ static void init_sensor_readings(void)
  * @details Initializes all system components, creates application threads,
  * and enters the main system monitoring loop. Follows medical device
  * software initialization patterns for safety and reliability.
+ * Includes DFU boot process with button press wait and Bluetooth advertising.
  * 
  * @note This function does not return - it runs the main system loop indefinitely
  */
@@ -185,15 +187,53 @@ void main(void)
     /* Initialize hardware abstraction layer first */
     printk("Initializing hardware abstraction layer...\n");
     ret = hw_init();
-    if (ret != SUCCESS) {
+    if (ret != HW_OK) {
         printk("FATAL: Hardware initialization failed (error: %d)\n", ret);
         hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SOS);
         return;
     }
 
+    /* Initialize DFU boot process */
+    printk("Initializing DFU boot process...\n");
+    ret = hw_dfu_init();
+    if (ret != HW_OK) {
+        printk("WARNING: DFU initialization failed (error: %d)\n", ret);
+    }
+
+    /* Check if DFU boot is requested */
+    if (hw_dfu_boot_requested()) {
+        printk("DFU boot requested - entering DFU mode\n");
+        ret = hw_dfu_enter_boot_mode();
+        if (ret == HW_OK) {
+            /* Wait for button press to exit DFU mode */
+            printk("Waiting for button press to exit DFU mode...\n");
+            while (hw_dfu_boot_requested()) {
+                if (hw_button_is_pressed()) {
+                    printk("Button pressed - exiting DFU mode\n");
+                    hw_dfu_exit_boot_mode();
+                    break;
+                }
+                k_sleep(K_MSEC(100));
+            }
+        }
+    }
+
+    /* Wait for button press before starting normal operation */
+    printk("Waiting for button press to start normal operation...\n");
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
+    
+    bool button_pressed = hw_button_wait_press(10000); /* 10 second timeout */
+    if (button_pressed) {
+        printk("Button pressed - starting normal operation\n");
+    } else {
+        printk("Timeout - starting normal operation automatically\n");
+    }
+    
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
+
     /* Show hardware information */
     hw_info_t hw_info;
-    if (hw_get_info(&hw_info) == SUCCESS) {
+    if (hw_get_info(&hw_info) == HW_OK) {
         printk("Hardware Info:\n");
         printk("  Device ID: %02x%02x%02x%02x-%02x%02x%02x%02x\n",
                hw_info.device_id[0], hw_info.device_id[1], 
@@ -247,8 +287,33 @@ void main(void)
 
     /* Initialize shell commands for USB console */
     ret = shell_commands_init();
-    if (ret != SUCCESS) {
+    if (ret != SHELL_OK) {
         DIAG_WARNING(DIAG_CAT_SYSTEM, "Shell commands initialization failed");
+    }
+
+    /* Initialize Bluetooth advertising */
+    printk("Initializing Bluetooth advertising...\n");
+    ret = hw_ble_advertising_init();
+    if (ret != HW_OK) {
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "Bluetooth advertising initialization failed: %d", ret);
+    } else {
+        /* Start Bluetooth advertising */
+        ret = hw_ble_advertising_start();
+        if (ret == HW_OK) {
+            printk("Bluetooth advertising started - Device discoverable\n");
+            DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising active");
+        } else {
+            DIAG_WARNING(DIAG_CAT_SYSTEM, "Failed to start Bluetooth advertising: %d", ret);
+        }
+    }
+
+    /* Initialize serial Bluetooth communication */
+    ret = hw_serial_bt_init();
+    if (ret != HW_OK) {
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "Serial Bluetooth initialization failed: %d", ret);
+    } else {
+        printk("Serial Bluetooth communication ready\n");
+        DIAG_INFO(DIAG_CAT_SYSTEM, "Serial Bluetooth interface initialized");
     }
 
     DIAG_INFO(DIAG_CAT_SYSTEM, "All subsystems initialized successfully");
@@ -546,11 +611,22 @@ void communication_thread(void *arg1, void *arg2, void *arg3)
                simple_sensor_values[3] / 10, simple_sensor_values[3] % 10);
         printk("+-------------------------------------+\n");
         
+        /* Send medical data via serial Bluetooth */
+        char bt_data[64];
+        snprintf(bt_data, sizeof(bt_data), "HR:%d,T:%d.%d,M:%d.%d,SpO2:%d.%d",
+                simple_sensor_values[0],
+                simple_sensor_values[1] / 10, simple_sensor_values[1] % 10,
+                simple_sensor_values[2] / 10, simple_sensor_values[2] % 10,
+                simple_sensor_values[3] / 10, simple_sensor_values[3] % 10);
+        
+        hw_serial_bt_send((const uint8_t *)bt_data, strlen(bt_data));
+        
         /* Show transmission protocol with LED indication */
         uint32_t protocol = transmission_count % 3U;
         switch (protocol) {
             case 0U:
-                printk("Via: Bluetooth Low Energy (BLE)\n");
+                printk("Via: Bluetooth Low Energy (BLE) - Advertising Active\n");
+                printk("Device Name: NISC-Medical-Device\n");
                 /* Quick blue-like flash pattern */
                 for (int i = 0; i < 3; i++) {
                     hw_led_set_state(HW_LED_COMMUNICATION, true);
@@ -560,15 +636,17 @@ void communication_thread(void *arg1, void *arg2, void *arg3)
                 }
                 break;
             case 1U:
-                printk("Via: WiFi Connection\n");
-                /* Longer on pattern for WiFi */
+                printk("Via: Serial Bluetooth Module\n");
+                printk("Data: %s\n", bt_data);
+                /* Longer on pattern for serial */
                 hw_led_set_state(HW_LED_COMMUNICATION, true);
                 k_sleep(K_MSEC(500));
                 hw_led_set_state(HW_LED_COMMUNICATION, false);
                 break;
             case 2U:
-                printk("Via: Cloud Health Platform\n");
-                /* Double blink for cloud */
+                printk("Via: USB Console Interface\n");
+                printk("Console: Ready for shell commands\n");
+                /* Double blink for console */
                 hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_DOUBLE_BLINK);
                 k_sleep(K_MSEC(1000));
                 break;
