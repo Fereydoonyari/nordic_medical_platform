@@ -106,10 +106,6 @@
     };
 };
 
-/* Bluetooth Configuration */
-&bt {
-    status = "okay";
-};
 
 /* Flash Configuration for DFU */
 &flash0 {
