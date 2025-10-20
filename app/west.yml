@@ -15,11 +15,14 @@ manifest:
       import:
         path-prefix: deps
         name-allowlist:
+          - cmsis
           - hal_nordic   # Nordic HAL (essential for nRF52840)
           - nrfx         # Nordic drivers (essential)
-          - cmsis
           - segger
-          - tinycrypt    # Required for BLE crypto (ECC) in Zephyr
+    - name: tinycrypt
+      repo-path: tinycrypt
+      revision: v0.2.8
+      path: deps/tinycrypt
+          
   self:
     path: app
-

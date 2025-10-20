@@ -48,7 +48,7 @@ static volatile uint32_t dropped_messages = 0U;
 
 /** @brief Category name lookup table */
 static const char *category_names[DIAG_CAT_MAX] = {
-    "SYS", "SNS", "COM", "PWR", "SAF", "PRF"
+    "SYS", "SNS", "COM", "PWR", "SAF", "PRF", "HW"
 };
 
 /** @brief Log level name lookup table */

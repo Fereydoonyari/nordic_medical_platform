@@ -73,9 +73,9 @@ typedef enum {
     DIAG_CAT_POWER,               /**< Power management and battery monitoring */
     DIAG_CAT_SAFETY,              /**< Safety-critical operations and alerts */
     DIAG_CAT_PERFORMANCE,         /**< Performance monitoring and optimization */
+    DIAG_CAT_HARDWARE,            /**< Hardware operations and GPIO control */
     DIAG_CAT_MAX                  /**< Maximum category value for bounds checking */
 } diag_category_t;
-
 /** @} */ /* End of DiagCategories group */
 
 /*============================================================================*/
