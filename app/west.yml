@@ -19,10 +19,7 @@ manifest:
           - hal_nordic   # Nordic HAL (essential for nRF52840)
           - nrfx         # Nordic drivers (essential)
           - segger
-    - name: tinycrypt
-      repo-path: tinycrypt
-      revision: v0.2.8
-      path: deps/tinycrypt
-          
+          - tinycrypt    # Required for Bluetooth crypto
+  
   self:
     path: app
