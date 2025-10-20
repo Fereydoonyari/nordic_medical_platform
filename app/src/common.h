@@ -121,7 +121,10 @@
  */
 
 /** @brief Mark unused parameter to avoid compiler warnings */
-#define ARG_UNUSED(x)        ((void)(x))
+/* Use Zephyr's built-in ARG_UNUSED from toolchain headers */
+#ifndef ARG_UNUSED
+#define ARG_UNUSED(x) (void)(x)
+#endif
 #define UNUSED(x)            ARG_UNUSED(x)
 
 /** @} */ /* End of UtilityMacros group */

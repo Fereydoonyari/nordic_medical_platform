@@ -18,7 +18,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
-#include <zephyr/hwinfo.h>
+#include <zephyr/drivers/hwinfo.h>
 #include <stdint.h>
 #include <stdbool.h>
 
