@@ -817,7 +817,7 @@ static void print_medical_status(const struct shell *shell)
     shell_print(shell, "  Heart Rate: 72 bpm (simulated)\n");
     shell_print(shell, "  Temperature: 36.6°C (simulated)\n");
     shell_print(shell, "  Motion: 0.2g (simulated)\n");
-    shell_print(shell, "  Blood Oxygen: 98.0% (simulated)\n");
+    shell_print(shell, "  Blood Oxygen: 98.0%% (simulated)");
     shell_print(shell, "  Device Status: Normal\n");
 }
 

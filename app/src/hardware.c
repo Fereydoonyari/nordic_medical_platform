@@ -127,7 +127,7 @@ int hw_init(void)
     /* Initialize GPIO subsystem */
     ret = init_gpio();
     if (ret != HW_OK) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "GPIO initialization failed: %d", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "GPIO initialization failed: %d", ret);
         return ret;
     }
 
@@ -367,7 +367,7 @@ int hw_button_init(void)
     gpio_init_callback(&button_state.callback, button_callback, BIT(HW_BUTTON_PIN));
     ret = gpio_add_callback(gpio_dev, &button_state.callback);
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to add button callback: %d", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to add button callback: %d", ret);
         return HW_ERROR_GPIO;
     }
 
@@ -411,7 +411,7 @@ bool hw_button_wait_press(uint32_t timeout_ms)
 
     while (k_uptime_get_32() < timeout_time) {
         if (hw_button_is_pressed()) {
-            DIAG_INFO(DIAG_CAT_HARDWARE, "Button press detected");
+            DIAG_INFO(DIAG_CAT_SYSTEM, "Button press detected");
             return true;
         }
         k_sleep(K_MSEC(10));
