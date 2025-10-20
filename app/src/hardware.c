@@ -122,7 +122,7 @@ int hw_init(void)
         return HW_OK;
     }
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Initializing hardware abstraction layer");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Initializing hardware abstraction layer");
 
     /* Initialize GPIO subsystem */
     ret = init_gpio();
@@ -226,7 +226,7 @@ int hw_led_set_state(uint32_t led_id, bool state)
 
     int ret = gpio_pin_set(gpio_dev, led_pins[led_id], state ? 1 : 0);
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to set LED %u state: %d", led_id, ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to set LED %u state: %d", led_id, ret);
         return HW_ERROR_LED;
     }
 
@@ -307,7 +307,7 @@ int hw_led_test_patterns(hw_led_pattern_t pattern)
     if (pattern == HW_PULSE_PATTERN_MAX) {
         /* Test all patterns */
         for (hw_led_pattern_t p = HW_PULSE_OFF; p < HW_PULSE_PATTERN_MAX; p++) {
-            DIAG_INFO(DIAG_CAT_HARDWARE, "Testing LED pattern: %d", p);
+            DIAG_INFO(DIAG_CAT_SYSTEM, "Testing LED pattern: %d", p);
             
             /* Test on all LEDs */
             for (uint32_t led = 0; led < HW_LED_COUNT; led++) {
@@ -354,7 +354,7 @@ int hw_button_init(void)
     int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
                                 GPIO_INPUT | GPIO_PULL_UP | GPIO_INT_EDGE_TO_ACTIVE);
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to configure button pin: %d", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
         return HW_ERROR_GPIO;
     }
 
@@ -407,7 +407,7 @@ bool hw_button_wait_press(uint32_t timeout_ms)
     uint32_t start_time = k_uptime_get_32();
     uint32_t timeout_time = start_time + timeout_ms;
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Waiting for button press (timeout: %u ms)", timeout_ms);
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Waiting for button press (timeout: %u ms)", timeout_ms);
 
     while (k_uptime_get_32() < timeout_time) {
         if (hw_button_is_pressed()) {
@@ -446,7 +446,7 @@ int hw_dfu_init(void)
     dfu_state.boot_requested = false;
     dfu_state.in_boot_mode = false;
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "DFU boot process initialized");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "DFU boot process initialized");
     return HW_OK;
 }
 
@@ -462,7 +462,7 @@ bool hw_dfu_boot_requested(void)
     /* Check if button is pressed during boot */
     if (hw_button_is_pressed()) {
         dfu_state.boot_requested = true;
-        DIAG_INFO(DIAG_CAT_HARDWARE, "DFU boot requested via button press");
+        DIAG_INFO(DIAG_CAT_SYSTEM, "DFU boot requested via button press");
     }
 
     return dfu_state.boot_requested;
@@ -484,7 +484,7 @@ int hw_dfu_enter_boot_mode(void)
     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_FAST_BLINK);
     hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SOS);
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Entered DFU boot mode");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Entered DFU boot mode");
     printk("=== DFU BOOT MODE ACTIVATED ===\n");
     printk("Waiting for firmware update...\n");
     printk("Press button to exit DFU mode\n");
@@ -508,7 +508,7 @@ int hw_dfu_exit_boot_mode(void)
     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_BREATHING);
     hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Exited DFU boot mode");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Exited DFU boot mode");
     printk("=== DFU BOOT MODE DEACTIVATED ===\n");
 
     return HW_OK;
@@ -529,7 +529,7 @@ int hw_ble_advertising_init(void)
 
     int ret = bt_enable(NULL);
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "Bluetooth enable failed: %d", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth enable failed: %d", ret);
         return HW_ERROR_USB;
     }
 
@@ -550,7 +550,7 @@ int hw_ble_advertising_init(void)
     ble_state.initialized = true;
     ble_state.advertising = false;
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Bluetooth advertising initialized");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising initialized");
     return HW_OK;
 }
 
@@ -573,14 +573,14 @@ int hw_ble_advertising_start(void)
                                              BT_GAP_ADV_FAST_INT_MAX_2,
                                              NULL), ad, ARRAY_SIZE(ad), NULL, 0);
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "Bluetooth advertising start failed: %d", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising start failed: %d", ret);
         return HW_ERROR_USB;
     }
 
     ble_state.advertising = true;
     hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_SLOW_BLINK);
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Bluetooth advertising started");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising started");
     return HW_OK;
 }
 
@@ -595,14 +595,14 @@ int hw_ble_advertising_stop(void)
 
     int ret = bt_le_adv_stop();
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "Bluetooth advertising stop failed: %d", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising stop failed: %d", ret);
         return HW_ERROR_USB;
     }
 
     ble_state.advertising = false;
     hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_OFF);
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Bluetooth advertising stopped");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising stopped");
     return HW_OK;
 }
 
@@ -619,7 +619,7 @@ int hw_ble_set_advertising_data(const char *device_name, const void *medical_dat
     strncpy(ble_state.device_name, device_name, sizeof(ble_state.device_name) - 1);
     ble_state.device_name[sizeof(ble_state.device_name) - 1] = '\0';
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Bluetooth advertising data updated: %s", device_name);
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising data updated: %s", device_name);
     return HW_OK;
 }
 
@@ -634,11 +634,11 @@ int hw_serial_bt_init(void)
 
     /* UART is already initialized in init_uart_bt() */
     if (!uart_bt_dev) {
-        DIAG_WARNING(DIAG_CAT_HARDWARE, "UART Bluetooth device not available");
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "UART Bluetooth device not available");
         return HW_ERROR_USB;
     }
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Serial Bluetooth communication initialized");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Serial Bluetooth communication initialized");
     return HW_OK;
 }
 
@@ -699,11 +699,11 @@ static int init_gpio(void)
 {
     gpio_dev = DEVICE_DT_GET_OR_NULL(DT_NODELABEL(gpio0));
     if (!gpio_dev || !device_is_ready(gpio_dev)) {
-        DIAG_ERROR(DIAG_CAT_HARDWARE, "GPIO device not found");
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "GPIO device not found");
         return HW_ERROR_GPIO;
     }
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "GPIO subsystem initialized");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "GPIO subsystem initialized");
     return HW_OK;
 }
 
@@ -720,7 +720,7 @@ static int init_leds(void)
     for (uint32_t i = 0; i < HW_LED_COUNT; i++) {
         int ret = gpio_pin_configure(gpio_dev, led_pins[i], GPIO_OUTPUT_INACTIVE);
         if (ret != 0) {
-            DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to configure LED %u pin: %d", i, ret);
+            DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure LED %u pin: %d", i, ret);
             return HW_ERROR_LED;
         }
 
@@ -731,7 +731,7 @@ static int init_leds(void)
         led_states[i].state = false;
     }
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "LEDs initialized");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "LEDs initialized");
     return HW_OK;
 }
 
@@ -752,11 +752,11 @@ static int init_uart_bt(void)
     /* Try to get UART device - this might not be available on all boards */
     uart_bt_dev = DEVICE_DT_GET_OR_NULL(DT_NODELABEL(uart1));
     if (!uart_bt_dev || !device_is_ready(uart_bt_dev)) {
-        DIAG_WARNING(DIAG_CAT_HARDWARE, "UART Bluetooth device not found");
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "UART Bluetooth device not found");
         return HW_ERROR_USB;
     }
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "UART Bluetooth initialized");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "UART Bluetooth initialized");
     return HW_OK;
 }
 
@@ -789,7 +789,7 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
     button_state.press_count++;
     button_state.last_press_time = current_time;
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Button pressed (count: %u)", button_state.press_count);
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Button pressed (count: %u)", button_state.press_count);
 }
 
 /**
