@@ -350,36 +350,22 @@ int hw_button_init(void)
         return HW_ERROR_NOT_READY;
     }
 
-    /* Configure button pin as input with pull-up */
-    int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
-        GPIO_INPUT | GPIO_PULL_UP);  // Remove interrupt flag here
-
-    if (ret != 0) {
-    DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
-    return HW_ERROR_GPIO;
-    }
-
-    /* Initialize button state */
-    button_state.pressed = false;
-    button_state.press_count = 0;
-    button_state.last_press_time = 0;
-
     /* Set up button callback */
     gpio_init_callback(&button_state.callback, button_callback, BIT(HW_BUTTON_PIN));
-    ret = gpio_add_callback(gpio_dev, &button_state.callback);
+    int ret = gpio_add_callback(gpio_dev, &button_state.callback);
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to add button callback: %d", ret);
         return HW_ERROR_GPIO;
     }
 
     /* Enable button interrupt */
-    ret = gpio_pin_interrupt_configure(gpio_dev, HW_BUTTON_PIN, GPIO_INT_EDGE_TO_ACTIVE);
+    ret = gpio_pin_interrupt_configure(gpio_dev, HW_BUTTON_PIN, GPIO_INT_EDGE_BOTH);
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to enable button interrupt: %d", ret);
         return HW_ERROR_GPIO;
     }
 
-    DIAG_INFO(DIAG_CAT_HARDWARE, "Button initialized for DFU boot process");
+    DIAG_INFO(DIAG_CAT_HARDWARE, "Button interrupt configured");
     return HW_OK;
 }
 
@@ -535,18 +521,14 @@ int hw_ble_advertising_init(void)
     }
 
     /* Set device name */
-    strncpy(ble_state.device_name, "NISC-Medical-Device", sizeof(ble_state.device_name) - 1);
+    strncpy(ble_state.device_name, "NISC-Medical", sizeof(ble_state.device_name) - 1);
     ble_state.device_name[sizeof(ble_state.device_name) - 1] = '\0';
 
-    /* Set advertising data */
-    ble_state.advertising_data_len = 0;
-    
-    /* Add device name to advertising data */
-    ble_state.advertising_data[ble_state.advertising_data_len++] = strlen(ble_state.device_name) + 1;
-    ble_state.advertising_data[ble_state.advertising_data_len++] = BT_DATA_NAME_COMPLETE;
-    memcpy(&ble_state.advertising_data[ble_state.advertising_data_len], 
-           ble_state.device_name, strlen(ble_state.device_name));
-    ble_state.advertising_data_len += strlen(ble_state.device_name);
+    /* Set the device name in Bluetooth stack */
+    ret = bt_set_name(ble_state.device_name);
+    if (ret != 0) {
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "Failed to set BT name: %d", ret);
+    }
 
     ble_state.initialized = true;
     ble_state.advertising = false;
@@ -564,16 +546,29 @@ int hw_ble_advertising_start(void)
         return HW_ERROR_NOT_READY;
     }
 
-    struct bt_data ad[] = {
-        BT_DATA_BYTES(BT_DATA_FLAGS, BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR),
+    /* Define advertising data */
+    static const struct bt_data ad[] = {
+        BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR)),
         BT_DATA(BT_DATA_NAME_COMPLETE, ble_state.device_name, strlen(ble_state.device_name)),
     };
 
-    int ret = bt_le_adv_start(BT_LE_ADV_PARAM(BT_LE_ADV_OPT_USE_IDENTITY,
-        BT_GAP_ADV_FAST_INT_MIN_2,
-        BT_GAP_ADV_FAST_INT_MAX_2,
-        NULL), ad, ARRAY_SIZE(ad), NULL, 0);
-        
+    /* Define scan response data (optional) */
+    static const struct bt_data sd[] = {
+        BT_DATA_BYTES(BT_DATA_UUID16_ALL, 
+            BT_UUID_16_ENCODE(0x180D),  /* Heart Rate Service */
+            BT_UUID_16_ENCODE(0x180A)), /* Device Information Service */
+    };
+
+    /* Start advertising with correct parameters */
+    struct bt_le_adv_param adv_param = {
+        .id = BT_ID_DEFAULT,
+        .options = BT_LE_ADV_OPT_CONNECTABLE | BT_LE_ADV_OPT_USE_NAME,
+        .interval_min = BT_GAP_ADV_FAST_INT_MIN_2,
+        .interval_max = BT_GAP_ADV_FAST_INT_MAX_2,
+        .peer = NULL,
+    };
+
+    int ret = bt_le_adv_start(&adv_param, ad, ARRAY_SIZE(ad), sd, ARRAY_SIZE(sd));
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising start failed: %d", ret);
         return HW_ERROR_USB;
@@ -583,9 +578,10 @@ int hw_ble_advertising_start(void)
     hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_SLOW_BLINK);
 
     DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising started");
+    printk("Bluetooth advertising active - Device name: %s\n", ble_state.device_name);
+    
     return HW_OK;
 }
-
 /**
  * @brief Stop Bluetooth advertising
  */
@@ -767,18 +763,38 @@ static int init_uart_bt(void)
  */
 static int init_bluetooth(void)
 {
-    /* Bluetooth initialization is handled in hw_ble_advertising_init() */
+    if (!gpio_dev) {
+        return HW_ERROR_GPIO;
+    }
+
+    /* Configure button pin as input with pull-up */
+    int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
+        GPIO_INPUT | GPIO_PULL_UP);
+    
+    if (ret != 0) {
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
+        return HW_ERROR_GPIO;
+    }
+
+    /* Initialize button state */
+    button_state.pressed = false;
+    button_state.press_count = 0;
+    button_state.last_press_time = 0;
+
+    DIAG_INFO(DIAG_CAT_HARDWARE, "Button initialized for DFU boot process");
     return HW_OK;
 }
 
 /**
  * @brief Button callback function
  */
+/**
+ * @brief Button callback function - FIXED
+ */
 static void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
 {
     ARG_UNUSED(dev);
     ARG_UNUSED(cb);
-    ARG_UNUSED(pins);
 
     uint32_t current_time = k_uptime_get_32();
     
@@ -787,11 +803,22 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
         return;
     }
 
-    button_state.pressed = true;
-    button_state.press_count++;
-    button_state.last_press_time = current_time;
+    /* Read actual button state */
+    int button_value = gpio_pin_get(gpio_dev, HW_BUTTON_PIN);
+    
+    /* Active low - pressed when pin is low */
+    if (button_value == 0) {
+        button_state.pressed = true;
+        button_state.press_count++;
+        button_state.last_press_time = current_time;
 
-    DIAG_INFO(DIAG_CAT_SYSTEM, "Button pressed (count: %u)", button_state.press_count);
+        DIAG_INFO(DIAG_CAT_SYSTEM, "Button pressed (count: %u)", button_state.press_count);
+        
+        /* Visual feedback */
+        hw_led_set_state(HW_LED_STATUS, true);
+        k_msleep(100);
+        hw_led_set_state(HW_LED_STATUS, false);
+    }
 }
 
 /**
