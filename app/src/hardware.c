@@ -594,23 +594,11 @@ int hw_ble_advertising_start(void)
         BT_DATA(BT_DATA_NAME_COMPLETE, ble_state.device_name, strlen(ble_state.device_name)),
     };
 
-<<<<<<< HEAD
     int ret = bt_le_adv_start(BT_LE_ADV_PARAM(BT_LE_ADV_CONN_NAME,
                                              BT_GAP_ADV_FAST_INT_MIN_2,
                                              BT_GAP_ADV_FAST_INT_MAX_2,
                                              NULL), ad, ARRAY_SIZE(ad), NULL, 0);
-=======
-    struct bt_data sd[] = {
-        BT_DATA_BYTES(BT_DATA_UUID16_ALL,
-                     BT_UUID_16_ENCODE(BT_UUID_HRS_VAL)),  // Heart Rate Service
-    };
 
-    int ret = bt_le_adv_start(BT_LE_ADV_CONN_NAME,  // Use connectable advertising
-        ad, ARRAY_SIZE(ad), 
-        sd, ARRAY_SIZE(sd));
-
-
->>>>>>> c577efe81101ca4237df2bccf849496d5e9736ec
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising start failed: %d", ret);
         return HW_ERROR_USB;
