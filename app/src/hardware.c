@@ -352,10 +352,11 @@ int hw_button_init(void)
 
     /* Configure button pin as input with pull-up */
     int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
-                                GPIO_INPUT | GPIO_PULL_UP | GPIO_INT_EDGE_TO_ACTIVE);
+        GPIO_INPUT | GPIO_PULL_UP);  // Remove interrupt flag here
+
     if (ret != 0) {
-        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
-        return HW_ERROR_GPIO;
+    DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
+    return HW_ERROR_GPIO;
     }
 
     /* Initialize button state */
