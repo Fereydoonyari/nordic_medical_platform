@@ -25,6 +25,9 @@
 #include <zephyr/devicetree.h>
 #include <string.h>
 #include <math.h>
+#include <zephyr/bluetooth/gatt.h>
+#include <zephyr/bluetooth/services/bas.h>  // Battery service
+#include <zephyr/bluetooth/services/hrs.h>  // Heart rate service
 
 /*============================================================================*/
 /* Private Constants and Macros                                               */
@@ -521,6 +524,29 @@ int hw_dfu_exit_boot_mode(void)
 /**
  * @brief Initialize Bluetooth Low Energy advertising
  */
+
+ // Heart rate measurement simulation
+static uint8_t simulate_hrm(uint8_t heartrate)
+{
+    static uint8_t hrm[2];
+
+    hrm[0] = 0x06; /* sensor contact detected */
+    hrm[1] = heartrate;
+
+    return bt_gatt_notify(NULL, &hrs_svc.attrs[1], &hrm, sizeof(hrm));
+}
+
+// GATT service definition
+BT_GATT_SERVICE_DEFINE(hrs_svc,
+    BT_GATT_PRIMARY_SERVICE(BT_UUID_HRS),
+    BT_GATT_CHARACTERISTIC(BT_UUID_HRS_MEASUREMENT, 
+                          BT_GATT_CHRC_NOTIFY,
+                          BT_GATT_PERM_NONE, 
+                          NULL, NULL, NULL),
+    BT_GATT_CCC(NULL, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+);
+
+
 int hw_ble_advertising_init(void)
 {
     if (!hw_initialized) {
@@ -568,10 +594,23 @@ int hw_ble_advertising_start(void)
         BT_DATA(BT_DATA_NAME_COMPLETE, ble_state.device_name, strlen(ble_state.device_name)),
     };
 
+<<<<<<< HEAD
     int ret = bt_le_adv_start(BT_LE_ADV_PARAM(BT_LE_ADV_CONN_NAME,
                                              BT_GAP_ADV_FAST_INT_MIN_2,
                                              BT_GAP_ADV_FAST_INT_MAX_2,
                                              NULL), ad, ARRAY_SIZE(ad), NULL, 0);
+=======
+    struct bt_data sd[] = {
+        BT_DATA_BYTES(BT_DATA_UUID16_ALL,
+                     BT_UUID_16_ENCODE(BT_UUID_HRS_VAL)),  // Heart Rate Service
+    };
+
+    int ret = bt_le_adv_start(BT_LE_ADV_CONN_NAME,  // Use connectable advertising
+        ad, ARRAY_SIZE(ad), 
+        sd, ARRAY_SIZE(sd));
+
+
+>>>>>>> c577efe81101ca4237df2bccf849496d5e9736ec
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising start failed: %d", ret);
         return HW_ERROR_USB;
