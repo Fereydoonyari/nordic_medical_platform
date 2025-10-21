@@ -25,7 +25,8 @@
 #include <zephyr/devicetree.h>
 #include <string.h>
 #include <math.h>
-
+#include <zephyr/bluetooth/bluetooth.h>
+#include <zephyr/bluetooth/gap.h>
 /*============================================================================*/
 /* Private Constants and Macros                                               */
 /*============================================================================*/
@@ -286,7 +287,7 @@ int hw_show_medical_pulse(uint32_t heart_rate_bpm)
     }
 
     /* Calculate heartbeat period based on BPM */
-    uint32_t heartbeat_period_ms = 60000U / heart_rate_bpm;
+    //uint32_t heartbeat_period_ms = 60000U / heart_rate_bpm;
     
     /* Update LED pattern timing */
     led_states[HW_LED_HEARTBEAT].pattern = HW_PULSE_HEARTBEAT;
@@ -538,7 +539,7 @@ int hw_ble_advertising_init(void)
 }
 
 /**
- * @brief Start Bluetooth advertising
+ * @brief Start Bluetooth advertising - FIXED FOR STATIC INITIALIZATION
  */
 int hw_ble_advertising_start(void)
 {
@@ -546,18 +547,39 @@ int hw_ble_advertising_start(void)
         return HW_ERROR_NOT_READY;
     }
 
-    /* Define advertising data */
-    static const struct bt_data ad[] = {
-        BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR)),
-        BT_DATA(BT_DATA_NAME_COMPLETE, ble_state.device_name, strlen(ble_state.device_name)),
-    };
+    /* Prepare device name data statically */
+    static uint8_t device_name_data[32];
+    size_t name_len = strlen(ble_state.device_name);
+    if (name_len > sizeof(device_name_data)) {
+        name_len = sizeof(device_name_data);
+    }
+    memcpy(device_name_data, ble_state.device_name, name_len);
 
-    /* Define scan response data (optional) */
-    static const struct bt_data sd[] = {
-        BT_DATA_BYTES(BT_DATA_UUID16_ALL, 
-            BT_UUID_16_ENCODE(0x180D),  /* Heart Rate Service */
-            BT_UUID_16_ENCODE(0x180A)), /* Device Information Service */
+    /* Define advertising data with static initialization */
+    static struct bt_data ad[2];
+    
+    /* Flags - must be static constant data */
+    static const uint8_t flags_data[] = {BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR};
+    ad[0].type = BT_DATA_FLAGS;
+    ad[0].data_len = sizeof(flags_data);
+    ad[0].data = flags_data;
+    
+    /* Device name */
+    ad[1].type = BT_DATA_NAME_COMPLETE;
+    ad[1].data_len = name_len;
+    ad[1].data = device_name_data;
+
+    /* Define scan response data (optional) with static initialization */
+    static struct bt_data sd[1];
+    
+    /* Service UUIDs - Heart Rate Service (0x180D) and Device Info (0x180A) */
+    static const uint8_t service_uuids[] = {
+        0x0D, 0x18,  /* Heart Rate Service UUID in little-endian */
+        0x0A, 0x18   /* Device Information Service UUID in little-endian */
     };
+    sd[0].type = BT_DATA_UUID16_ALL;
+    sd[0].data_len = sizeof(service_uuids);
+    sd[0].data = service_uuids;
 
     /* Start advertising with correct parameters */
     struct bt_le_adv_param adv_param = {
@@ -738,7 +760,25 @@ static int init_leds(void)
  */
 static int init_button(void)
 {
-    /* Button initialization is handled in hw_button_init() */
+    if (!gpio_dev) {
+        return HW_ERROR_GPIO;
+    }
+
+    /* Configure button pin as input with pull-up */
+    int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
+        GPIO_INPUT | GPIO_PULL_UP);
+    
+    if (ret != 0) {
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
+        return HW_ERROR_GPIO;
+    }
+
+    /* Initialize button state */
+    button_state.pressed = false;
+    button_state.press_count = 0;
+    button_state.last_press_time = 0;
+
+    DIAG_INFO(DIAG_CAT_HARDWARE, "Button initialized for DFU boot process");
     return HW_OK;
 }
 
@@ -795,6 +835,7 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
 {
     ARG_UNUSED(dev);
     ARG_UNUSED(cb);
+    ARG_UNUSED(pins);
 
     uint32_t current_time = k_uptime_get_32();
     
@@ -813,14 +854,8 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
         button_state.last_press_time = current_time;
 
         DIAG_INFO(DIAG_CAT_SYSTEM, "Button pressed (count: %u)", button_state.press_count);
-        
-        /* Visual feedback */
-        hw_led_set_state(HW_LED_STATUS, true);
-        k_msleep(100);
-        hw_led_set_state(HW_LED_STATUS, false);
     }
 }
-
 /**
  * @brief Update LED pattern
  */

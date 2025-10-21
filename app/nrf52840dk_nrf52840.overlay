@@ -6,7 +6,6 @@
     chosen {
         zephyr,console = &uart0;
         zephyr,shell-uart = &uart0;
-        zephyr,uart-mcumgr = &uart0;
     };
 
     /* Button configuration for DFU */
@@ -57,10 +56,4 @@
 &uart0 {
     status = "okay";
     current-speed = <115200>;
-};
-
-/* USB Configuration */
-&usbd {
-    compatible = "nordic,nrf-usbd";
-    status = "okay";
 };
