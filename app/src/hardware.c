@@ -39,7 +39,7 @@
 #define LED_PATTERN_DOUBLE_BLINK_PERIOD    200U
 
 /** @brief Button debounce time in milliseconds */
-#define BUTTON_DEBOUNCE_MS                 50U
+#define BUTTON_DEBOUNCE_MS                 500U
 
 /** @brief DFU boot timeout in milliseconds */
 #define DFU_BOOT_TIMEOUT_MS                10000U
@@ -788,8 +788,15 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
 
     uint32_t current_time = k_uptime_get_32();
     
-    /* Debounce check */
+    /* Debounce check - ignore rapid repeated presses */
     if (current_time - button_state.last_press_time < BUTTON_DEBOUNCE_MS) {
+        DIAG_DEBUG(DIAG_CAT_SYSTEM, "Button bounce ignored (too fast)");
+        return;
+    }
+
+    /* Verify button is actually pressed (active low) */
+    if (!hw_button_is_pressed()) {
+        DIAG_DEBUG(DIAG_CAT_SYSTEM, "Button release detected, ignoring");
         return;
     }
 
@@ -798,15 +805,17 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
     button_state.last_press_time = current_time;
 
     DIAG_INFO(DIAG_CAT_SYSTEM, "Button pressed (count: %u)", button_state.press_count);
+    printk("\n*** BUTTON 1 PRESS DETECTED (Press #%u) ***\n", button_state.press_count);
 
-    /* Enter DFU mode when button is pressed */
+    /* Toggle DFU mode on button press */
     if (dfu_state.initialized && !dfu_state.in_boot_mode) {
-        DIAG_INFO(DIAG_CAT_SYSTEM, "Button 1 pressed - entering DFU boot mode");
-        printk("\n=== Button 1 Pressed - Entering DFU Mode ===\n");
+        DIAG_INFO(DIAG_CAT_SYSTEM, "Entering DFU boot mode");
+        printk(">>> Entering DFU Mode - LED patterns: Fast Blink + SOS\n");
+        printk(">>> Press Button 1 again to exit DFU mode\n\n");
         hw_dfu_enter_boot_mode();
     } else if (dfu_state.in_boot_mode) {
-        DIAG_INFO(DIAG_CAT_SYSTEM, "Button 1 pressed - exiting DFU boot mode");
-        printk("\n=== Button 1 Pressed - Exiting DFU Mode ===\n");
+        DIAG_INFO(DIAG_CAT_SYSTEM, "Exiting DFU boot mode");
+        printk(">>> Exiting DFU Mode - Returning to normal operation\n\n");
         hw_dfu_exit_boot_mode();
     }
 }
