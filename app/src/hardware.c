@@ -224,49 +224,75 @@
      return gpio_pin_get_dt(&button) == 0; /* Active low */
  }
  
- bool hw_button_wait_press(uint32_t timeout_ms)
- {
-     if (!hw_initialized) return false;
-     
-     printk("Waiting for button press (timeout: %u ms)...\n", timeout_ms);
-     
-     uint32_t start = k_uptime_get_32();
-     uint32_t elapsed;
-     bool was_pressed = hw_button_is_pressed();  /* Get initial state */
-     
-     /* Wait for timeout or button press */
-     do {
-         bool is_pressed = hw_button_is_pressed();
-         
-         /* Detect state change from not pressed to pressed */
-         if (!was_pressed && is_pressed) {
-             /* Button pressed - wait for release (debounce) */
-             k_sleep(K_MSEC(50));
-             
-             /* Wait for button release */
-             while (hw_button_is_pressed()) {
-                 k_sleep(K_MSEC(10));
-                 /* Check timeout even during button hold */
-                 if ((k_uptime_get_32() - start) >= timeout_ms) {
-                     printk("Timeout during button hold\n");
-                     return false;
-                 }
-             }
-             
-             printk("Button pressed!\n");
-             dfu_state.button_presses++;
-             return true;
-         }
-         
-         was_pressed = is_pressed;
-         k_sleep(K_MSEC(10));  /* Small delay to avoid busy waiting */
-         
-         elapsed = k_uptime_get_32() - start;
-     } while (elapsed < timeout_ms);
-     
-     printk("Button wait timeout - no press detected\n");
-     return false;
- }
+bool hw_button_wait_press(uint32_t timeout_ms)
+{
+    if (!hw_initialized) return false;
+    
+    printk("Waiting for button press (timeout: %u ms)...\n", timeout_ms);
+    
+    /* Small delay to ensure GPIO is stable */
+    k_sleep(K_MSEC(100));
+    
+    uint32_t start = k_uptime_get_32();
+    uint32_t elapsed;
+    bool was_pressed = hw_button_is_pressed();  /* Get initial state */
+    
+    printk("[DEBUG] Initial button state: %s\n", was_pressed ? "PRESSED" : "NOT PRESSED");
+    
+    /* If button is already pressed at startup, wait for it to be released first */
+    if (was_pressed) {
+        printk("[DEBUG] Button already pressed at startup, waiting for release...\n");
+        while (hw_button_is_pressed()) {
+            k_sleep(K_MSEC(10));
+            /* Check timeout even during initial button hold */
+            if ((k_uptime_get_32() - start) >= timeout_ms) {
+                printk("Timeout during initial button hold\n");
+                return false;
+            }
+        }
+        printk("[DEBUG] Button released, now waiting for press...\n");
+        was_pressed = false; /* Reset state after release */
+    }
+    
+    /* Wait for timeout or button press */
+    do {
+        bool is_pressed = hw_button_is_pressed();
+        
+        /* Detect state change from not pressed to pressed */
+        if (!was_pressed && is_pressed) {
+            printk("[DEBUG] Button state changed from NOT PRESSED to PRESSED\n");
+            /* Button pressed - wait for release (debounce) */
+            k_sleep(K_MSEC(50));
+            
+            /* Wait for button release */
+            while (hw_button_is_pressed()) {
+                k_sleep(K_MSEC(10));
+                /* Check timeout even during button hold */
+                if ((k_uptime_get_32() - start) >= timeout_ms) {
+                    printk("Timeout during button hold\n");
+                    return false;
+                }
+            }
+            
+            printk("Button pressed!\n");
+            dfu_state.button_presses++;
+            return true;
+        }
+        
+        was_pressed = is_pressed;
+        k_sleep(K_MSEC(10));  /* Small delay to avoid busy waiting */
+        
+        elapsed = k_uptime_get_32() - start;
+        
+        /* Debug output every 500ms */
+        if (elapsed % 500 < 20) {
+            printk("[DEBUG] Elapsed: %u ms, Button: %s\n", elapsed, is_pressed ? "PRESSED" : "NOT PRESSED");
+        }
+    } while (elapsed < timeout_ms);
+    
+    printk("Button wait timeout - no press detected\n");
+    return false;
+}
  
  uint32_t hw_button_get_press_count(void)
  {
