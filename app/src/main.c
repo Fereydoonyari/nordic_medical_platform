@@ -48,7 +48,7 @@ int main(void)
     ret = hw_init();
     if (ret != HW_OK) {
         printk("FATAL: Hardware initialization failed (error: %d)\n", ret);
-        return;
+        return -1;
     }
 
     /* Initialize DFU boot process */

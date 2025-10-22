@@ -99,9 +99,7 @@ static bool hw_initialized = false;
 
 static int init_gpio(void);
 static int init_leds(void);
-static int init_button(void);
 static int init_bluetooth(void);
-static void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
 
 /*============================================================================*/
 /* Public Function Implementations                                            */
@@ -627,15 +625,6 @@ static int init_leds(void)
     }
 
     printk("LEDs initialized\n");
-    return HW_OK;
-}
-
-/**
- * @brief Initialize button
- */
-static int init_button(void)
-{
-    /* Button initialization is handled in hw_button_init() */
     return HW_OK;
 }
 
