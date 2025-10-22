@@ -43,7 +43,7 @@
      int ret = hw_init();
      if (ret != HW_OK) {
          printk("FATAL: Hardware init failed: %d\n", ret);
-         return;
+         return -1;
      }
      
      /* Initialize DFU */
@@ -125,4 +125,6 @@
              hw_led_set_state(HW_LED_ERROR, false);
          }
      }
+     
+     return 0;
  }
