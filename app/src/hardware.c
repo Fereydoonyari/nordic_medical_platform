@@ -1,60 +1,76 @@
 /**
  * @file hardware.c
- * @brief Simplified hardware abstraction layer for nRF52840 Development Kit
- * @details Simple implementation with LED control, GPIO operations, button handling,
- * and Bluetooth advertising for the medical wearable device.
+ * @brief Hardware abstraction layer implementation for nRF52840 Development Kit
+ * @details Implements LED control, GPIO operations, USB console management,
+ * DFU boot process, and Bluetooth advertising for the medical wearable device.
  * 
- * @author Nordic Medical Platform
- * @version 2.0.0
+ * @author NISC Medical Devices
+ * @version 1.0.0
  * @date 2024
+ * 
+ * @note This implementation provides a complete hardware abstraction layer
+ * for medical device development on the nRF52840 platform.
  */
 
 #include "hardware.h"
 #include "common.h"
+#include "diagnostics.h"
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/uart.h>
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/gap.h>
-#include <zephyr/bluetooth/gatt.h>
-#include <zephyr/bluetooth/uuid.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/devicetree.h>
 #include <string.h>
+#include <math.h>
 
 /*============================================================================*/
-/* Simple Constants                                                           */
+/* Private Constants and Macros                                               */
 /*============================================================================*/
 
-/** @brief Simple LED timing constants (in milliseconds) */
-#define LED_SLOW_BLINK_PERIOD     1000U
-#define LED_FAST_BLINK_PERIOD     250U
-#define LED_BREATHING_PERIOD      2000U
+/** @brief LED pattern timing constants (in milliseconds) */
+#define LED_PATTERN_SLOW_BLINK_PERIOD     1000U
+#define LED_PATTERN_FAST_BLINK_PERIOD     250U
+#define LED_PATTERN_BREATHING_PERIOD       2000U
+#define LED_PATTERN_HEARTBEAT_PERIOD       600U
+#define LED_PATTERN_SOS_PERIOD             100U
+#define LED_PATTERN_DOUBLE_BLINK_PERIOD    200U
 
 /** @brief Button debounce time in milliseconds */
-#define BUTTON_DEBOUNCE_MS        50U
+#define BUTTON_DEBOUNCE_MS                 50U
+
+/** @brief DFU boot timeout in milliseconds */
+#define DFU_BOOT_TIMEOUT_MS                10000U
+
+/** @brief Bluetooth advertising interval in milliseconds */
+#define BLE_ADV_INTERVAL_MS                100U
 
 /*============================================================================*/
-/* Simple Global Variables                                                    */
+/* Private Global Variables                                                   */
 /*============================================================================*/
 
 /** @brief GPIO device for LED control */
 static const struct device *gpio_dev;
+
+/** @brief UART device for serial Bluetooth communication */
+static const struct device *uart_bt_dev;
 
 /** @brief LED GPIO pins */
 static const uint32_t led_pins[HW_LED_COUNT] = {
     HW_LED1_PIN, HW_LED2_PIN, HW_LED3_PIN, HW_LED4_PIN
 };
 
-/** @brief Simple LED states */
-static bool led_states[HW_LED_COUNT];
+/** @brief LED states for pattern management */
+static hw_led_state_t led_states[HW_LED_COUNT];
 
 /** @brief Button state tracking */
 static struct {
     bool pressed;
     uint32_t press_count;
     uint32_t last_press_time;
+    struct gpio_callback callback;
 } button_state;
 
 /** @brief DFU boot state */
@@ -62,6 +78,7 @@ static struct {
     bool initialized;
     bool boot_requested;
     bool in_boot_mode;
+    uint32_t boot_start_time;
 } dfu_state;
 
 /** @brief Bluetooth advertising state */
@@ -69,37 +86,26 @@ static struct {
     bool initialized;
     bool advertising;
     char device_name[32];
+    uint8_t advertising_data[31];
+    uint8_t advertising_data_len;
 } ble_state;
-
-/** @brief Simple GATT service for device info */
-static uint8_t device_info_data[] = "Nordic Medical Platform v1.0";
-
-static ssize_t read_device_info(struct bt_conn *conn, const struct bt_gatt_attr *attr,
-                               void *buf, uint16_t len, uint16_t offset)
-{
-    UNUSED(conn);
-    UNUSED(attr);
-    
-    return bt_gatt_attr_read(conn, attr, buf, len, offset, device_info_data, sizeof(device_info_data) - 1);
-}
-
-/* GATT Service Declaration */
-BT_GATT_SERVICE_DEFINE(device_info_svc,
-    BT_GATT_PRIMARY_SERVICE(BT_UUID_DIS),
-    BT_GATT_CHARACTERISTIC(BT_UUID_DIS_MODEL_NUMBER, BT_GATT_CHRC_READ,
-                           BT_GATT_PERM_READ, read_device_info, NULL, NULL),
-);
 
 /** @brief Hardware initialization status */
 static bool hw_initialized = false;
 
 /*============================================================================*/
-/* Simple Function Declarations                                               */
+/* Private Function Declarations                                              */
 /*============================================================================*/
 
 static int init_gpio(void);
 static int init_leds(void);
+static int init_button(void);
+static int init_uart_bt(void);
 static int init_bluetooth(void);
+static void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
+static void update_led_pattern(uint32_t led_id);
+static uint32_t calculate_pattern_state(hw_led_pattern_t pattern, uint32_t elapsed_ms);
+static int send_uart_data(const uint8_t *data, uint32_t length);
 
 /*============================================================================*/
 /* Public Function Implementations                                            */
@@ -116,33 +122,40 @@ int hw_init(void)
         return HW_OK;
     }
 
-    printk("Initializing hardware abstraction layer\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Initializing hardware abstraction layer");
 
     /* Initialize GPIO subsystem */
     ret = init_gpio();
     if (ret != HW_OK) {
-        printk("ERROR: GPIO initialization failed: %d\n", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "GPIO initialization failed: %d", ret);
         return ret;
     }
 
     /* Initialize LEDs */
     ret = init_leds();
     if (ret != HW_OK) {
-        printk("ERROR: LED initialization failed: %d\n", ret);
+        DIAG_ERROR(DIAG_CAT_HARDWARE, "LED initialization failed: %d", ret);
         return ret;
     }
 
     /* Initialize button for DFU */
-    ret = hw_button_init();
+    ret = init_button();
     if (ret != HW_OK) {
-        printk("WARNING: Button initialization failed: %d\n", ret);
+        DIAG_WARNING(DIAG_CAT_HARDWARE, "Button initialization failed: %d", ret);
+        /* Non-critical error, continue */
+    }
+
+    /* Initialize UART for Bluetooth */
+    ret = init_uart_bt();
+    if (ret != HW_OK) {
+        DIAG_WARNING(DIAG_CAT_HARDWARE, "UART Bluetooth initialization failed: %d", ret);
         /* Non-critical error, continue */
     }
 
     /* Initialize Bluetooth */
     ret = init_bluetooth();
     if (ret != HW_OK) {
-        printk("WARNING: Bluetooth initialization failed: %d\n", ret);
+        DIAG_WARNING(DIAG_CAT_HARDWARE, "Bluetooth initialization failed: %d", ret);
         /* Non-critical error, continue */
     }
 
@@ -152,7 +165,7 @@ int hw_init(void)
     dfu_state.in_boot_mode = false;
 
     hw_initialized = true;
-    printk("Hardware abstraction layer initialized successfully\n");
+    DIAG_INFO(DIAG_CAT_HARDWARE, "Hardware abstraction layer initialized successfully");
 
     return HW_OK;
 }
@@ -213,18 +226,19 @@ int hw_led_set_state(uint32_t led_id, bool state)
 
     int ret = gpio_pin_set(gpio_dev, led_pins[led_id], state ? 1 : 0);
     if (ret != 0) {
-        printk("ERROR: Failed to set LED %u state: %d\n", led_id, ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to set LED %u state: %d", led_id, ret);
         return HW_ERROR_LED;
     }
 
     /* Update LED state */
-    led_states[led_id] = state;
+    led_states[led_id].state = state;
+    led_states[led_id].pattern = state ? HW_PULSE_ON : HW_PULSE_OFF;
 
     return HW_OK;
 }
 
 /**
- * @brief Set LED pattern (simplified)
+ * @brief Set LED pattern
  */
 int hw_led_set_pattern(uint32_t led_id, hw_led_pattern_t pattern)
 {
@@ -232,42 +246,95 @@ int hw_led_set_pattern(uint32_t led_id, hw_led_pattern_t pattern)
         return HW_ERROR_INVALID_PARAM;
     }
 
-    /* Simple pattern implementation */
-    switch (pattern) {
-        case HW_PULSE_OFF:
-            return hw_led_set_state(led_id, false);
-        case HW_PULSE_ON:
-            return hw_led_set_state(led_id, true);
-        case HW_PULSE_SLOW_BLINK:
-        case HW_PULSE_FAST_BLINK:
-        case HW_PULSE_BREATHING:
-        case HW_PULSE_HEARTBEAT:
-        case HW_PULSE_SOS:
-        case HW_PULSE_DOUBLE_BLINK:
-            /* For now, just turn on - patterns would need a timer thread */
-            return hw_led_set_state(led_id, true);
-        default:
-            return HW_ERROR_INVALID_PARAM;
-    }
-}
+    led_states[led_id].pattern = pattern;
+    led_states[led_id].pattern_start_ms = k_uptime_get_32();
+    led_states[led_id].cycle_count = 0;
 
-/**
- * @brief Update LED patterns (simplified - no-op for now)
- */
-int hw_led_update_patterns(void)
-{
-    /* Simple implementation - no complex patterns */
+    /* For static patterns, set immediately */
+    if (pattern == HW_PULSE_OFF) {
+        return hw_led_set_state(led_id, false);
+    } else if (pattern == HW_PULSE_ON) {
+        return hw_led_set_state(led_id, true);
+    }
+
     return HW_OK;
 }
 
 /**
- * @brief Show medical pulse on heartbeat LED (simplified)
+ * @brief Update LED patterns
+ */
+int hw_led_update_patterns(void)
+{
+    if (!hw_initialized) {
+        return HW_ERROR_NOT_READY;
+    }
+
+    for (uint32_t i = 0; i < HW_LED_COUNT; i++) {
+        update_led_pattern(i);
+    }
+
+    return HW_OK;
+}
+
+/**
+ * @brief Show medical pulse on heartbeat LED
  */
 int hw_show_medical_pulse(uint32_t heart_rate_bpm)
 {
-    UNUSED(heart_rate_bpm);
-    /* Simple implementation - just turn on heartbeat LED */
-    return hw_led_set_state(HW_LED_HEARTBEAT, true);
+    if (!hw_initialized) {
+        return HW_ERROR_NOT_READY;
+    }
+
+    /* Calculate heartbeat period based on BPM */
+    uint32_t heartbeat_period_ms = 60000U / heart_rate_bpm;
+    
+    /* Update LED pattern timing */
+    led_states[HW_LED_HEARTBEAT].pattern = HW_PULSE_HEARTBEAT;
+    led_states[HW_LED_HEARTBEAT].pattern_start_ms = k_uptime_get_32();
+
+    return HW_OK;
+}
+
+/**
+ * @brief Test LED patterns
+ */
+int hw_led_test_patterns(hw_led_pattern_t pattern)
+{
+    if (!hw_initialized) {
+        return HW_ERROR_NOT_READY;
+    }
+
+    if (pattern == HW_PULSE_PATTERN_MAX) {
+        /* Test all patterns */
+        for (hw_led_pattern_t p = HW_PULSE_OFF; p < HW_PULSE_PATTERN_MAX; p++) {
+            DIAG_INFO(DIAG_CAT_SYSTEM, "Testing LED pattern: %d", p);
+            
+            /* Test on all LEDs */
+            for (uint32_t led = 0; led < HW_LED_COUNT; led++) {
+                hw_led_set_pattern(led, p);
+                k_sleep(K_MSEC(1000));
+            }
+            
+            /* Turn off all LEDs */
+            for (uint32_t led = 0; led < HW_LED_COUNT; led++) {
+                hw_led_set_pattern(led, HW_PULSE_OFF);
+            }
+            k_sleep(K_MSEC(500));
+        }
+    } else {
+        /* Test specific pattern */
+        for (uint32_t led = 0; led < HW_LED_COUNT; led++) {
+            hw_led_set_pattern(led, pattern);
+        }
+        k_sleep(K_MSEC(3000));
+        
+        /* Turn off all LEDs */
+        for (uint32_t led = 0; led < HW_LED_COUNT; led++) {
+            hw_led_set_pattern(led, HW_PULSE_OFF);
+        }
+    }
+
+    return HW_OK;
 }
 
 /*============================================================================*/
@@ -287,7 +354,7 @@ int hw_button_init(void)
     int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
                                 GPIO_INPUT | GPIO_PULL_UP | GPIO_INT_EDGE_TO_ACTIVE);
     if (ret != 0) {
-        printk("ERROR: Failed to configure button pin: %d\n", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
         return HW_ERROR_GPIO;
     }
 
@@ -296,7 +363,22 @@ int hw_button_init(void)
     button_state.press_count = 0;
     button_state.last_press_time = 0;
 
-    printk("Button initialized for DFU boot process\n");
+    /* Set up button callback */
+    gpio_init_callback(&button_state.callback, button_callback, BIT(HW_BUTTON_PIN));
+    ret = gpio_add_callback(gpio_dev, &button_state.callback);
+    if (ret != 0) {
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to add button callback: %d", ret);
+        return HW_ERROR_GPIO;
+    }
+
+    /* Enable button interrupt */
+    ret = gpio_pin_interrupt_configure(gpio_dev, HW_BUTTON_PIN, GPIO_INT_EDGE_TO_ACTIVE);
+    if (ret != 0) {
+        DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to enable button interrupt: %d", ret);
+        return HW_ERROR_GPIO;
+    }
+
+    DIAG_INFO(DIAG_CAT_HARDWARE, "Button initialized for DFU boot process");
     return HW_OK;
 }
 
@@ -310,16 +392,7 @@ bool hw_button_is_pressed(void)
     }
 
     int ret = gpio_pin_get(gpio_dev, HW_BUTTON_PIN);
-    bool pressed = (ret == 0); /* Active low button */
-    
-    /* Debug output */
-    static bool last_state = false;
-    if (pressed != last_state) {
-        printk("Button state changed: %s\n", pressed ? "PRESSED" : "RELEASED");
-        last_state = pressed;
-    }
-    
-    return pressed;
+    return (ret == 0); /* Active low button */
 }
 
 /**
@@ -334,17 +407,17 @@ bool hw_button_wait_press(uint32_t timeout_ms)
     uint32_t start_time = k_uptime_get_32();
     uint32_t timeout_time = start_time + timeout_ms;
 
-    printk("Waiting for button press (timeout: %u ms)\n", timeout_ms);
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Waiting for button press (timeout: %u ms)", timeout_ms);
 
     while (k_uptime_get_32() < timeout_time) {
         if (hw_button_is_pressed()) {
-            printk("Button press detected\n");
+            DIAG_INFO(DIAG_CAT_SYSTEM, "Button press detected");
             return true;
         }
         k_sleep(K_MSEC(10));
     }
 
-    printk("Button press timeout\n");
+    DIAG_INFO(DIAG_CAT_HARDWARE, "Button press timeout");
     return false;
 }
 
@@ -373,7 +446,7 @@ int hw_dfu_init(void)
     dfu_state.boot_requested = false;
     dfu_state.in_boot_mode = false;
 
-    printk("DFU boot process initialized\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "DFU boot process initialized");
     return HW_OK;
 }
 
@@ -387,10 +460,9 @@ bool hw_dfu_boot_requested(void)
     }
 
     /* Check if button is pressed during boot */
-    bool button_pressed = hw_button_is_pressed();
-    if (button_pressed) {
+    if (hw_button_is_pressed()) {
         dfu_state.boot_requested = true;
-        printk("DFU boot requested via button press\n");
+        DIAG_INFO(DIAG_CAT_SYSTEM, "DFU boot requested via button press");
     }
 
     return dfu_state.boot_requested;
@@ -406,12 +478,13 @@ int hw_dfu_enter_boot_mode(void)
     }
 
     dfu_state.in_boot_mode = true;
+    dfu_state.boot_start_time = k_uptime_get_32();
 
     /* Indicate DFU mode with LED pattern */
     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_FAST_BLINK);
     hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SOS);
 
-    printk("Entered DFU boot mode\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Entered DFU boot mode");
     printk("=== DFU BOOT MODE ACTIVATED ===\n");
     printk("Waiting for firmware update...\n");
     printk("Press button to exit DFU mode\n");
@@ -435,7 +508,7 @@ int hw_dfu_exit_boot_mode(void)
     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_BREATHING);
     hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);
 
-    printk("Exited DFU boot mode\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Exited DFU boot mode");
     printk("=== DFU BOOT MODE DEACTIVATED ===\n");
 
     return HW_OK;
@@ -456,18 +529,28 @@ int hw_ble_advertising_init(void)
 
     int ret = bt_enable(NULL);
     if (ret != 0) {
-        printk("ERROR: Bluetooth enable failed: %d\n", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth enable failed: %d", ret);
         return HW_ERROR_USB;
     }
 
     /* Set device name */
-    strncpy(ble_state.device_name, "Nordic-Medical-Device", sizeof(ble_state.device_name) - 1);
+    strncpy(ble_state.device_name, "NISC-Medical-Device", sizeof(ble_state.device_name) - 1);
     ble_state.device_name[sizeof(ble_state.device_name) - 1] = '\0';
+
+    /* Set advertising data */
+    ble_state.advertising_data_len = 0;
+    
+    /* Add device name to advertising data */
+    ble_state.advertising_data[ble_state.advertising_data_len++] = strlen(ble_state.device_name) + 1;
+    ble_state.advertising_data[ble_state.advertising_data_len++] = BT_DATA_NAME_COMPLETE;
+    memcpy(&ble_state.advertising_data[ble_state.advertising_data_len], 
+           ble_state.device_name, strlen(ble_state.device_name));
+    ble_state.advertising_data_len += strlen(ble_state.device_name);
 
     ble_state.initialized = true;
     ble_state.advertising = false;
 
-    printk("Bluetooth advertising initialized\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising initialized");
     return HW_OK;
 }
 
@@ -490,14 +573,14 @@ int hw_ble_advertising_start(void)
                                              BT_GAP_ADV_FAST_INT_MAX_2,
                                              NULL), ad, ARRAY_SIZE(ad), NULL, 0);
     if (ret != 0) {
-        printk("ERROR: Bluetooth advertising start failed: %d\n", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising start failed: %d", ret);
         return HW_ERROR_USB;
     }
 
     ble_state.advertising = true;
     hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_SLOW_BLINK);
 
-    printk("Bluetooth advertising started\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising started");
     return HW_OK;
 }
 
@@ -512,14 +595,14 @@ int hw_ble_advertising_stop(void)
 
     int ret = bt_le_adv_stop();
     if (ret != 0) {
-        printk("ERROR: Bluetooth advertising stop failed: %d\n", ret);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising stop failed: %d", ret);
         return HW_ERROR_USB;
     }
 
     ble_state.advertising = false;
     hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_OFF);
 
-    printk("Bluetooth advertising stopped\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising stopped");
     return HW_OK;
 }
 
@@ -528,8 +611,6 @@ int hw_ble_advertising_stop(void)
  */
 int hw_ble_set_advertising_data(const char *device_name, const void *medical_data)
 {
-    UNUSED(medical_data);
-    
     if (!ble_state.initialized || !device_name) {
         return HW_ERROR_INVALID_PARAM;
     }
@@ -538,7 +619,7 @@ int hw_ble_set_advertising_data(const char *device_name, const void *medical_dat
     strncpy(ble_state.device_name, device_name, sizeof(ble_state.device_name) - 1);
     ble_state.device_name[sizeof(ble_state.device_name) - 1] = '\0';
 
-    printk("Bluetooth advertising data updated: %s\n", device_name);
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising data updated: %s", device_name);
     return HW_OK;
 }
 
@@ -551,7 +632,13 @@ int hw_serial_bt_init(void)
         return HW_ERROR_NOT_READY;
     }
 
-    printk("Serial Bluetooth communication initialized\n");
+    /* UART is already initialized in init_uart_bt() */
+    if (!uart_bt_dev) {
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "UART Bluetooth device not available");
+        return HW_ERROR_USB;
+    }
+
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Serial Bluetooth communication initialized");
     return HW_OK;
 }
 
@@ -560,12 +647,15 @@ int hw_serial_bt_init(void)
  */
 int hw_serial_bt_send(const uint8_t *data, uint32_t length)
 {
-    UNUSED(data);
-    UNUSED(length);
-    
-    /* Simple implementation - just print to console */
-    printk("Serial BT data sent: %u bytes\n", length);
-    return HW_OK;
+    if (!data || length == 0) {
+        return HW_ERROR_INVALID_PARAM;
+    }
+
+    if (!uart_bt_dev) {
+        return HW_ERROR_NOT_READY;
+    }
+
+    return send_uart_data(data, length);
 }
 
 /**
@@ -573,19 +663,33 @@ int hw_serial_bt_send(const uint8_t *data, uint32_t length)
  */
 int hw_serial_bt_receive(uint8_t *buffer, uint32_t max_length, uint32_t *received_length)
 {
-    UNUSED(buffer);
-    UNUSED(max_length);
-    
-    if (!received_length) {
+    if (!buffer || !received_length || max_length == 0) {
         return HW_ERROR_INVALID_PARAM;
     }
 
+    if (!uart_bt_dev) {
+        return HW_ERROR_NOT_READY;
+    }
+
     *received_length = 0;
+    
+    /* Simple implementation - in real scenario, this would use UART interrupt */
+    for (uint32_t i = 0; i < max_length; i++) {
+        uint8_t byte;
+        int ret = uart_poll_in(uart_bt_dev, &byte);
+        if (ret == 0) {
+            buffer[i] = byte;
+            (*received_length)++;
+        } else {
+            break;
+        }
+    }
+
     return HW_OK;
 }
 
 /*============================================================================*/
-/* Simple Function Implementations                                            */
+/* Private Function Implementations                                           */
 /*============================================================================*/
 
 /**
@@ -595,11 +699,11 @@ static int init_gpio(void)
 {
     gpio_dev = DEVICE_DT_GET_OR_NULL(DT_NODELABEL(gpio0));
     if (!gpio_dev || !device_is_ready(gpio_dev)) {
-        printk("ERROR: GPIO device not found\n");
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "GPIO device not found");
         return HW_ERROR_GPIO;
     }
 
-    printk("GPIO subsystem initialized\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "GPIO subsystem initialized");
     return HW_OK;
 }
 
@@ -616,15 +720,43 @@ static int init_leds(void)
     for (uint32_t i = 0; i < HW_LED_COUNT; i++) {
         int ret = gpio_pin_configure(gpio_dev, led_pins[i], GPIO_OUTPUT_INACTIVE);
         if (ret != 0) {
-            printk("ERROR: Failed to configure LED %u pin: %d\n", i, ret);
+            DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure LED %u pin: %d", i, ret);
             return HW_ERROR_LED;
         }
 
         /* Initialize LED state */
-        led_states[i] = false;
+        led_states[i].pattern = HW_PULSE_OFF;
+        led_states[i].pattern_start_ms = 0;
+        led_states[i].cycle_count = 0;
+        led_states[i].state = false;
     }
 
-    printk("LEDs initialized\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "LEDs initialized");
+    return HW_OK;
+}
+
+/**
+ * @brief Initialize button
+ */
+static int init_button(void)
+{
+    /* Button initialization is handled in hw_button_init() */
+    return HW_OK;
+}
+
+/**
+ * @brief Initialize UART for Bluetooth communication
+ */
+static int init_uart_bt(void)
+{
+    /* Try to get UART device - this might not be available on all boards */
+    uart_bt_dev = DEVICE_DT_GET_OR_NULL(DT_NODELABEL(uart1));
+    if (!uart_bt_dev || !device_is_ready(uart_bt_dev)) {
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "UART Bluetooth device not found");
+        return HW_ERROR_USB;
+    }
+
+    DIAG_INFO(DIAG_CAT_SYSTEM, "UART Bluetooth initialized");
     return HW_OK;
 }
 
@@ -637,3 +769,113 @@ static int init_bluetooth(void)
     return HW_OK;
 }
 
+/**
+ * @brief Button callback function
+ */
+static void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
+{
+    ARG_UNUSED(dev);
+    ARG_UNUSED(cb);
+    ARG_UNUSED(pins);
+
+    uint32_t current_time = k_uptime_get_32();
+    
+    /* Debounce check */
+    if (current_time - button_state.last_press_time < BUTTON_DEBOUNCE_MS) {
+        return;
+    }
+
+    button_state.pressed = true;
+    button_state.press_count++;
+    button_state.last_press_time = current_time;
+
+    DIAG_INFO(DIAG_CAT_SYSTEM, "Button pressed (count: %u)", button_state.press_count);
+}
+
+/**
+ * @brief Update LED pattern
+ */
+static void update_led_pattern(uint32_t led_id)
+{
+    if (led_id >= HW_LED_COUNT) {
+        return;
+    }
+
+    hw_led_pattern_t pattern = led_states[led_id].pattern;
+    
+    /* Handle static patterns */
+    if (pattern == HW_PULSE_OFF || pattern == HW_PULSE_ON) {
+        return; /* Already handled in hw_led_set_pattern */
+    }
+
+    uint32_t elapsed_ms = k_uptime_get_32() - led_states[led_id].pattern_start_ms;
+    bool new_state = calculate_pattern_state(pattern, elapsed_ms);
+
+    /* Update LED if state changed */
+    if (new_state != led_states[led_id].state) {
+        gpio_pin_set(gpio_dev, led_pins[led_id], new_state ? 1 : 0);
+        led_states[led_id].state = new_state;
+    }
+}
+
+/**
+ * @brief Calculate pattern state based on elapsed time
+ */
+static uint32_t calculate_pattern_state(hw_led_pattern_t pattern, uint32_t elapsed_ms)
+{
+    switch (pattern) {
+        case HW_PULSE_SLOW_BLINK:
+            return (elapsed_ms / LED_PATTERN_SLOW_BLINK_PERIOD) % 2;
+
+        case HW_PULSE_FAST_BLINK:
+            return (elapsed_ms / LED_PATTERN_FAST_BLINK_PERIOD) % 2;
+
+        case HW_PULSE_BREATHING:
+            {
+                uint32_t cycle = elapsed_ms % LED_PATTERN_BREATHING_PERIOD;
+                uint32_t half_period = LED_PATTERN_BREATHING_PERIOD / 2;
+                return (cycle < half_period) ? 1 : 0;
+            }
+
+        case HW_PULSE_HEARTBEAT:
+            {
+                uint32_t cycle = elapsed_ms % LED_PATTERN_HEARTBEAT_PERIOD;
+                return (cycle < 100) ? 1 : 0; /* Short pulse */
+            }
+
+        case HW_PULSE_SOS:
+            {
+                uint32_t cycle = elapsed_ms % (LED_PATTERN_SOS_PERIOD * 21); /* SOS pattern */
+                uint32_t pos = cycle / LED_PATTERN_SOS_PERIOD;
+                /* SOS pattern: ... --- ... */
+                return ((pos >= 0 && pos < 3) || (pos >= 4 && pos < 7) || 
+                        (pos >= 8 && pos < 11) || (pos >= 12 && pos < 15) ||
+                        (pos >= 16 && pos < 19) || (pos >= 20 && pos < 21)) ? 1 : 0;
+            }
+
+        case HW_PULSE_DOUBLE_BLINK:
+            {
+                uint32_t cycle = elapsed_ms % LED_PATTERN_DOUBLE_BLINK_PERIOD;
+                return (cycle < 50 || (cycle >= 100 && cycle < 150)) ? 1 : 0;
+            }
+
+        default:
+            return 0;
+    }
+}
+
+/**
+ * @brief Send UART data
+ */
+static int send_uart_data(const uint8_t *data, uint32_t length)
+{
+    if (!uart_bt_dev || !data || length == 0) {
+        return HW_ERROR_INVALID_PARAM;
+    }
+
+    for (uint32_t i = 0; i < length; i++) {
+        uart_poll_out(uart_bt_dev, data[i]);
+    }
+
+    return HW_OK;
+}
