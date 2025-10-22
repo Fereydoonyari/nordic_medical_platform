@@ -165,6 +165,14 @@ int hw_init(void)
     dfu_state.in_boot_mode = false;
 
     hw_initialized = true;
+    
+    /* Now initialize button with interrupts (requires hw_initialized to be true) */
+    ret = hw_button_init();
+    if (ret != HW_OK) {
+        DIAG_WARNING(DIAG_CAT_HARDWARE, "Button interrupt initialization failed: %d", ret);
+        /* Non-critical error, continue */
+    }
+    
     DIAG_INFO(DIAG_CAT_HARDWARE, "Hardware abstraction layer initialized successfully");
 
     return HW_OK;
@@ -352,7 +360,7 @@ int hw_button_init(void)
 
     /* Configure button pin as input with pull-up */
     int ret = gpio_pin_configure(gpio_dev, HW_BUTTON_PIN, 
-                                GPIO_INPUT | GPIO_PULL_UP | GPIO_INT_EDGE_TO_ACTIVE);
+                                GPIO_INPUT | GPIO_PULL_UP);
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Failed to configure button pin: %d", ret);
         return HW_ERROR_GPIO;
@@ -371,8 +379,8 @@ int hw_button_init(void)
         return HW_ERROR_GPIO;
     }
 
-    /* Enable button interrupt */
-    ret = gpio_pin_interrupt_configure(gpio_dev, HW_BUTTON_PIN, GPIO_INT_EDGE_TO_ACTIVE);
+    /* Enable button interrupt on falling edge (button press - active low) */
+    ret = gpio_pin_interrupt_configure(gpio_dev, HW_BUTTON_PIN, GPIO_INT_EDGE_FALLING);
     if (ret != 0) {
         DIAG_ERROR(DIAG_CAT_HARDWARE, "Failed to enable button interrupt: %d", ret);
         return HW_ERROR_GPIO;
