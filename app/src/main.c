@@ -193,28 +193,43 @@ void main(void)
         return;
     }
 
-    /* Initialize DFU boot process (disabled when MCUboot is not enabled) */
-    #ifdef CONFIG_BOOTLOADER_MCUBOOT
+    /* Initialize DFU boot process */
     printk("Initializing DFU boot process...\n");
     ret = hw_dfu_init();
     if (ret != HW_OK) {
         printk("WARNING: DFU initialization failed (error: %d)\n", ret);
     }
 
-    /* Check if DFU boot is requested at startup (long-press SW1) */
+    /* Check if DFU boot is requested */
     if (hw_dfu_boot_requested()) {
-        printk("DFU boot requested - rebooting to bootloader\n");
-        /* Hint LEDs */
-        hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_FAST_BLINK);
-        hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SOS);
-        /* Short delay to show indication */
-        k_sleep(K_MSEC(200));
-        /* Reboot to MCUboot; bootloader will enter serial DFU if configured */
-        sys_reboot(SYS_REBOOT_WARM);
+        printk("DFU boot requested - entering DFU mode\n");
+        ret = hw_dfu_enter_boot_mode();
+        if (ret == HW_OK) {
+            /* Wait for button press to exit DFU mode */
+            printk("Waiting for button press to exit DFU mode...\n");
+            while (hw_dfu_boot_requested()) {
+                if (hw_button_is_pressed()) {
+                    printk("Button pressed - exiting DFU mode\n");
+                    hw_dfu_exit_boot_mode();
+                    break;
+                }
+                k_sleep(K_MSEC(100));
+            }
+        }
     }
-    #endif
 
-    printk("Starting normal operation...\n");
+    /* Wait for button press before starting normal operation */
+    printk("Waiting for button press to start normal operation...\n");
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
+    
+    bool button_pressed = hw_button_wait_press(10000); /* 10 second timeout */
+    if (button_pressed) {
+        printk("Button pressed - starting normal operation\n");
+    } else {
+        printk("Timeout - starting normal operation automatically\n");
+    }
+    
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
 
     /* Show hardware information */
     hw_info_t hw_info;
@@ -442,28 +457,6 @@ void hardware_update_thread(void *arg1, void *arg2, void *arg3)
         /* Update LED patterns every 50ms for smooth animation */
         hw_led_update_patterns();
         
-        #ifdef CONFIG_BOOTLOADER_MCUBOOT
-        /* Detect SW1 long-press (~2s) at runtime to enter DFU (reboot to MCUboot) */
-        static bool button_was_pressed = false;
-        static uint32_t button_press_start = 0U;
-        if (hw_button_is_pressed()) {
-            if (!button_was_pressed) {
-                button_was_pressed = true;
-                button_press_start = k_uptime_get_32();
-            } else {
-                if ((k_uptime_get_32() - button_press_start) > 2000U) {
-                    printk("Long-press detected on SW1 - rebooting to bootloader for DFU\n");
-                    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_FAST_BLINK);
-                    hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SOS);
-                    k_sleep(K_MSEC(100));
-                    sys_reboot(SYS_REBOOT_WARM);
-                }
-            }
-        } else {
-            button_was_pressed = false;
-        }
-        #endif
-
         /* Update thread heartbeat every few cycles */
         static uint32_t heartbeat_counter = 0;
         heartbeat_counter++;

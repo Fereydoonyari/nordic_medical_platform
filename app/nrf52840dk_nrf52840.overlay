@@ -16,7 +16,15 @@
     };
 
     /* DFU Boot Configuration */
-    /* Note: DFU is handled by MCUboot; app detects long-press on SW1 and reboots */
+    dfu-boot {
+        compatible = "nisc,dfu-boot";
+        button-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
+        led-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>,  /* LED1 - Status */
+                   <&gpio0 14 GPIO_ACTIVE_LOW>,  /* LED2 - Heartbeat */
+                   <&gpio0 15 GPIO_ACTIVE_LOW>,  /* LED3 - Communication */
+                   <&gpio0 16 GPIO_ACTIVE_LOW>;  /* LED4 - Error */
+        timeout-ms = <10000>;
+    };
 
     /* Bluetooth Module Configuration */
     bluetooth-module {
