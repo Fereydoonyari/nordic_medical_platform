@@ -34,7 +34,7 @@
  * 
  * @note This function does not return - it runs the main system loop indefinitely
  */
-void main(void) 
+int main(void) 
 {
     int ret;
 

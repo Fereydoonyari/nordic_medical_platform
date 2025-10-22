@@ -617,25 +617,3 @@ static int init_bluetooth(void)
     return HW_OK;
 }
 
-/**
- * @brief Button callback function (simplified)
- */
-static void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
-{
-    UNUSED(dev);
-    UNUSED(cb);
-    UNUSED(pins);
-
-    uint32_t current_time = k_uptime_get_32();
-    
-    /* Debounce check */
-    if (current_time - button_state.last_press_time < BUTTON_DEBOUNCE_MS) {
-        return;
-    }
-
-    button_state.pressed = true;
-    button_state.press_count++;
-    button_state.last_press_time = current_time;
-
-    printk("Button pressed (count: %u)\n", button_state.press_count);
-}
