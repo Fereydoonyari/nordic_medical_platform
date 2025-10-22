@@ -413,6 +413,7 @@ int hw_show_medical_pulse(uint32_t heart_rate_bpm)
 
     /* Calculate heartbeat period based on BPM */
     uint32_t heartbeat_period_ms = 60000U / heart_rate_bpm;
+    (void)heartbeat_period_ms;  /* Reserved for future dynamic heartbeat timing */
     
     /* Update LED pattern timing */
     led_states[HW_LED_HEARTBEAT].pattern = HW_PULSE_HEARTBEAT;
