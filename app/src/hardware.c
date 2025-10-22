@@ -846,50 +846,13 @@ int hw_ble_update_medical_data(uint16_t heart_rate, int16_t temperature,
     medical_data.spo2 = spo2;
     medical_data.motion = motion;
     
-    /* Send notifications if connected */
+    /* Send notifications if connected - but only if client enabled them */
     if (ble_state.connected && ble_state.conn) {
-        /* Notify all characteristics with the updated data */
+        /* Only send notifications, don't fail if client hasn't enabled them */
         struct bt_gatt_notify_params params;
         int ret;
         
-        /* Notify heart rate */
-        params.attr = &medical_svc.attrs[2];  /* Heart rate characteristic */
-        params.data = &medical_data.heart_rate;
-        params.len = sizeof(medical_data.heart_rate);
-        params.func = NULL;
-        ret = bt_gatt_notify_cb(ble_state.conn, &params);
-        if (ret != 0 && ret != -ENOTCONN) {
-            DIAG_DEBUG(DIAG_CAT_SYSTEM, "Heart rate notify failed: %d", ret);
-        }
-        
-        /* Notify temperature */
-        params.attr = &medical_svc.attrs[5];  /* Temperature characteristic */
-        params.data = &medical_data.temperature;
-        params.len = sizeof(medical_data.temperature);
-        ret = bt_gatt_notify_cb(ble_state.conn, &params);
-        if (ret != 0 && ret != -ENOTCONN) {
-            DIAG_DEBUG(DIAG_CAT_SYSTEM, "Temperature notify failed: %d", ret);
-        }
-        
-        /* Notify SpO2 */
-        params.attr = &medical_svc.attrs[8];  /* SpO2 characteristic */
-        params.data = &medical_data.spo2;
-        params.len = sizeof(medical_data.spo2);
-        ret = bt_gatt_notify_cb(ble_state.conn, &params);
-        if (ret != 0 && ret != -ENOTCONN) {
-            DIAG_DEBUG(DIAG_CAT_SYSTEM, "SpO2 notify failed: %d", ret);
-        }
-        
-        /* Notify motion */
-        params.attr = &medical_svc.attrs[11];  /* Motion characteristic */
-        params.data = &medical_data.motion;
-        params.len = sizeof(medical_data.motion);
-        ret = bt_gatt_notify_cb(ble_state.conn, &params);
-        if (ret != 0 && ret != -ENOTCONN) {
-            DIAG_DEBUG(DIAG_CAT_SYSTEM, "Motion notify failed: %d", ret);
-        }
-        
-        /* Notify all data combined */
+        /* Prepare combined data for "All Data" characteristic */
         struct {
             uint16_t heart_rate;
             int16_t temperature;
@@ -902,12 +865,16 @@ int hw_ble_update_medical_data(uint16_t heart_rate, int16_t temperature,
         all_data.spo2 = medical_data.spo2;
         all_data.motion = medical_data.motion;
         
+        /* Send "All Data" notification (most efficient) */
         params.attr = &medical_svc.attrs[14];  /* All data characteristic */
         params.data = &all_data;
         params.len = sizeof(all_data);
+        params.func = NULL;
         ret = bt_gatt_notify_cb(ble_state.conn, &params);
-        if (ret != 0 && ret != -ENOTCONN) {
-            DIAG_DEBUG(DIAG_CAT_SYSTEM, "All data notify failed: %d", ret);
+        
+        /* Only log real errors, not "notifications not enabled" */
+        if (ret != 0 && ret != -ENOTCONN && ret != -EINVAL) {
+            printk("WARNING: Notification failed: %d\n", ret);
         }
     }
     
@@ -1097,13 +1064,16 @@ static int init_bluetooth(void)
  */
 static void bt_connected_cb(struct bt_conn *conn, uint8_t err)
 {
+    char addr[BT_ADDR_LE_STR_LEN];
+    
     if (err) {
         printk("BLE connection failed (err 0x%02x)\n", err);
         DIAG_ERROR(DIAG_CAT_SYSTEM, "BLE connection failed: %d", err);
         return;
     }
 
-    printk("BLE device connected!\n");
+    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+    printk("BLE device connected! Address: %s\n", addr);
     DIAG_INFO(DIAG_CAT_SYSTEM, "BLE device connected successfully");
     
     ble_state.connected = true;
@@ -1112,6 +1082,19 @@ static void bt_connected_cb(struct bt_conn *conn, uint8_t err)
     /* Stop advertising when connected */
     if (ble_state.advertising) {
         hw_ble_advertising_stop();
+    }
+    
+    /* Request connection parameter update for stable connection */
+    struct bt_le_conn_param param = {
+        .interval_min = 24,   /* 30ms */
+        .interval_max = 40,   /* 50ms */
+        .latency = 0,         /* No latency */
+        .timeout = 400,       /* 4 seconds supervision timeout */
+    };
+    
+    int ret = bt_conn_le_param_update(conn, &param);
+    if (ret) {
+        printk("WARNING: Failed to update connection parameters: %d\n", ret);
     }
     
     /* Indicate connection with LED */
@@ -1123,8 +1106,41 @@ static void bt_connected_cb(struct bt_conn *conn, uint8_t err)
  */
 static void bt_disconnected_cb(struct bt_conn *conn, uint8_t reason)
 {
-    printk("BLE device disconnected (reason 0x%02x)\n", reason);
-    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE device disconnected: %d", reason);
+    char addr[BT_ADDR_LE_STR_LEN];
+    
+    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+    
+    printk("\n");
+    printk("========================================\n");
+    printk("BLE DISCONNECTED\n");
+    printk("========================================\n");
+    printk("Address: %s\n", addr);
+    printk("Reason: 0x%02x ", reason);
+    
+    /* Decode disconnect reason */
+    switch (reason) {
+        case 0x08:
+            printk("(Connection timeout)\n");
+            break;
+        case 0x13:
+            printk("(Remote user terminated)\n");
+            break;
+        case 0x16:
+            printk("(Connection terminated by local host)\n");
+            break;
+        case 0x3E:
+            printk("(Connection failed to be established)\n");
+            break;
+        case 0x22:
+            printk("(LMP response timeout)\n");
+            break;
+        default:
+            printk("(Unknown reason)\n");
+            break;
+    }
+    printk("========================================\n\n");
+    
+    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE device disconnected: reason=%d", reason);
     
     if (ble_state.conn) {
         bt_conn_unref(ble_state.conn);
@@ -1134,6 +1150,7 @@ static void bt_disconnected_cb(struct bt_conn *conn, uint8_t reason)
     ble_state.connected = false;
     
     /* Restart advertising */
+    printk("Restarting advertising...\n");
     hw_ble_advertising_start();
     
     /* Turn off connection LED */
