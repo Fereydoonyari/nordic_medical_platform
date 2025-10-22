@@ -193,7 +193,8 @@ void main(void)
         return;
     }
 
-    /* Initialize DFU boot process */
+    /* Initialize DFU boot process (disabled when MCUboot is not enabled) */
+    #ifdef CONFIG_BOOTLOADER_MCUBOOT
     printk("Initializing DFU boot process...\n");
     ret = hw_dfu_init();
     if (ret != HW_OK) {
@@ -211,10 +212,9 @@ void main(void)
         /* Reboot to MCUboot; bootloader will enter serial DFU if configured */
         sys_reboot(SYS_REBOOT_WARM);
     }
+    #endif
 
-    /* Optional pause at boot removed to speed startup */
-    
-    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
+    printk("Starting normal operation...\n");
 
     /* Show hardware information */
     hw_info_t hw_info;
@@ -442,6 +442,7 @@ void hardware_update_thread(void *arg1, void *arg2, void *arg3)
         /* Update LED patterns every 50ms for smooth animation */
         hw_led_update_patterns();
         
+        #ifdef CONFIG_BOOTLOADER_MCUBOOT
         /* Detect SW1 long-press (~2s) at runtime to enter DFU (reboot to MCUboot) */
         static bool button_was_pressed = false;
         static uint32_t button_press_start = 0U;
@@ -461,6 +462,7 @@ void hardware_update_thread(void *arg1, void *arg2, void *arg3)
         } else {
             button_was_pressed = false;
         }
+        #endif
 
         /* Update thread heartbeat every few cycles */
         static uint32_t heartbeat_counter = 0;
