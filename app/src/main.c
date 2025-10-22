@@ -59,6 +59,7 @@ int main(void)
     }
 
     /* Check if DFU boot is requested (button pressed during startup) */
+    printk("Checking for DFU boot request...\n");
     if (hw_dfu_boot_requested()) {
         printk("DFU boot requested - entering DFU mode\n");
         ret = hw_dfu_enter_boot_mode();
@@ -74,6 +75,8 @@ int main(void)
                 k_sleep(K_MSEC(100));
             }
         }
+    } else {
+        printk("No DFU boot requested - continuing with normal operation\n");
     }
 
     /* Wait 5 seconds for button press to start normal operation */

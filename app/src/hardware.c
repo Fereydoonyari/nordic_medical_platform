@@ -17,6 +17,8 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/gap.h>
+#include <zephyr/bluetooth/gatt.h>
+#include <zephyr/bluetooth/uuid.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/devicetree.h>
 #include <string.h>
@@ -69,6 +71,25 @@ static struct {
     char device_name[32];
 } ble_state;
 
+/** @brief Simple GATT service for device info */
+static uint8_t device_info_data[] = "Nordic Medical Platform v1.0";
+
+static ssize_t read_device_info(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                               void *buf, uint16_t len, uint16_t offset)
+{
+    UNUSED(conn);
+    UNUSED(attr);
+    
+    return bt_gatt_attr_read(conn, attr, buf, len, offset, device_info_data, sizeof(device_info_data) - 1);
+}
+
+/* GATT Service Declaration */
+BT_GATT_SERVICE_DEFINE(device_info_svc,
+    BT_GATT_PRIMARY_SERVICE(BT_UUID_DIS),
+    BT_GATT_CHARACTERISTIC(BT_UUID_DIS_MODEL_NUMBER, BT_GATT_CHRC_READ,
+                           BT_GATT_PERM_READ, read_device_info, NULL, NULL),
+);
+
 /** @brief Hardware initialization status */
 static bool hw_initialized = false;
 
@@ -114,7 +135,7 @@ int hw_init(void)
     }
 
     /* Initialize button for DFU */
-    ret = init_button();
+    ret = hw_button_init();
     if (ret != HW_OK) {
         printk("WARNING: Button initialization failed: %d\n", ret);
         /* Non-critical error, continue */
@@ -291,7 +312,16 @@ bool hw_button_is_pressed(void)
     }
 
     int ret = gpio_pin_get(gpio_dev, HW_BUTTON_PIN);
-    return (ret == 0); /* Active low button */
+    bool pressed = (ret == 0); /* Active low button */
+    
+    /* Debug output */
+    static bool last_state = false;
+    if (pressed != last_state) {
+        printk("Button state changed: %s\n", pressed ? "PRESSED" : "RELEASED");
+        last_state = pressed;
+    }
+    
+    return pressed;
 }
 
 /**
@@ -359,7 +389,8 @@ bool hw_dfu_boot_requested(void)
     }
 
     /* Check if button is pressed during boot */
-    if (hw_button_is_pressed()) {
+    bool button_pressed = hw_button_is_pressed();
+    if (button_pressed) {
         dfu_state.boot_requested = true;
         printk("DFU boot requested via button press\n");
     }
