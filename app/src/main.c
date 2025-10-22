@@ -612,13 +612,15 @@ void communication_thread(void *arg1, void *arg2, void *arg3)
         /* BLE data is updated in data acquisition thread every 1 second */
         /* Send notification to connected clients */
         if (hw_ble_is_connected()) {
-            hw_ble_send_notification();
-            printk("[BLE] Notification #%u: HR=%d Temp=%d.%d SpO2=%d.%d Motion=%d.%d\n",
-                   transmission_count,
-                   simple_sensor_values[0],
-                   simple_sensor_values[1]/10, simple_sensor_values[1]%10,
-                   simple_sensor_values[3]/10, simple_sensor_values[3]%10,
-                   simple_sensor_values[2]/10, simple_sensor_values[2]%10);
+            int ret = hw_ble_send_notification();
+            if (ret == HW_OK) {
+                printk("[BLE] ✓ Notification #%u sent: HR=%d Temp=%d.%d SpO2=%d.%d Motion=%d.%d\n",
+                       transmission_count,
+                       simple_sensor_values[0],
+                       simple_sensor_values[1]/10, simple_sensor_values[1]%10,
+                       simple_sensor_values[3]/10, simple_sensor_values[3]%10,
+                       simple_sensor_values[2]/10, simple_sensor_values[2]%10);
+            }
         } else {
             /* Full display when not connected */
             printk("\nTRANSMITTING MEDICAL DATA PACKET #%u\n", transmission_count);

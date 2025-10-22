@@ -862,7 +862,7 @@ int hw_ble_send_notification(void)
     }
     
     /* Prepare combined data for "All Data" characteristic */
-    struct {
+    static struct {
         uint16_t heart_rate;
         int16_t temperature;
         uint16_t spo2;
@@ -875,20 +875,31 @@ int hw_ble_send_notification(void)
     all_data.motion = medical_data.motion;
     
     /* Send "All Data" notification */
-    struct bt_gatt_notify_params params;
-    params.attr = &medical_svc.attrs[14];  /* All data characteristic */
-    params.data = &all_data;
-    params.len = sizeof(all_data);
-    params.func = NULL;
+    struct bt_gatt_notify_params params = {
+        .attr = &medical_svc.attrs[14],  /* All data characteristic */
+        .data = &all_data,
+        .len = sizeof(all_data),
+        .func = NULL,
+    };
     
     int ret = bt_gatt_notify_cb(ble_state.conn, &params);
     
-    /* Only log real errors, not "notifications not enabled" */
-    if (ret != 0 && ret != -ENOTCONN && ret != -EINVAL) {
-        printk("WARNING: Notification failed: %d\n", ret);
+    /* Report errors with explanations */
+    if (ret != 0) {
+        static bool warning_shown = false;
+        if (ret == -EINVAL && !warning_shown) {
+            printk("INFO: Notifications not enabled yet - enable them in nRF Connect app\n");
+            printk("      (Tap the triple-arrow icon on 'All Data' characteristic)\n");
+            warning_shown = true;
+        } else if (ret == -ENOTCONN) {
+            printk("WARNING: BLE disconnected\n");
+        } else if (ret != -EINVAL) {
+            printk("ERROR: Notification failed with error %d\n", ret);
+        }
         return HW_ERROR_USB;
     }
     
+    /* Success - notifications are working */
     return HW_OK;
 }
 
@@ -1237,11 +1248,15 @@ static void ccc_cfg_changed(const struct bt_gatt_attr *attr, uint16_t value)
 {
     bool notif_enabled = (value == BT_GATT_CCC_NOTIFY);
     
-    printk("Notifications %s for characteristic\n", notif_enabled ? "enabled" : "disabled");
-    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE notifications %s", notif_enabled ? "enabled" : "disabled");
+    printk("\n");
+    printk("========================================\n");
+    printk("NOTIFICATIONS %s\n", notif_enabled ? "ENABLED" : "DISABLED");
+    printk("========================================\n");
+    printk("You should now receive automatic updates every 15 seconds!\n");
+    printk("Watch nRF Connect for new data appearing.\n");
+    printk("========================================\n\n");
     
-    /* Note: In a more sophisticated implementation, we'd track which specific
-     * characteristic's notifications were enabled/disabled */
+    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE notifications %s", notif_enabled ? "enabled" : "disabled");
 }
 
 /**
