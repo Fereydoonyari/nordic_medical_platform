@@ -1,6 +1,6 @@
 /**
  * @file main.c
- * @brief Simplified main with working DFU boot process
+ * @brief Simplified main with working DFU boot timeout test
  */
 
  #include <zephyr/kernel.h>
@@ -63,28 +63,35 @@
          hw_led_set_state(i, true);
          printk("[LED] LED %d ON\n", i);
      }
-     k_sleep(K_MSEC(200));
+     k_sleep(K_MSEC(500));
      for (int i = 0; i < 4; i++) {
          hw_led_set_state(i, false);
          printk("[LED] LED %d OFF\n", i);
      }
      printk("[OK] LED test completed\n\n");
      
-     /* Check for DFU boot request */
+     /* Check for DFU boot request with 5 second timeout */
      printk("╔═══════════════════════════════════════╗\n");
      printk("║       DFU BOOT CHECK                  ║\n");
      printk("║                                       ║\n");
      printk("║  Press Button 1 within 5 seconds     ║\n");
      printk("║  to enter DFU (firmware update) mode  ║\n");
      printk("║                                       ║\n");
-     printk("║  Waiting... (5 second timeout)        ║\n");
+     printk("║  Starting countdown...                ║\n");
      printk("╚═══════════════════════════════════════╝\n\n");
      
+     /* Flash LEDs during countdown to show waiting */
+     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
+     
+     /* Wait for button with 5 second timeout */
      bool dfu_requested = hw_button_wait_press(5000);
+     
+     /* Stop blinking */
+     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
      
      if (dfu_requested) {
          /* Enter DFU mode */
-         printk("\n[DFU] Button detected! Entering DFU boot mode...\n");
+         printk("\n[DFU] ✓ Button detected! Entering DFU boot mode...\n");
          hw_dfu_enter_boot_mode();
          
          printk("\n");
@@ -117,7 +124,8 @@
          hw_dfu_exit_boot_mode();
          printk("[OK] DFU mode exited - transitioning to normal operation\n\n");
      } else {
-         printk("\n[INFO] No DFU request detected - proceeding to normal boot\n\n");
+         printk("\n[INFO] ✓ Timeout reached - No DFU request detected\n");
+         printk("[INFO] Proceeding to normal boot...\n\n");
      }
      
      /* Normal operation */
@@ -125,6 +133,7 @@
      printk("║   📱 NORMAL OPERATION MODE 📱         ║\n");
      printk("╚═══════════════════════════════════════╝\n\n");
      
+     printk("[INFO] System is now in normal operation mode\n");
      printk("[INFO] LED Pattern Configuration:\n");
      printk("  • LED 0 (Status):        Breathing (system alive)\n");
      printk("  • LED 1 (Heartbeat):     Pulse (medical monitoring)\n");
@@ -142,7 +151,7 @@
      }
      
      /* Set LED patterns for normal operation */
-     printk("[LED] Activating LED patterns...\n");
+     printk("[LED] Activating normal operation LED patterns...\n");
      hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_BREATHING);
      printk("  ✓ LED 0: Breathing pattern active\n");
      
@@ -164,21 +173,27 @@
      
      /* Main loop - monitor and report status */
      uint32_t heartbeat = 0;
+     uint32_t last_print_time = k_uptime_get_32();
+     
      while (1) {
-         k_sleep(K_SECONDS(10));
-         heartbeat++;
-         
-         uint32_t uptime_sec = k_uptime_get_32() / 1000;
-         uint32_t uptime_min = uptime_sec / 60;
-         uint32_t uptime_hours = uptime_min / 60;
-         
-         printk("\n[HEARTBEAT #%u] ═══════════════════════════\n", heartbeat);
-         printk("  Uptime:         %uh %um %us\n", 
-                uptime_hours, uptime_min % 60, uptime_sec % 60);
-         printk("  Button presses: %u\n", hw_button_get_press_count());
-         printk("  System status:  RUNNING\n");
-         printk("  LEDs active:    4/4\n");
-         printk("═══════════════════════════════════════════\n");
+         /* Print status every 10 seconds */
+         uint32_t current_time = k_uptime_get_32();
+         if ((current_time - last_print_time) >= 10000) {
+             heartbeat++;
+             last_print_time = current_time;
+             
+             uint32_t uptime_sec = current_time / 1000;
+             uint32_t uptime_min = uptime_sec / 60;
+             uint32_t uptime_hours = uptime_min / 60;
+             
+             printk("\n[HEARTBEAT #%u] ═══════════════════════════\n", heartbeat);
+             printk("  Uptime:         %uh %um %us\n", 
+                    uptime_hours, uptime_min % 60, uptime_sec % 60);
+             printk("  Button presses: %u\n", hw_button_get_press_count());
+             printk("  System status:  RUNNING\n");
+             printk("  LEDs active:    4/4\n");
+             printk("═══════════════════════════════════════════\n");
+         }
          
          /* Check for button press to demonstrate interaction */
          if (hw_button_is_pressed()) {
@@ -194,7 +209,15 @@
              }
              
              printk("[OK] Button event processed\n");
+             
+             /* Wait for button release to avoid multiple detections */
+             while (hw_button_is_pressed()) {
+                 k_sleep(K_MSEC(10));
+             }
          }
+         
+         /* Small sleep to avoid busy waiting */
+         k_sleep(K_MSEC(100));
      }
      
      return 0;

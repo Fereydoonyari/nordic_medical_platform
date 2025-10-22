@@ -1,6 +1,6 @@
 /**
  * @file hardware.c
- * @brief Simplified hardware abstraction with working DFU boot
+ * @brief Simplified hardware abstraction with working DFU boot - FIXED TIMEOUT
  */
 
  #include "hardware.h"
@@ -209,7 +209,7 @@
  }
  
  /*============================================================================*/
- /* Button Functions                                                           */
+ /* Button Functions - FIXED VERSION                                          */
  /*============================================================================*/
  
  int hw_button_init(void)
@@ -231,28 +231,40 @@
      printk("Waiting for button press (timeout: %u ms)...\n", timeout_ms);
      
      uint32_t start = k_uptime_get_32();
-     bool was_pressed = false;
+     uint32_t elapsed;
+     bool was_pressed = hw_button_is_pressed();  /* Get initial state */
      
-     while ((k_uptime_get_32() - start) < timeout_ms) {
+     /* Wait for timeout or button press */
+     do {
          bool is_pressed = hw_button_is_pressed();
          
-         /* Detect rising edge (button press) */
-         if (is_pressed && !was_pressed) {
-             /* Wait for release to debounce */
+         /* Detect state change from not pressed to pressed */
+         if (!was_pressed && is_pressed) {
+             /* Button pressed - wait for release (debounce) */
              k_sleep(K_MSEC(50));
+             
+             /* Wait for button release */
              while (hw_button_is_pressed()) {
                  k_sleep(K_MSEC(10));
+                 /* Check timeout even during button hold */
+                 if ((k_uptime_get_32() - start) >= timeout_ms) {
+                     printk("Timeout during button hold\n");
+                     return false;
+                 }
              }
+             
              printk("Button pressed!\n");
              dfu_state.button_presses++;
              return true;
          }
          
          was_pressed = is_pressed;
-         k_sleep(K_MSEC(10));
-     }
+         k_sleep(K_MSEC(10));  /* Small delay to avoid busy waiting */
+         
+         elapsed = k_uptime_get_32() - start;
+     } while (elapsed < timeout_ms);
      
-     printk("Button timeout\n");
+     printk("Button wait timeout - no press detected\n");
      return false;
  }
  
