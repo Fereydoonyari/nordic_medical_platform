@@ -167,8 +167,10 @@ static void init_sensor_readings(void)
 
 /**
  * @brief Main application entry point
- * @details Simplified startup sequence: 5-second button wait for DFU mode,
- * then proceeds to normal operation with threads and Bluetooth advertising.
+ * @details Initializes all system components, creates application threads,
+ * and enters the main system monitoring loop. Follows medical device
+ * software initialization patterns for safety and reliability.
+ * Includes DFU boot process with button press wait and Bluetooth advertising.
  * 
  * @note This function does not return - it runs the main system loop indefinitely
  */
@@ -198,19 +200,13 @@ void main(void)
         printk("WARNING: DFU initialization failed (error: %d)\n", ret);
     }
 
-    /* DFU Mode Check: Wait 5 seconds for button press */
-    printk("Waiting 5 seconds for DFU mode...\n");
-    printk("Press Button 1 within 5 seconds to enter DFU mode\n");
-    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
-    
-    bool dfu_requested = hw_button_wait_press(5000); /* 5 second timeout */
-    
-    if (dfu_requested) {
-        printk("Button pressed - entering DFU mode\n");
+    /* Check if DFU boot is requested */
+    if (hw_dfu_boot_requested()) {
+        printk("DFU boot requested - entering DFU mode\n");
         ret = hw_dfu_enter_boot_mode();
         if (ret == HW_OK) {
-            /* Stay in DFU mode until button pressed again */
-            printk("DFU mode active - press button to exit\n");
+            /* Wait for button press to exit DFU mode */
+            printk("Waiting for button press to exit DFU mode...\n");
             while (hw_dfu_boot_requested()) {
                 if (hw_button_is_pressed()) {
                     printk("Button pressed - exiting DFU mode\n");
@@ -220,8 +216,17 @@ void main(void)
                 k_sleep(K_MSEC(100));
             }
         }
+    }
+
+    /* Wait for button press before starting normal operation */
+    printk("Waiting for button press to start normal operation...\n");
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
+    
+    bool button_pressed = hw_button_wait_press(10000); /* 10 second timeout */
+    if (button_pressed) {
+        printk("Button pressed - starting normal operation\n");
     } else {
-        printk("No button press - proceeding to normal operation\n");
+        printk("Timeout - starting normal operation automatically\n");
     }
     
     hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
@@ -369,24 +374,27 @@ void main(void)
     }
 
     DIAG_INFO(DIAG_CAT_SYSTEM, "Medical wearable device startup complete");
-    printk("=== Normal Operation Started ===\n");
-    printk("Device is now running with threads and Bluetooth advertising\n");
+    printk("=== System Ready - All LEDs Active ===\n");
 
-    /* Main system monitoring loop */
-    uint32_t last_heartbeat = k_uptime_get_32();
+    /* Show system ready indication - single synchronized flash */
+    hw_led_set_state(HW_LED_STATUS, true);
+    hw_led_set_state(HW_LED_HEARTBEAT, true);  
+    hw_led_set_state(HW_LED_COMMUNICATION, true);
+    hw_led_set_state(HW_LED_ERROR, true);
+    k_sleep(K_MSEC(300));
     
+    /* Set final LED patterns for normal operation */
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_BREATHING);      /* Breathing = system OK */
+    hw_led_set_pattern(HW_LED_HEARTBEAT, HW_PULSE_HEARTBEAT);   /* Medical pulse */
+    hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_OFF);     /* Will be controlled by comm thread */
+    hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);             /* Off = no errors */
+
+    /* Main thread becomes system monitor - all work is done in other threads */
     while (1) {
-        uint32_t current_time = k_uptime_get_32();
+        k_sleep(K_SECONDS(MAIN_HEARTBEAT_INTERVAL_SEC));
+        DIAG_INFO(DIAG_CAT_SYSTEM, "Main thread heartbeat - System operational");
         
-        /* Periodic heartbeat every 30 seconds */
-        if ((current_time - last_heartbeat) >= (MAIN_HEARTBEAT_INTERVAL_SEC * 1000U)) {
-            DIAG_INFO(DIAG_CAT_SYSTEM, "System heartbeat - uptime: %u seconds", 
-                     current_time / 1000U);
-            last_heartbeat = current_time;
-        }
-        
-        /* Sleep for 1 second to prevent busy waiting */
-        k_sleep(K_MSEC(1000));
+        /* No LED blinking here - maintain breathing pattern */
     }
 }
 
