@@ -661,15 +661,24 @@ int hw_ble_advertising_init(void)
         return HW_ERROR_NOT_READY;
     }
 
+    printk("Enabling Bluetooth...\n");
     int ret = bt_enable(NULL);
     if (ret != 0) {
+        printk("ERROR: Bluetooth enable failed with error %d\n", ret);
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth enable failed: %d", ret);
         return HW_ERROR_USB;
     }
+    printk("Bluetooth enabled successfully\n");
 
     /* Set device name */
     strncpy(ble_state.device_name, "NISC-Medical-Device", sizeof(ble_state.device_name) - 1);
     ble_state.device_name[sizeof(ble_state.device_name) - 1] = '\0';
+    
+    /* Set BLE device name in stack */
+    ret = bt_set_name(ble_state.device_name);
+    if (ret != 0) {
+        printk("WARNING: Failed to set BLE device name: %d\n", ret);
+    }
 
     /* Set advertising data */
     ble_state.advertising_data_len = 0;
@@ -684,6 +693,7 @@ int hw_ble_advertising_init(void)
     ble_state.initialized = true;
     ble_state.advertising = false;
 
+    printk("Bluetooth advertising initialized successfully\n");
     DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising initialized");
     return HW_OK;
 }
@@ -694,19 +704,21 @@ int hw_ble_advertising_init(void)
 int hw_ble_advertising_start(void)
 {
     if (!ble_state.initialized) {
+        printk("ERROR: Cannot start advertising - BLE not initialized\n");
         return HW_ERROR_NOT_READY;
     }
 
+    printk("Starting BLE advertising as '%s'...\n", ble_state.device_name);
+
     struct bt_data ad[] = {
-        BT_DATA_BYTES(BT_DATA_FLAGS, BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR),
+        BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR)),
         BT_DATA(BT_DATA_NAME_COMPLETE, ble_state.device_name, strlen(ble_state.device_name)),
     };
 
-    int ret = bt_le_adv_start(BT_LE_ADV_PARAM(BT_LE_ADV_OPT_USE_IDENTITY,
-                                             BT_GAP_ADV_FAST_INT_MIN_2,
-                                             BT_GAP_ADV_FAST_INT_MAX_2,
-                                             NULL), ad, ARRAY_SIZE(ad), NULL, 0);
+    /* Use connectable advertising parameters */
+    int ret = bt_le_adv_start(BT_LE_ADV_CONN_NAME, ad, ARRAY_SIZE(ad), NULL, 0);
     if (ret != 0) {
+        printk("ERROR: Bluetooth advertising start failed with error %d\n", ret);
         DIAG_ERROR(DIAG_CAT_SYSTEM, "Bluetooth advertising start failed: %d", ret);
         return HW_ERROR_USB;
     }
@@ -714,6 +726,9 @@ int hw_ble_advertising_start(void)
     ble_state.advertising = true;
     hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_SLOW_BLINK);
 
+    printk("✓ Bluetooth advertising started successfully - Device should be discoverable now!\n");
+    printk("  Device Name: %s\n", ble_state.device_name);
+    printk("  Look for it in nRF Connect app\n");
     DIAG_INFO(DIAG_CAT_SYSTEM, "Bluetooth advertising started");
     return HW_OK;
 }
