@@ -231,17 +231,24 @@
      printk("Waiting for button press (timeout: %u ms)...\n", timeout_ms);
      
      uint32_t start = k_uptime_get_32();
+     bool was_pressed = false;
      
      while ((k_uptime_get_32() - start) < timeout_ms) {
-         if (hw_button_is_pressed()) {
+         bool is_pressed = hw_button_is_pressed();
+         
+         /* Detect rising edge (button press) */
+         if (is_pressed && !was_pressed) {
              /* Wait for release to debounce */
              k_sleep(K_MSEC(50));
              while (hw_button_is_pressed()) {
                  k_sleep(K_MSEC(10));
              }
              printk("Button pressed!\n");
+             dfu_state.button_presses++;
              return true;
          }
+         
+         was_pressed = is_pressed;
          k_sleep(K_MSEC(10));
      }
      
