@@ -704,12 +704,10 @@ int hw_ble_advertising_start(void)
         BT_DATA(BT_DATA_NAME_COMPLETE, ble_state.device_name, strlen(ble_state.device_name)),
     };
 
-    /* Use simple connectable undirected advertising */
+    /* Use legacy advertising parameters (not extended advertising) */
     struct bt_le_adv_param adv_param = {
         .id = BT_ID_DEFAULT,
-        .sid = 0,
-        .secondary_max_skip = 0,
-        .options = BT_LE_ADV_OPT_CONNECTABLE | BT_LE_ADV_OPT_USE_NAME,
+        .options = BT_LE_ADV_OPT_CONNECTABLE,
         .interval_min = BT_GAP_ADV_FAST_INT_MIN_2,
         .interval_max = BT_GAP_ADV_FAST_INT_MAX_2,
         .peer = NULL,
