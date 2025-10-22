@@ -385,6 +385,15 @@ int hw_ble_update_medical_data(uint16_t heart_rate, int16_t temperature,
 bool hw_ble_is_connected(void);
 
 /**
+ * @brief Send notification for updated medical data
+ * @details Sends a notification to the connected device for all medical data.
+ * Should be called periodically (e.g., every 15 seconds) when data has updated.
+ * 
+ * @return HW_OK on success, error code on failure
+ */
+int hw_ble_send_notification(void);
+
+/**
  * @brief Send notification for a specific characteristic
  * @details Sends a notification to the connected device for updated data.
  * 

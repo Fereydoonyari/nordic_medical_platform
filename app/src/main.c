@@ -510,47 +510,66 @@ void data_acquisition_thread(void *arg1, void *arg2, void *arg3)
         /* Update heartbeat LED with current heart rate */
         hw_show_medical_pulse((uint32_t)simple_sensor_values[0]);
 
-        /* Display real-time medical data pulse with clean formatting */
-        printk("\n");
-        printk("MEDICAL DATA PULSE #%u [Time: %u.%03u s]\n", 
-               cycle_count, uptime_sec, (k_uptime_get_32() % 1000U));
-        printk("+-----------------------------------------+\n");
-        printk("| HEART RATE:   %3d bpm   [Quality: %2d%%] |\n", 
-               simple_sensor_values[0], 88 + (cycle_count % 13));
-        printk("| TEMPERATURE:  %2d.%d°C    [Quality: %2d%%] |\n", 
-               simple_sensor_values[1] / 10, simple_sensor_values[1] % 10,
-               91 + (cycle_count % 10));
-        printk("| MOTION:       %d.%d g     [Quality: %2d%%] |\n", 
-               simple_sensor_values[2] / 10, simple_sensor_values[2] % 10,
-               94 + (cycle_count % 7));
-        printk("| BLOOD O2:     %2d.%d%%     [Quality: %2d%%] |\n", 
-               simple_sensor_values[3] / 10, simple_sensor_values[3] % 10,
-               97 + (cycle_count % 4));
-        printk("+-----------------------------------------+\n");
+        /* Display real-time medical data pulse - simplified when BLE connected */
+        if (!hw_ble_is_connected()) {
+            /* Full display when not connected */
+            printk("\n");
+            printk("MEDICAL DATA PULSE #%u [Time: %u.%03u s]\n", 
+                   cycle_count, uptime_sec, (k_uptime_get_32() % 1000U));
+            printk("+-----------------------------------------+\n");
+            printk("| HEART RATE:   %3d bpm   [Quality: %2d%%] |\n", 
+                   simple_sensor_values[0], 88 + (cycle_count % 13));
+            printk("| TEMPERATURE:  %2d.%d°C    [Quality: %2d%%] |\n", 
+                   simple_sensor_values[1] / 10, simple_sensor_values[1] % 10,
+                   91 + (cycle_count % 10));
+            printk("| MOTION:       %d.%d g     [Quality: %2d%%] |\n", 
+                   simple_sensor_values[2] / 10, simple_sensor_values[2] % 10,
+                   94 + (cycle_count % 7));
+            printk("| BLOOD O2:     %2d.%d%%     [Quality: %2d%%] |\n", 
+                   simple_sensor_values[3] / 10, simple_sensor_values[3] % 10,
+                   97 + (cycle_count % 4));
+            printk("+-----------------------------------------+\n");
+        } else {
+            /* Minimal logging when BLE connected to avoid blocking */
+            if (cycle_count % 5 == 0) {
+                printk("[BLE] Data: HR=%d Temp=%d.%d SpO2=%d.%d Motion=%d.%d\n",
+                       simple_sensor_values[0],
+                       simple_sensor_values[1]/10, simple_sensor_values[1]%10,
+                       simple_sensor_values[3]/10, simple_sensor_values[3]%10,
+                       simple_sensor_values[2]/10, simple_sensor_values[2]%10);
+            }
+        }
+
+        /* Update BLE GATT data immediately after sensor reading */
+        hw_ble_update_medical_data(
+            (uint16_t)simple_sensor_values[0],  /* Heart rate */
+            (int16_t)simple_sensor_values[1],   /* Temperature */
+            (uint16_t)simple_sensor_values[3],  /* SpO2 */
+            (uint16_t)simple_sensor_values[2]   /* Motion */
+        );
 
         /* Add special indicators for notable events with LED feedback */
-        if (simple_sensor_values[0] > 85) {
-            printk("ALERT: Elevated heart rate detected!\n");
-            hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_FAST_BLINK);
-            k_sleep(K_MSEC(100));
-            hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);
-        }
-        if (simple_sensor_values[2] > 20) {
-            printk("INFO: High activity detected - Patient is active\n");
-            /* Brief communication LED flash instead of disrupting status LED */
-            hw_led_set_state(HW_LED_COMMUNICATION, true);
-            k_sleep(K_MSEC(100));
-            hw_led_set_state(HW_LED_COMMUNICATION, false);
-        }
-        if (simple_sensor_values[1] > 372) {
-            printk("WARNING: Elevated temperature detected\n");
-            hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SLOW_BLINK);
-        } else if (simple_sensor_values[3] < 960) {
-            printk("CAUTION: Blood oxygen below normal range\n");
-            hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_DOUBLE_BLINK);
-        } else {
-            /* Clear error LED if no conditions are met */
-            hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);
+        if (!hw_ble_is_connected()) {
+            /* Only show alerts when not connected to avoid console spam */
+            if (simple_sensor_values[0] > 85) {
+                printk("ALERT: Elevated heart rate detected!\n");
+                hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_FAST_BLINK);
+                k_sleep(K_MSEC(100));
+                hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);
+            }
+            if (simple_sensor_values[2] > 20) {
+                printk("INFO: High activity detected - Patient is active\n");
+            }
+            if (simple_sensor_values[1] > 372) {
+                printk("WARNING: Elevated temperature detected\n");
+                hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_SLOW_BLINK);
+            } else if (simple_sensor_values[3] < 960) {
+                printk("CAUTION: Blood oxygen below normal range\n");
+                hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_DOUBLE_BLINK);
+            } else {
+                /* Clear error LED if no conditions are met */
+                hw_led_set_pattern(HW_LED_ERROR, HW_PULSE_OFF);
+            }
         }
 
         cycle_count++;
@@ -590,27 +609,28 @@ void communication_thread(void *arg1, void *arg2, void *arg3)
 
         transmission_count++;
 
-        /* Show communication activity on LED */
-        hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_FAST_BLINK);
-        
-        /* Show data transmission with current medical readings */
-        printk("\nTRANSMITTING MEDICAL DATA PACKET #%u\n", transmission_count);
-        printk("+--- Current Patient Vitals Summary ---+\n");
-        printk("| HR: %3d bpm  | Temp: %2d.%d°C         |\n", 
-               simple_sensor_values[0],
-               simple_sensor_values[1] / 10, simple_sensor_values[1] % 10);
-        printk("| Motion: %d.%dg | SpO2: %2d.%d%%         |\n", 
-               simple_sensor_values[2] / 10, simple_sensor_values[2] % 10,
-               simple_sensor_values[3] / 10, simple_sensor_values[3] % 10);
-        printk("+-------------------------------------+\n");
-        
-        /* Send medical data via BLE GATT characteristics */
-        hw_ble_update_medical_data(
-            (uint16_t)simple_sensor_values[0],  /* Heart rate */
-            (int16_t)simple_sensor_values[1],   /* Temperature */
-            (uint16_t)simple_sensor_values[3],  /* SpO2 */
-            (uint16_t)simple_sensor_values[2]   /* Motion */
-        );
+        /* BLE data is updated in data acquisition thread every 1 second */
+        /* Send notification to connected clients */
+        if (hw_ble_is_connected()) {
+            hw_ble_send_notification();
+            printk("[BLE] Notification #%u: HR=%d Temp=%d.%d SpO2=%d.%d Motion=%d.%d\n",
+                   transmission_count,
+                   simple_sensor_values[0],
+                   simple_sensor_values[1]/10, simple_sensor_values[1]%10,
+                   simple_sensor_values[3]/10, simple_sensor_values[3]%10,
+                   simple_sensor_values[2]/10, simple_sensor_values[2]%10);
+        } else {
+            /* Full display when not connected */
+            printk("\nTRANSMITTING MEDICAL DATA PACKET #%u\n", transmission_count);
+            printk("+--- Current Patient Vitals Summary ---+\n");
+            printk("| HR: %3d bpm  | Temp: %2d.%d°C         |\n", 
+                   simple_sensor_values[0],
+                   simple_sensor_values[1] / 10, simple_sensor_values[1] % 10);
+            printk("| Motion: %d.%dg | SpO2: %2d.%d%%         |\n", 
+                   simple_sensor_values[2] / 10, simple_sensor_values[2] % 10,
+                   simple_sensor_values[3] / 10, simple_sensor_values[3] % 10);
+            printk("+-------------------------------------+\n");
+        }
         
         /* Also send via serial Bluetooth for legacy support */
         char bt_data[64];

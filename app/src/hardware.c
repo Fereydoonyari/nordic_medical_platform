@@ -840,42 +840,53 @@ int hw_serial_bt_receive(uint8_t *buffer, uint32_t max_length, uint32_t *receive
 int hw_ble_update_medical_data(uint16_t heart_rate, int16_t temperature, 
                                  uint16_t spo2, uint16_t motion)
 {
-    /* Update medical data */
+    /* Always update medical data so reads work even without notifications */
     medical_data.heart_rate = heart_rate;
     medical_data.temperature = temperature;
     medical_data.spo2 = spo2;
     medical_data.motion = motion;
     
-    /* Send notifications if connected - but only if client enabled them */
-    if (ble_state.connected && ble_state.conn) {
-        /* Only send notifications, don't fail if client hasn't enabled them */
-        struct bt_gatt_notify_params params;
-        int ret;
-        
-        /* Prepare combined data for "All Data" characteristic */
-        struct {
-            uint16_t heart_rate;
-            int16_t temperature;
-            uint16_t spo2;
-            uint16_t motion;
-        } __attribute__((packed)) all_data;
-        
-        all_data.heart_rate = medical_data.heart_rate;
-        all_data.temperature = medical_data.temperature;
-        all_data.spo2 = medical_data.spo2;
-        all_data.motion = medical_data.motion;
-        
-        /* Send "All Data" notification (most efficient) */
-        params.attr = &medical_svc.attrs[14];  /* All data characteristic */
-        params.data = &all_data;
-        params.len = sizeof(all_data);
-        params.func = NULL;
-        ret = bt_gatt_notify_cb(ble_state.conn, &params);
-        
-        /* Only log real errors, not "notifications not enabled" */
-        if (ret != 0 && ret != -ENOTCONN && ret != -EINVAL) {
-            printk("WARNING: Notification failed: %d\n", ret);
-        }
+    /* Only send notifications if connected (not every time data updates) */
+    /* Notifications are sent from communication thread every 15 seconds */
+    
+    return HW_OK;
+}
+
+/**
+ * @brief Send BLE notifications for updated medical data
+ */
+int hw_ble_send_notification(void)
+{
+    if (!ble_state.connected || !ble_state.conn) {
+        return HW_ERROR_NOT_READY;
+    }
+    
+    /* Prepare combined data for "All Data" characteristic */
+    struct {
+        uint16_t heart_rate;
+        int16_t temperature;
+        uint16_t spo2;
+        uint16_t motion;
+    } __attribute__((packed)) all_data;
+    
+    all_data.heart_rate = medical_data.heart_rate;
+    all_data.temperature = medical_data.temperature;
+    all_data.spo2 = medical_data.spo2;
+    all_data.motion = medical_data.motion;
+    
+    /* Send "All Data" notification */
+    struct bt_gatt_notify_params params;
+    params.attr = &medical_svc.attrs[14];  /* All data characteristic */
+    params.data = &all_data;
+    params.len = sizeof(all_data);
+    params.func = NULL;
+    
+    int ret = bt_gatt_notify_cb(ble_state.conn, &params);
+    
+    /* Only log real errors, not "notifications not enabled" */
+    if (ret != 0 && ret != -ENOTCONN && ret != -EINVAL) {
+        printk("WARNING: Notification failed: %d\n", ret);
+        return HW_ERROR_USB;
     }
     
     return HW_OK;
