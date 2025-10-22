@@ -278,11 +278,11 @@ void main(void)
         return;
     }
 
-    /* Initialize shell commands for USB console */
-    ret = shell_commands_init();
+    /* Shell disabled - uncomment if you re-enable CONFIG_SHELL in prj.conf */
+    /* ret = shell_commands_init();
     if (ret != SHELL_OK) {
         DIAG_WARNING(DIAG_CAT_SYSTEM, "Shell commands initialization failed");
-    }
+    } */
 
     /* Initialize Bluetooth advertising */
     printk("Initializing Bluetooth advertising...\n");

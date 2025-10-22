@@ -101,19 +101,19 @@ typedef enum {
 #define THREAD_PRIO_DIAGNOSTICS      5U
 
 /** @brief Supervisor thread stack size in bytes */
-#define THREAD_STACK_SUPERVISOR      1024U
+#define THREAD_STACK_SUPERVISOR      2048U
 
 /** @brief Data acquisition thread stack size in bytes */
-#define THREAD_STACK_DATA_ACQ        1536U
+#define THREAD_STACK_DATA_ACQ        3072U
 
-/** @brief Communication thread stack size in bytes */
-#define THREAD_STACK_COMMUNICATION   1024U
+/** @brief Communication thread stack size in bytes (needs extra for BLE) */
+#define THREAD_STACK_COMMUNICATION   2560U
 
 /** @brief Data processing thread stack size in bytes */
-#define THREAD_STACK_DATA_PROC       1536U
+#define THREAD_STACK_DATA_PROC       2048U
 
-/** @brief Diagnostics thread stack size in bytes */
-#define THREAD_STACK_DIAGNOSTICS     512U
+/** @brief Diagnostics thread stack size in bytes (hardware/LED updates) */
+#define THREAD_STACK_DIAGNOSTICS     1536U
 
 /** @} */ /* End of ThreadConfig group */
 
