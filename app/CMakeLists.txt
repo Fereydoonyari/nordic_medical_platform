@@ -1,7 +1,4 @@
-# Ensure reboot API is linked
-zephyr_compile_definitions_ifdef(CONFIG_BOOTLOADER_MCUBOOT USE_MCUBOOT)
 cmake_minimum_required(VERSION 3.20.0)
-
 # Add custom board root
 set(BOARD_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
