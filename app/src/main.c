@@ -604,7 +604,15 @@ void communication_thread(void *arg1, void *arg2, void *arg3)
                simple_sensor_values[3] / 10, simple_sensor_values[3] % 10);
         printk("+-------------------------------------+\n");
         
-        /* Send medical data via serial Bluetooth */
+        /* Send medical data via BLE GATT characteristics */
+        hw_ble_update_medical_data(
+            (uint16_t)simple_sensor_values[0],  /* Heart rate */
+            (int16_t)simple_sensor_values[1],   /* Temperature */
+            (uint16_t)simple_sensor_values[3],  /* SpO2 */
+            (uint16_t)simple_sensor_values[2]   /* Motion */
+        );
+        
+        /* Also send via serial Bluetooth for legacy support */
         char bt_data[64];
         snprintf(bt_data, sizeof(bt_data), "HR:%d,T:%d.%d,M:%d.%d,SpO2:%d.%d",
                 simple_sensor_values[0],
@@ -618,8 +626,13 @@ void communication_thread(void *arg1, void *arg2, void *arg3)
         uint32_t protocol = transmission_count % 3U;
         switch (protocol) {
             case 0U:
-                printk("Via: Bluetooth Low Energy (BLE) - Advertising Active\n");
+                printk("Via: Bluetooth Low Energy (BLE GATT)\n");
                 printk("Device Name: NISC-Medical-Device\n");
+                if (hw_ble_is_connected()) {
+                    printk("Status: CONNECTED - Data transmitted via GATT notifications\n");
+                } else {
+                    printk("Status: Advertising - Waiting for connection...\n");
+                }
                 /* Quick blue-like flash pattern */
                 for (int i = 0; i < 3; i++) {
                     hw_led_set_state(HW_LED_COMMUNICATION, true);

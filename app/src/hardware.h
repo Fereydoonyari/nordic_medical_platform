@@ -358,4 +358,39 @@ int hw_serial_bt_send(const uint8_t *data, uint32_t length);
  */
 int hw_serial_bt_receive(uint8_t *buffer, uint32_t max_length, uint32_t *received_length);
 
+/*============================================================================*/
+/* BLE GATT Medical Data Functions                                            */
+/*============================================================================*/
+
+/**
+ * @brief Update medical data for BLE GATT characteristics
+ * @details Updates the medical data that will be sent to connected BLE devices.
+ * This function also sends notifications if enabled.
+ * 
+ * @param heart_rate Heart rate in bpm
+ * @param temperature Temperature in 0.1°C units (e.g., 366 = 36.6°C)
+ * @param spo2 Blood oxygen in 0.1% units (e.g., 980 = 98.0%)
+ * @param motion Motion in 0.1g units
+ * @return HW_OK on success, error code on failure
+ */
+int hw_ble_update_medical_data(uint16_t heart_rate, int16_t temperature, 
+                                 uint16_t spo2, uint16_t motion);
+
+/**
+ * @brief Check if a BLE device is connected
+ * @details Returns the current BLE connection status.
+ * 
+ * @return true if connected, false otherwise
+ */
+bool hw_ble_is_connected(void);
+
+/**
+ * @brief Send notification for a specific characteristic
+ * @details Sends a notification to the connected device for updated data.
+ * 
+ * @param characteristic_index Index of the characteristic (0=HR, 1=Temp, 2=SpO2, 3=Motion, 4=All)
+ * @return HW_OK on success, error code on failure
+ */
+int hw_ble_notify_characteristic(uint8_t characteristic_index);
+
 #endif /* HARDWARE_H */

@@ -21,6 +21,9 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/gap.h>
+#include <zephyr/bluetooth/gatt.h>
+#include <zephyr/bluetooth/uuid.h>
+#include <zephyr/bluetooth/conn.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/devicetree.h>
 #include <string.h>
@@ -46,6 +49,42 @@
 
 /** @brief Bluetooth advertising interval in milliseconds */
 #define BLE_ADV_INTERVAL_MS                100U
+
+/*============================================================================*/
+/* BLE GATT Service UUIDs                                                     */
+/*============================================================================*/
+
+/** @brief Medical Device Service UUID (custom 128-bit UUID) */
+#define BT_UUID_MEDICAL_SERVICE_VAL \
+    BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef0)
+
+/** @brief Heart Rate Characteristic UUID */
+#define BT_UUID_HEART_RATE_CHAR_VAL \
+    BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef1)
+
+/** @brief Temperature Characteristic UUID */
+#define BT_UUID_TEMPERATURE_CHAR_VAL \
+    BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef2)
+
+/** @brief SpO2 Characteristic UUID */
+#define BT_UUID_SPO2_CHAR_VAL \
+    BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef3)
+
+/** @brief Motion Characteristic UUID */
+#define BT_UUID_MOTION_CHAR_VAL \
+    BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef4)
+
+/** @brief All Medical Data Characteristic UUID (combined data) */
+#define BT_UUID_ALL_DATA_CHAR_VAL \
+    BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef5)
+
+/* Define UUID variables */
+static struct bt_uuid_128 medical_svc_uuid = BT_UUID_INIT_128(BT_UUID_MEDICAL_SERVICE_VAL);
+static struct bt_uuid_128 heart_rate_char_uuid = BT_UUID_INIT_128(BT_UUID_HEART_RATE_CHAR_VAL);
+static struct bt_uuid_128 temperature_char_uuid = BT_UUID_INIT_128(BT_UUID_TEMPERATURE_CHAR_VAL);
+static struct bt_uuid_128 spo2_char_uuid = BT_UUID_INIT_128(BT_UUID_SPO2_CHAR_VAL);
+static struct bt_uuid_128 motion_char_uuid = BT_UUID_INIT_128(BT_UUID_MOTION_CHAR_VAL);
+static struct bt_uuid_128 all_data_char_uuid = BT_UUID_INIT_128(BT_UUID_ALL_DATA_CHAR_VAL);
 
 /*============================================================================*/
 /* Private Global Variables                                                   */
@@ -85,10 +124,21 @@ static struct {
 static struct {
     bool initialized;
     bool advertising;
+    bool connected;
+    struct bt_conn *conn;
     char device_name[32];
     uint8_t advertising_data[31];
     uint8_t advertising_data_len;
 } ble_state;
+
+/** @brief Medical data for GATT characteristics */
+static struct {
+    uint16_t heart_rate;       /* bpm */
+    int16_t temperature;       /* 0.1°C units (e.g., 366 = 36.6°C) */
+    uint16_t spo2;             /* 0.1% units (e.g., 980 = 98.0%) */
+    uint16_t motion;           /* 0.1g units */
+    bool notify_enabled[5];    /* Notification enable flags for each characteristic */
+} medical_data;
 
 /** @brief Hardware initialization status */
 static bool hw_initialized = false;
@@ -106,6 +156,74 @@ static void button_callback(const struct device *dev, struct gpio_callback *cb, 
 static void update_led_pattern(uint32_t led_id);
 static uint32_t calculate_pattern_state(hw_led_pattern_t pattern, uint32_t elapsed_ms);
 static int send_uart_data(const uint8_t *data, uint32_t length);
+
+/* BLE GATT callbacks */
+static void bt_connected_cb(struct bt_conn *conn, uint8_t err);
+static void bt_disconnected_cb(struct bt_conn *conn, uint8_t reason);
+static ssize_t read_heart_rate(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                               void *buf, uint16_t len, uint16_t offset);
+static ssize_t read_temperature(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                                void *buf, uint16_t len, uint16_t offset);
+static ssize_t read_spo2(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                         void *buf, uint16_t len, uint16_t offset);
+static ssize_t read_motion(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                           void *buf, uint16_t len, uint16_t offset);
+static ssize_t read_all_data(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                             void *buf, uint16_t len, uint16_t offset);
+static void ccc_cfg_changed(const struct bt_gatt_attr *attr, uint16_t value);
+
+/*============================================================================*/
+/* BLE Connection Callbacks                                                   */
+/*============================================================================*/
+
+BT_CONN_CB_DEFINE(conn_callbacks) = {
+    .connected = bt_connected_cb,
+    .disconnected = bt_disconnected_cb,
+};
+
+/*============================================================================*/
+/* BLE GATT Service Definition                                                */
+/*============================================================================*/
+
+/* Medical Device Service */
+BT_GATT_SERVICE_DEFINE(medical_svc,
+    BT_GATT_PRIMARY_SERVICE(&medical_svc_uuid),
+    
+    /* Heart Rate Characteristic */
+    BT_GATT_CHARACTERISTIC(&heart_rate_char_uuid.uuid,
+                          BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
+                          BT_GATT_PERM_READ,
+                          read_heart_rate, NULL, NULL),
+    BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+    
+    /* Temperature Characteristic */
+    BT_GATT_CHARACTERISTIC(&temperature_char_uuid.uuid,
+                          BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
+                          BT_GATT_PERM_READ,
+                          read_temperature, NULL, NULL),
+    BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+    
+    /* SpO2 Characteristic */
+    BT_GATT_CHARACTERISTIC(&spo2_char_uuid.uuid,
+                          BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
+                          BT_GATT_PERM_READ,
+                          read_spo2, NULL, NULL),
+    BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+    
+    /* Motion Characteristic */
+    BT_GATT_CHARACTERISTIC(&motion_char_uuid.uuid,
+                          BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
+                          BT_GATT_PERM_READ,
+                          read_motion, NULL, NULL),
+    BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+    
+    /* All Data Characteristic (combined) */
+    BT_GATT_CHARACTERISTIC(&all_data_char_uuid.uuid,
+                          BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
+                          BT_GATT_PERM_READ,
+                          read_all_data, NULL, NULL),
+    BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
+);
 
 /*============================================================================*/
 /* Public Function Implementations                                            */
@@ -704,6 +822,166 @@ int hw_serial_bt_receive(uint8_t *buffer, uint32_t max_length, uint32_t *receive
     return HW_OK;
 }
 
+/**
+ * @brief Update medical data for BLE GATT characteristics
+ */
+int hw_ble_update_medical_data(uint16_t heart_rate, int16_t temperature, 
+                                 uint16_t spo2, uint16_t motion)
+{
+    /* Update medical data */
+    medical_data.heart_rate = heart_rate;
+    medical_data.temperature = temperature;
+    medical_data.spo2 = spo2;
+    medical_data.motion = motion;
+    
+    /* Send notifications if connected */
+    if (ble_state.connected && ble_state.conn) {
+        /* Notify all characteristics with the updated data */
+        struct bt_gatt_notify_params params;
+        int ret;
+        
+        /* Notify heart rate */
+        params.attr = &medical_svc.attrs[2];  /* Heart rate characteristic */
+        params.data = &medical_data.heart_rate;
+        params.len = sizeof(medical_data.heart_rate);
+        params.func = NULL;
+        ret = bt_gatt_notify_cb(ble_state.conn, &params);
+        if (ret != 0 && ret != -ENOTCONN) {
+            DIAG_DEBUG(DIAG_CAT_SYSTEM, "Heart rate notify failed: %d", ret);
+        }
+        
+        /* Notify temperature */
+        params.attr = &medical_svc.attrs[5];  /* Temperature characteristic */
+        params.data = &medical_data.temperature;
+        params.len = sizeof(medical_data.temperature);
+        ret = bt_gatt_notify_cb(ble_state.conn, &params);
+        if (ret != 0 && ret != -ENOTCONN) {
+            DIAG_DEBUG(DIAG_CAT_SYSTEM, "Temperature notify failed: %d", ret);
+        }
+        
+        /* Notify SpO2 */
+        params.attr = &medical_svc.attrs[8];  /* SpO2 characteristic */
+        params.data = &medical_data.spo2;
+        params.len = sizeof(medical_data.spo2);
+        ret = bt_gatt_notify_cb(ble_state.conn, &params);
+        if (ret != 0 && ret != -ENOTCONN) {
+            DIAG_DEBUG(DIAG_CAT_SYSTEM, "SpO2 notify failed: %d", ret);
+        }
+        
+        /* Notify motion */
+        params.attr = &medical_svc.attrs[11];  /* Motion characteristic */
+        params.data = &medical_data.motion;
+        params.len = sizeof(medical_data.motion);
+        ret = bt_gatt_notify_cb(ble_state.conn, &params);
+        if (ret != 0 && ret != -ENOTCONN) {
+            DIAG_DEBUG(DIAG_CAT_SYSTEM, "Motion notify failed: %d", ret);
+        }
+        
+        /* Notify all data combined */
+        struct {
+            uint16_t heart_rate;
+            int16_t temperature;
+            uint16_t spo2;
+            uint16_t motion;
+        } __attribute__((packed)) all_data;
+        
+        all_data.heart_rate = medical_data.heart_rate;
+        all_data.temperature = medical_data.temperature;
+        all_data.spo2 = medical_data.spo2;
+        all_data.motion = medical_data.motion;
+        
+        params.attr = &medical_svc.attrs[14];  /* All data characteristic */
+        params.data = &all_data;
+        params.len = sizeof(all_data);
+        ret = bt_gatt_notify_cb(ble_state.conn, &params);
+        if (ret != 0 && ret != -ENOTCONN) {
+            DIAG_DEBUG(DIAG_CAT_SYSTEM, "All data notify failed: %d", ret);
+        }
+    }
+    
+    return HW_OK;
+}
+
+/**
+ * @brief Check if a BLE device is connected
+ */
+bool hw_ble_is_connected(void)
+{
+    return ble_state.connected;
+}
+
+/**
+ * @brief Send notification for a specific characteristic
+ */
+int hw_ble_notify_characteristic(uint8_t characteristic_index)
+{
+    if (!ble_state.connected || !ble_state.conn) {
+        return HW_ERROR_NOT_READY;
+    }
+    
+    struct bt_gatt_notify_params params;
+    const void *data;
+    uint16_t len;
+    
+    /* Determine which characteristic to notify based on index */
+    switch (characteristic_index) {
+        case 0:  /* Heart Rate */
+            params.attr = &medical_svc.attrs[2];
+            data = &medical_data.heart_rate;
+            len = sizeof(medical_data.heart_rate);
+            break;
+        case 1:  /* Temperature */
+            params.attr = &medical_svc.attrs[5];
+            data = &medical_data.temperature;
+            len = sizeof(medical_data.temperature);
+            break;
+        case 2:  /* SpO2 */
+            params.attr = &medical_svc.attrs[8];
+            data = &medical_data.spo2;
+            len = sizeof(medical_data.spo2);
+            break;
+        case 3:  /* Motion */
+            params.attr = &medical_svc.attrs[11];
+            data = &medical_data.motion;
+            len = sizeof(medical_data.motion);
+            break;
+        case 4:  /* All Data */
+            {
+                struct {
+                    uint16_t heart_rate;
+                    int16_t temperature;
+                    uint16_t spo2;
+                    uint16_t motion;
+                } __attribute__((packed)) all_data;
+                
+                all_data.heart_rate = medical_data.heart_rate;
+                all_data.temperature = medical_data.temperature;
+                all_data.spo2 = medical_data.spo2;
+                all_data.motion = medical_data.motion;
+                
+                params.attr = &medical_svc.attrs[14];
+                data = &all_data;
+                len = sizeof(all_data);
+            }
+            break;
+        default:
+            return HW_ERROR_INVALID_PARAM;
+    }
+    
+    params.data = data;
+    params.len = len;
+    params.func = NULL;
+    
+    int ret = bt_gatt_notify_cb(ble_state.conn, &params);
+    if (ret != 0) {
+        DIAG_WARNING(DIAG_CAT_SYSTEM, "Notification failed for characteristic %u: %d", 
+                     characteristic_index, ret);
+        return HW_ERROR_USB;
+    }
+    
+    return HW_OK;
+}
+
 /*============================================================================*/
 /* Private Function Implementations                                           */
 /*============================================================================*/
@@ -782,7 +1060,148 @@ static int init_uart_bt(void)
 static int init_bluetooth(void)
 {
     /* Bluetooth initialization is handled in hw_ble_advertising_init() */
+    ble_state.connected = false;
+    ble_state.conn = NULL;
+    
+    /* Initialize medical data */
+    medical_data.heart_rate = 72;
+    medical_data.temperature = 366;  /* 36.6°C */
+    medical_data.spo2 = 980;         /* 98.0% */
+    medical_data.motion = 10;        /* 1.0g */
+    
+    for (int i = 0; i < 5; i++) {
+        medical_data.notify_enabled[i] = false;
+    }
+    
     return HW_OK;
+}
+
+/*============================================================================*/
+/* BLE GATT Callback Implementations                                          */
+/*============================================================================*/
+
+/**
+ * @brief Connection established callback
+ */
+static void bt_connected_cb(struct bt_conn *conn, uint8_t err)
+{
+    if (err) {
+        printk("BLE connection failed (err 0x%02x)\n", err);
+        DIAG_ERROR(DIAG_CAT_SYSTEM, "BLE connection failed: %d", err);
+        return;
+    }
+
+    printk("BLE device connected!\n");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE device connected successfully");
+    
+    ble_state.connected = true;
+    ble_state.conn = bt_conn_ref(conn);
+    
+    /* Stop advertising when connected */
+    if (ble_state.advertising) {
+        hw_ble_advertising_stop();
+    }
+    
+    /* Indicate connection with LED */
+    hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_ON);
+}
+
+/**
+ * @brief Connection disconnected callback
+ */
+static void bt_disconnected_cb(struct bt_conn *conn, uint8_t reason)
+{
+    printk("BLE device disconnected (reason 0x%02x)\n", reason);
+    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE device disconnected: %d", reason);
+    
+    if (ble_state.conn) {
+        bt_conn_unref(ble_state.conn);
+        ble_state.conn = NULL;
+    }
+    
+    ble_state.connected = false;
+    
+    /* Restart advertising */
+    hw_ble_advertising_start();
+    
+    /* Turn off connection LED */
+    hw_led_set_pattern(HW_LED_COMMUNICATION, HW_PULSE_OFF);
+}
+
+/**
+ * @brief Read heart rate characteristic
+ */
+static ssize_t read_heart_rate(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                               void *buf, uint16_t len, uint16_t offset)
+{
+    uint16_t value = medical_data.heart_rate;
+    return bt_gatt_attr_read(conn, attr, buf, len, offset, &value, sizeof(value));
+}
+
+/**
+ * @brief Read temperature characteristic
+ */
+static ssize_t read_temperature(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                                void *buf, uint16_t len, uint16_t offset)
+{
+    int16_t value = medical_data.temperature;
+    return bt_gatt_attr_read(conn, attr, buf, len, offset, &value, sizeof(value));
+}
+
+/**
+ * @brief Read SpO2 characteristic
+ */
+static ssize_t read_spo2(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                         void *buf, uint16_t len, uint16_t offset)
+{
+    uint16_t value = medical_data.spo2;
+    return bt_gatt_attr_read(conn, attr, buf, len, offset, &value, sizeof(value));
+}
+
+/**
+ * @brief Read motion characteristic
+ */
+static ssize_t read_motion(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                           void *buf, uint16_t len, uint16_t offset)
+{
+    uint16_t value = medical_data.motion;
+    return bt_gatt_attr_read(conn, attr, buf, len, offset, &value, sizeof(value));
+}
+
+/**
+ * @brief Read all medical data at once (combined characteristic)
+ */
+static ssize_t read_all_data(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+                             void *buf, uint16_t len, uint16_t offset)
+{
+    /* Pack all data into a single structure */
+    struct {
+        uint16_t heart_rate;
+        int16_t temperature;
+        uint16_t spo2;
+        uint16_t motion;
+    } __attribute__((packed)) all_data;
+    
+    all_data.heart_rate = medical_data.heart_rate;
+    all_data.temperature = medical_data.temperature;
+    all_data.spo2 = medical_data.spo2;
+    all_data.motion = medical_data.motion;
+    
+    return bt_gatt_attr_read(conn, attr, buf, len, offset, &all_data, sizeof(all_data));
+}
+
+/**
+ * @brief Client Characteristic Configuration changed callback
+ */
+static void ccc_cfg_changed(const struct bt_gatt_attr *attr, uint16_t value)
+{
+    bool notif_enabled = (value == BT_GATT_CCC_NOTIFY);
+    
+    printk("Notifications %s for characteristic\n", notif_enabled ? "enabled" : "disabled");
+    DIAG_INFO(DIAG_CAT_SYSTEM, "BLE notifications %s", notif_enabled ? "enabled" : "disabled");
+    
+    /* Note: In a more sophisticated implementation, we'd track which specific
+     * characteristic's notifications were enabled/disabled */
 }
 
 /**

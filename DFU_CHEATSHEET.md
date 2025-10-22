@@ -117,11 +117,15 @@ west sign -t imgtool
 
 ## Files Created
 
+📁 **docs/MCUMGR_DETAILED_GUIDE.md** - ⭐ Complete MCUmgr explanation (READ THIS!)
+📁 **docs/MCUMGR_QUICK_REFERENCE.md** - Quick reference card
 📁 **docs/DFU_GUIDE.md** - Complete DFU documentation
 📁 **docs/QUICK_START_DFU.md** - Quick start guide
+📁 **app/mcumgr_full.conf** - Ready-to-use MCUmgr configuration
 📁 **app/mcuboot.conf** - MCUboot configuration
 📁 **scripts/build_dfu_package.sh** - Automated build script
 📁 **scripts/dfu_update.sh** - Automated update script
+📁 **scripts/quick_mcumgr_test.sh** - Test MCUmgr connectivity
 
-Read `docs/QUICK_START_DFU.md` for detailed instructions!
+Read `docs/MCUMGR_DETAILED_GUIDE.md` for the complete MCUmgr explanation!
 
