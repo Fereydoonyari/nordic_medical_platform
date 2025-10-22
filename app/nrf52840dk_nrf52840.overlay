@@ -4,7 +4,6 @@
  * This overlay provides basic configuration for:
  * - USB console
  * - GPIO for LEDs and button
- * - Bluetooth support
  */
 
 / {
@@ -32,9 +31,4 @@
         compatible = "zephyr,cdc-acm-uart";
         label = "CDC_ACM_0";
     };
-};
-
-/* Bluetooth Configuration */
-&bt {
-    status = "okay";
 };
