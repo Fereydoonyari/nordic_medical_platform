@@ -193,48 +193,10 @@ void main(void)
         return;
     }
 
-    /* Initialize DFU boot process */
-    printk("Initializing DFU boot process...\n");
-    ret = hw_dfu_init();
-    if (ret != HW_OK) {
-        printk("WARNING: DFU initialization failed (error: %d)\n", ret);
-    }
-
-    /* Check if DFU boot is requested */
-    if (hw_dfu_boot_requested()) {
-        printk("DFU boot requested - entering DFU mode\n");
-        ret = hw_dfu_enter_boot_mode();
-        if (ret == HW_OK) {
-            /* Wait for button press to exit DFU mode */
-            printk("Waiting for button press to exit DFU mode...\n");
-            while (hw_dfu_boot_requested()) {
-                if (hw_button_is_pressed()) {
-                    printk("Button pressed - exiting DFU mode\n");
-                    hw_dfu_exit_boot_mode();
-                    break;
-                }
-                k_sleep(K_MSEC(100));
-            }
-        }
-    }
-
-    /* Wait for button press before starting normal operation */
-    printk("Waiting for button press to start normal operation...\n");
-    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
-    
-    bool button_pressed = hw_button_wait_press(10000); /* 10 second timeout */
-    if (button_pressed) {
-        printk("Button pressed - starting normal operation\n");
-    } else {
-        printk("Timeout - starting normal operation automatically\n");
-    }
-    
-    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
-
     /* Show hardware information */
     hw_info_t hw_info;
     if (hw_get_info(&hw_info) == HW_OK) {
-        printk("Hardware Info:\n");
+        printk("\n=== Hardware Information ===\n");
         printk("  Device ID: %02x%02x%02x%02x-%02x%02x%02x%02x\n",
                hw_info.device_id[0], hw_info.device_id[1], 
                hw_info.device_id[2], hw_info.device_id[3],
@@ -243,7 +205,38 @@ void main(void)
         printk("  Reset Cause: 0x%08x\n", hw_info.reset_cause);
         printk("  USB Console: %s\n", hw_info.usb_console_ready ? "Ready" : "Not Ready");
         printk("  LEDs: %s\n", hw_info.leds_initialized ? "Initialized" : "Failed");
+        printk("============================\n\n");
     }
+
+    /* Initialize DFU boot process */
+    printk("Initializing DFU boot process...\n");
+    ret = hw_dfu_init();
+    if (ret != HW_OK) {
+        printk("WARNING: DFU initialization failed (error: %d)\n", ret);
+    } else {
+        printk("DFU mode ready - Press Button 1 anytime to enter DFU mode\n");
+    }
+
+    /* Optional DFU entry at startup */
+    printk("\n=== Startup Options ===\n");
+    printk("Press Button 1 within 5 seconds to enter DFU mode\n");
+    printk("Or wait to continue to normal operation...\n");
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_SLOW_BLINK);
+    
+    /* Wait with shorter timeout for optional DFU entry */
+    k_sleep(K_MSEC(5000)); /* 5 second wait */
+    
+    /* Check if user entered DFU mode during wait */
+    if (hw_dfu_is_active()) {
+        printk("\nDFU mode active - Press Button 1 to exit and continue\n");
+        /* Wait for user to exit DFU mode */
+        while (hw_dfu_is_active()) {
+            k_sleep(K_MSEC(100));
+        }
+    }
+    
+    printk("\nContinuing to normal operation...\n");
+    hw_led_set_pattern(HW_LED_STATUS, HW_PULSE_OFF);
 
     /* Wait for USB console to be ready for better log output */
     if (hw_usb_console_ready()) {

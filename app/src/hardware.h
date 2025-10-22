@@ -283,6 +283,14 @@ int hw_dfu_enter_boot_mode(void);
  */
 int hw_dfu_exit_boot_mode(void);
 
+/**
+ * @brief Check if currently in DFU boot mode
+ * @details Returns the current DFU mode status.
+ * 
+ * @return true if in DFU mode, false otherwise
+ */
+bool hw_dfu_is_active(void);
+
 /*============================================================================*/
 /* Bluetooth and Serial Communication Functions                               */
 /*============================================================================*/

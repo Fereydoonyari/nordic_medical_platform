@@ -522,6 +522,14 @@ int hw_dfu_exit_boot_mode(void)
     return HW_OK;
 }
 
+/**
+ * @brief Check if currently in DFU boot mode
+ */
+bool hw_dfu_is_active(void)
+{
+    return dfu_state.in_boot_mode;
+}
+
 /*============================================================================*/
 /* Bluetooth and Serial Communication Functions                               */
 /*============================================================================*/
