@@ -21,6 +21,7 @@
 #include <zephyr/drivers/hwinfo.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <zephyr/sys/reboot.h>
 
 /*============================================================================*/
 /* Hardware Configuration Constants                                           */

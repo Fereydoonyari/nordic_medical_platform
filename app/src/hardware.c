@@ -346,7 +346,8 @@ int hw_led_test_patterns(hw_led_pattern_t pattern)
  */
 int hw_button_init(void)
 {
-    if (!hw_initialized || !gpio_dev) {
+    /* Allow initialization during hw_init(): gpio_dev must be ready */
+    if (!gpio_dev) {
         return HW_ERROR_NOT_READY;
     }
 
@@ -387,7 +388,7 @@ int hw_button_init(void)
  */
 bool hw_button_is_pressed(void)
 {
-    if (!hw_initialized || !gpio_dev) {
+    if (!gpio_dev) {
         return false;
     }
 
@@ -459,8 +460,15 @@ bool hw_dfu_boot_requested(void)
         return false;
     }
 
-    /* Check if button is pressed during boot */
+    /* Check if button is pressed and held ~2s during boot */
     if (hw_button_is_pressed()) {
+        uint32_t t0 = k_uptime_get_32();
+        while (k_uptime_get_32() - t0 < 2000U) {
+            if (!hw_button_is_pressed()) {
+                return false; /* short press, ignore */
+            }
+            k_sleep(K_MSEC(10));
+        }
         dfu_state.boot_requested = true;
         DIAG_INFO(DIAG_CAT_SYSTEM, "DFU boot requested via button press");
     }
@@ -740,8 +748,8 @@ static int init_leds(void)
  */
 static int init_button(void)
 {
-    /* Button initialization is handled in hw_button_init() */
-    return HW_OK;
+    /* Ensure the DFU button is configured during hardware init */
+    return hw_button_init();
 }
 
 /**
