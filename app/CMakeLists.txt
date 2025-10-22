@@ -16,10 +16,9 @@ target_sources(app PRIVATE
     src/diagnostics.c
     src/config.c
     src/hardware.c
-    src/shell_commands.c
 )
 
-# Register shell commands
+# Register shell commands only if shell is enabled
 zephyr_library_sources_ifdef(CONFIG_SHELL
     src/shell_commands.c
 )
