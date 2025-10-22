@@ -52,7 +52,6 @@ SHELL_CMD_REGISTER(dfu_status, NULL, "Show DFU status", cmd_dfu_status);
 SHELL_CMD_REGISTER(dfu_enter, NULL, "Enter DFU mode", cmd_dfu_enter);
 SHELL_CMD_REGISTER(dfu_exit, NULL, "Exit DFU mode", cmd_dfu_exit);
 SHELL_CMD_REGISTER(dfu_wait, NULL, "Wait for DFU button press", cmd_dfu_wait);
-SHELL_CMD_REGISTER(test_button_timeout, NULL, "Test button timeout behavior", cmd_test_button_timeout);
 
 /* Bluetooth Commands */
 SHELL_CMD_REGISTER(bt, NULL, "Bluetooth control", cmd_bt);
@@ -506,33 +505,6 @@ int cmd_dfu_wait(const struct shell *shell, size_t argc, char **argv)
         shell_print(shell, "Timeout - continuing normal operation\n");
         return SHELL_OK;
     }
-}
-
-/**
- * @brief Test button timeout
- */
-int cmd_test_button_timeout(const struct shell *shell, size_t argc, char **argv)
-{
-    uint32_t timeout_ms = 5000U; /* Default 5 seconds */
-
-    if (argc > 1) {
-        timeout_ms = strtoul(argv[1], NULL, 10);
-        if (timeout_ms == 0) {
-            timeout_ms = 5000U;
-        }
-    }
-
-    shell_print(shell, "Testing button timeout (timeout: %u ms)...\n", timeout_ms);
-    shell_print(shell, "Don't press the button to test timeout behavior\n");
-    
-    bool pressed = hw_button_wait_press(timeout_ms);
-    if (pressed) {
-        shell_print(shell, "Button was pressed!\n");
-    } else {
-        shell_print(shell, "Timeout occurred as expected!\n");
-    }
-    
-    return SHELL_OK;
 }
 
 /*============================================================================*/

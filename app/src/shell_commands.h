@@ -259,21 +259,6 @@ int cmd_dfu_exit(const struct shell *shell, size_t argc, char **argv);
  */
 int cmd_dfu_wait(const struct shell *shell, size_t argc, char **argv);
 
-/**
- * @brief Test button timeout behavior
- * @details Tests the button timeout functionality without entering DFU mode.
- * Useful for debugging button timeout issues.
- * 
- * Usage:
- *   test_button_timeout [timeout_ms]  - Test timeout (default: 5000ms)
- * 
- * @param shell Shell instance
- * @param argc Argument count
- * @param argv Argument vector
- * @return SHELL_OK on success, error code on failure
- */
-int cmd_test_button_timeout(const struct shell *shell, size_t argc, char **argv);
-
 /*============================================================================*/
 /* Bluetooth Commands                                                         */
 /*============================================================================*/
