@@ -874,6 +874,19 @@ int hw_ble_send_notification(void)
     all_data.spo2 = medical_data.spo2;
     all_data.motion = medical_data.motion;
     
+    /* Debug: Show what we're sending in hex */
+    uint8_t *bytes = (uint8_t *)&all_data;
+    printk("[DEBUG] Sending %u bytes: ", sizeof(all_data));
+    for (size_t i = 0; i < sizeof(all_data); i++) {
+        printk("%02X ", bytes[i]);
+    }
+    printk("\n");
+    printk("[DEBUG] Decoded: HR=%u, Temp=%d (%.1f°C), SpO2=%u (%.1f%%), Motion=%u (%.1fg)\n",
+           all_data.heart_rate,
+           all_data.temperature, (float)all_data.temperature / 10.0f,
+           all_data.spo2, (float)all_data.spo2 / 10.0f,
+           all_data.motion, (float)all_data.motion / 10.0f);
+    
     /* Send "All Data" notification */
     struct bt_gatt_notify_params params = {
         .attr = &medical_svc.attrs[14],  /* All data characteristic */
